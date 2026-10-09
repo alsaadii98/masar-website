@@ -1,2 +1,27 @@
-# masar-website
-Masar Maps coming-soon website — navigation made for Iraq.
+# Masar Maps
+
+A responsive, animated coming-soon page for Masar Maps, in English and Arabic.
+
+Target domain: **masarmaps.com**.
+
+## Website
+
+The complete page is `site/index.html`. The Masar SVG logo, favicon, fonts, styling, and animations are embedded. No build, JavaScript framework, or external assets are required.
+
+Open `site/index.html` directly in a browser for a local preview. The page respects reduced-motion preferences. Font licenses are retained in an inert template inside the HTML.
+
+## Publishing
+
+`.github/workflows/pages.yml` publishes only the `site` directory to GitHub Pages on each push to `main`. It can also be run manually from the Actions tab. It uses GitHub's built-in deployment token; no Hostinger secret is needed.
+
+Before the first deployment, set the repository's **Settings → Pages → Build and deployment → Source** to **GitHub Actions**.
+
+Set **Settings → Pages → Custom domain** to `masarmaps.com` before pointing DNS to GitHub. Enable **Enforce HTTPS** when the certificate is ready.
+
+The `site/CNAME` file records the target domain for compatibility. With a custom Actions workflow, GitHub uses the domain in Pages settings; the CNAME file does not configure it.
+
+Read `DNS_SETUP.md` for the website DNS targets and email-preservation procedure. DNS is configured once at the DNS provider. Subsequent pushes deploy the website without modifying the email configuration.
+
+## Updating the page
+
+Edit `site/index.html`, commit, and push to `main`. Check the `Publish Masar Maps` workflow for the deployment result.
