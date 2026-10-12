@@ -10,7 +10,7 @@ from pathlib import Path
 
 SITE = Path(__file__).resolve().parent.parent / "site"
 ORIGIN = "https://masarmaps.com"
-# TODO(owner): confirm the support address before store submission.
+# Hostinger alias: support@ delivers to ali@masarmaps.com.
 EMAIL = "support@masarmaps.com"
 
 LANGS = {
@@ -475,7 +475,6 @@ def render(lang, page):
         f'<a href="{url(lang, pg)}"' + (' aria-current="page"' if pg == page else "") + f">{c['nav'][pg]}</a>"
         for pg in PAGES
     )
-    todo = f"<!-- TODO(owner): confirm {EMAIL} is the right support address. -->\n" if page in ("privacy", "delete-account", "support") else ""
     return f"""<!doctype html>
 <html lang="{lang}" dir="{meta['dir']}">
 <head>
@@ -492,7 +491,7 @@ def render(lang, page):
   <link rel="stylesheet" href="/assets/pages.css">
 </head>
 <body>
-{todo}  <header>
+  <header>
     <div class="wrap">
       <a class="brand" href="/" aria-label="{c['home']}"><img src="/assets/masar-logo.svg" alt="" width="40" height="40"><span>{meta['brand']}</span></a>
       <nav class="langs" aria-label="Language">{langs}</nav>
