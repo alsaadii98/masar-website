@@ -1,8 +1,17 @@
 {
   "applinks": {
-    "details": []
+    "details": [
+      {
+        "appIDs": [
+          "SVG229CANQ.com.masarmaps"
+        ],
+        "components": []
+      }
+    ]
   },
   "webcredentials": {
-    "apps": []
+    "apps": [
+      "SVG229CANQ.com.masarmaps"
+    ]
   }
 }

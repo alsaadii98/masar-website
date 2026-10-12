@@ -754,8 +754,11 @@ LASTMOD = "2026-10-12"
 #   APPLE_TEAM_ID  — Apple Developer → Membership → Team ID (10 chars).
 #   ANDROID_SHA256 — Play Console → App integrity → App signing key certificate
 #                    → SHA-256 (add the upload key too for local release builds).
-APPLE_TEAM_ID = ""
-ANDROID_SHA256 = []
+APPLE_TEAM_ID = "SVG229CANQ"
+ANDROID_SHA256 = [
+    # Upload key. Add the Play App Signing key after the first Play upload.
+    "33:8D:B6:53:E6:AA:18:11:F6:9D:8B:93:99:CF:37:7C:F4:68:36:F9:39:8B:6D:C5:11:F0:C7:14:39:48:DB:E5",
+]
 BUNDLE_ID = "com.masarmaps"
 
 

@@ -7,7 +7,9 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.masarmaps",
-      "sha256_cert_fingerprints": []
+      "sha256_cert_fingerprints": [
+        "33:8D:B6:53:E6:AA:18:11:F6:9D:8B:93:99:CF:37:7C:F4:68:36:F9:39:8B:6D:C5:11:F0:C7:14:39:48:DB:E5"
+      ]
     }
   }
 ]
