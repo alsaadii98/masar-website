@@ -30,10 +30,21 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
+      # upload-pages-artifact drops dot-directories, so .well-known (app links)
+      # would be lost. Package the site ourselves, the way that action does.
+      - name: Package website
+        run: |
+          tar --dereference --hard-dereference --directory site \
+            -cvf "$RUNNER_TEMP/artifact.tar" --exclude=.git --exclude=.github .
+          tar -tf "$RUNNER_TEMP/artifact.tar" | grep -q '^./.well-known/assetlinks.json$'
+
       - name: Upload website
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
-          path: ./site
+          name: github-pages
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 1
+          if-no-files-found: error
 
       - name: Publish website
         id: deployment

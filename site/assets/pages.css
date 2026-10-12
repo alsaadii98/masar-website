@@ -97,3 +97,5 @@ footer p { margin: 4px 0 0; }
   .brand span { font-size: 20px; }
   .langs a { padding: 0 11px; font-size: 14px; }
 }
+.sources { font-size: 14px; color: var(--muted); }
+.sources a { color: var(--muted); }

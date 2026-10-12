@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Build the store pages (privacy, terms, delete-account, support) in ar, en and ckb.
+"""Build the site pages in ar, en and ckb: the Waze-alternative landing page and the
+store pages (privacy, terms, delete-account, support), plus robots.txt, sitemap.xml
+and .well-known (app links).
 
 Arabic is the default and lives at the site root (/privacy). English and Kurdish
 live under /en/ and /ckb/. GitHub Pages serves privacy.html at /privacy, so the
@@ -448,32 +450,247 @@ def render_block(b):
     raise ValueError(kind)
 
 
+
+
+# --------------------------------------------------------------------------
+# Landing page: "Waze alternative in Iraq". Targets the searches around the
+# October 2026 ban (بديل ويز في العراق، حظر تطبيق ويز، مصطفى سند تطبيق ويز).
+# Ban facts are attributed to press reports and cited; update if the date moves.
+# --------------------------------------------------------------------------
+
+SOURCES = [
+    ("Kurdistan24", "https://www.kurdistan24.net/en/story/944372"),
+    ("Al Jazeera", "https://www.aljazeera.com/news/2026/10/9/why-has-iraq-decided-to-ban-online-map-service-waze"),
+    ("The National", "https://www.thenationalnews.com/news/mena/2026/10/07/iraq-to-ban-waze-navigation-app-over-israeli-links/"),
+]
+
+
+def sources_line(label):
+    joined = " · ".join(f'<a href="{u}" rel="noopener">{n}</a>' for n, u in SOURCES)
+    return f'<p class="sources">{label}: {joined}</p>'
+
+
+def landing(lang):
+    L = lambda page: url(lang, page)
+    if lang == "ar":
+        return {
+            "nav": "بديل ويز",
+            "seo_title": "بديل ويز في العراق: مسار، تطبيق ملاحة عراقي",
+            "description": "بعد قرار حظر تطبيق ويز في العراق، مسار تطبيق ملاحة عراقي فيه زحمة مباشرة وبلاغات الطريق وإرشاد صوتي بالعربي والكوردي. قريباً على App Store و Google Play.",
+            "title": "بديل ويز في العراق",
+            "lead": "مسار تطبيق ملاحة عراقي، مصنوع للعراق. قريباً على App Store و Google Play.",
+            "sections": [
+                ("حظر تطبيق ويز في العراق", [
+                    "في تشرين الأول 2026 أعلن وزير الاتصالات مصطفى سند حظر تطبيق ويز (Waze) في العراق، وقال إن السبب أن التطبيق إسرائيلي المنشأ. حُدّد الحظر أولاً مطلع 2027، ثم قُدّم موعده إلى نهاية كانون الأول 2026، بحسب تقارير صحفية.",
+                    ("raw", sources_line("المصادر")),
+                ]),
+                ("مسار: بديل عراقي لويز", [("ul", [
+                    "زحمة مباشرة على الطرق، تتحدّث كل دقيقة.",
+                    "إرشاد صوتي خطوة بخطوة، وإعادة توجيه تلقائية إذا خرجت عن المسار.",
+                    "بلاغات السائقين: حوادث، زحمة، طرق مغلقة، فيضانات، مطبات وغيرها.",
+                    "بحث بالعربي والكوردي والإنكليزي، وحتى العربي المكتوب بحروف لاتينية.",
+                    "مشاركة وقت الوصول عبر واتساب وتيليغرام.",
+                    "يعمل مع CarPlay و Android Auto.",
+                    "بدون إعلانات، وبدون حساب.",
+                ])]),
+                ("خصوصيتك أولاً", [
+                    f'لا نبيع بياناتك أبداً. نقاط GPS مجهولة وتُحذف خلال 24 ساعة. خرائطنا من OpenStreetMap على خوادمنا الخاصة، بدون Google أو Apple. اقرأ <a href="{L("privacy")}">سياسة الخصوصية</a>.',
+                ]),
+            ],
+            "faq_title": "أسئلة شائعة",
+            "faq": [
+                ("هل سيتم حظر تطبيق ويز في العراق؟", "نعم. أعلن وزير الاتصالات مصطفى سند حظر تطبيق ويز في العراق، والموعد المعلن نهاية كانون الأول 2026."),
+                ("متى يبدأ حظر ويز في العراق؟", "كان الموعد مطلع 2027، ثم قُدّم إلى نهاية كانون الأول 2026، بحسب ما نقلته وسائل الإعلام عن الوزير."),
+                ("ما هو بديل ويز في العراق؟", "مسار تطبيق ملاحة عراقي فيه ما تحتاجه من ويز: زحمة مباشرة وبلاغات الطريق وإرشاد صوتي، بالعربي والكوردي والإنكليزي."),
+                ("هل مسار تطبيق عراقي؟", "نعم. مسار تطبيق عراقي، خرائطه من OpenStreetMap على خوادمه الخاصة، ولا يعتمد على ويز أو خرائط Google."),
+                ("متى يتوفر مسار؟", "قريباً على App Store و Google Play. تابعنا على masarmaps.com."),
+                ("هل أحتاج حساباً لاستخدام مسار؟", "لا. تستطيع البحث والملاحة ونشر البلاغات بدون حساب."),
+            ],
+        }
+    if lang == "en":
+        return {
+            "nav": "Waze alternative",
+            "seo_title": "Waze alternative in Iraq: Masar, the Iraqi navigation app",
+            "description": "Iraq is banning Waze. Masar is an Iraqi navigation app with live traffic, road reports and voice guidance in Arabic, Kurdish and English. Coming soon to the App Store and Google Play.",
+            "title": "The Waze alternative for Iraq",
+            "lead": "Masar is an Iraqi navigation app, made for Iraq. Coming soon to the App Store and Google Play.",
+            "sections": [
+                ("Iraq's Waze ban", [
+                    "In October 2026, Iraq's Communications Minister Mustafa Sanad announced a ban on the Waze app in Iraq, citing the app's Israeli origin. The ban was first set for the start of 2027, then brought forward to the end of December 2026, according to press reports.",
+                    ("raw", sources_line("Sources")),
+                ]),
+                ("Masar: an Iraqi alternative to Waze", [("ul", [
+                    "Live traffic on the roads, updated every minute.",
+                    "Turn-by-turn voice guidance, with automatic rerouting if you leave the route.",
+                    "Driver reports: accidents, traffic, closed roads, floods, speed bumps and more.",
+                    "Search in Arabic, Kurdish and English, even Arabic typed in Latin letters.",
+                    "Share your arrival time on WhatsApp and Telegram.",
+                    "Works with CarPlay and Android Auto.",
+                    "No ads, no account needed.",
+                ])]),
+                ("Privacy first", [
+                    f'We never sell your data. GPS points are anonymous and deleted within 24 hours. Our maps come from OpenStreetMap on our own servers, without Google or Apple. Read our <a href="{L("privacy")}">Privacy Policy</a>.',
+                ]),
+            ],
+            "faq_title": "Questions",
+            "faq": [
+                ("Is Waze being banned in Iraq?", "Yes. Communications Minister Mustafa Sanad announced a ban on Waze in Iraq. The announced date is the end of December 2026."),
+                ("When does the Waze ban start in Iraq?", "It was first set for the start of 2027, then brought forward to the end of December 2026, according to press reports quoting the minister."),
+                ("What is the alternative to Waze in Iraq?", "Masar is an Iraqi navigation app with what you use Waze for: live traffic, road reports and voice guidance, in Arabic, Kurdish and English."),
+                ("Is Masar an Iraqi app?", "Yes. Masar is an Iraqi app. Its maps come from OpenStreetMap on its own servers, and it does not depend on Waze or Google Maps."),
+                ("When is Masar available?", "Coming soon to the App Store and Google Play. Follow masarmaps.com."),
+                ("Do I need an account to use Masar?", "No. You can search, navigate and post reports without an account."),
+            ],
+        }
+    return {
+        "nav": "جێگرەوەی ویز",
+        "seo_title": "جێگرەوەی ویز لە عێراق: مسار، ئەپی ڕێنیشاندەری عێراقی",
+        "description": "دوای بڕیاری قەدەغەکردنی ویز لە عێراق، مسار ئەپێکی ڕێنیشاندەری عێراقییە بە قەرەباڵغی ڕاستەوخۆ، ڕاپۆرتی ڕێگا و ڕێنمایی دەنگی بە کوردی و عەرەبی. بەم زووانە لە App Store و Google Play.",
+        "title": "جێگرەوەی ویز لە عێراق",
+        "lead": "مسار ئەپێکی ڕێنیشاندەری عێراقییە، بۆ عێراق دروستکراوە. بەم زووانە لە App Store و Google Play.",
+        "sections": [
+            ("قەدەغەکردنی ویز لە عێراق", [
+                "لە تشرینی یەکەمی 2026دا، وەزیری پەیوەندییەکانی عێراق مستەفا سەند قەدەغەکردنی ئەپی ویز (Waze)ی لە عێراق ڕاگەیاند، و گوتی هۆکارەکەی ئەوەیە کە ئەپەکە بنەچەی ئیسرائیلییە. سەرەتا بۆ سەرەتای 2027 دیاری کرا، پاشان بۆ کۆتایی کانوونی یەکەمی 2026 پێشخرا، بەپێی ڕاپۆرتە ڕۆژنامەوانییەکان.",
+                ("raw", sources_line("سەرچاوەکان")),
+            ]),
+            ("مسار: جێگرەوەیەکی عێراقی بۆ ویز", [("ul", [
+                "قەرەباڵغی ڕاستەوخۆ لەسەر ڕێگاکان، هەر خولەکێک نوێ دەبێتەوە.",
+                "ڕێنمایی دەنگی هەنگاو بە هەنگاو، و گۆڕینی ڕێگا بە خۆکار ئەگەر لە ڕێگاکە دەرچوویت.",
+                "ڕاپۆرتی شۆفێران: ڕووداو، قەرەباڵغی، ڕێگای داخراو، لافاو، بەربەستی خێرایی و زیاتر.",
+                "گەڕان بە کوردی و عەرەبی و ئینگلیزی.",
+                "هاوبەشکردنی کاتی گەیشتن لە واتسئاپ و تێلێگرام.",
+                "لەگەڵ CarPlay و Android Auto کار دەکات.",
+                "بێ ڕیکلام، بێ هەژمار.",
+            ])]),
+            ("تایبەتمەندیت لە پێشەوەیە", [
+                f'هەرگیز زانیارییەکانت نافرۆشین. خاڵەکانی GPS بێناون و لە ماوەی 24 کاتژمێردا دەسڕدرێنەوە. نەخشەکانمان لە OpenStreetMapەوەن لەسەر سێرڤەرەکانی خۆمان، بەبێ Google یان Apple. <a href="{L("privacy")}">سیاسەتی تایبەتمەندی</a> بخوێنەوە.',
+            ]),
+        ],
+        "faq_title": "پرسیارە باوەکان",
+        "faq": [
+            ("ئایا ویز لە عێراق قەدەغە دەکرێت؟", "بەڵێ. وەزیری پەیوەندییەکان مستەفا سەند قەدەغەکردنی ویزی لە عێراق ڕاگەیاند. بەرواری ڕاگەیەندراو کۆتایی کانوونی یەکەمی 2026یە."),
+            ("قەدەغەکردنی ویز لە عێراق کەی دەست پێدەکات؟", "سەرەتا بۆ سەرەتای 2027 بوو، پاشان بۆ کۆتایی کانوونی یەکەمی 2026 پێشخرا، بەپێی ڕاپۆرتەکان."),
+            ("جێگرەوەی ویز لە عێراق چییە؟", "مسار ئەپێکی ڕێنیشاندەری عێراقییە بە قەرەباڵغی ڕاستەوخۆ، ڕاپۆرتی ڕێگا و ڕێنمایی دەنگی، بە کوردی و عەرەبی و ئینگلیزی."),
+            ("ئایا مسار ئەپێکی عێراقییە؟", "بەڵێ. مسار ئەپێکی عێراقییە، نەخشەکانی لە OpenStreetMapەوەن لەسەر سێرڤەرەکانی خۆی، و پشت بە ویز یان نەخشەی Google نابەستێت."),
+            ("مسار کەی بەردەست دەبێت؟", "بەم زووانە لە App Store و Google Play. masarmaps.com بەدوادا بچۆ."),
+            ("پێویستم بە هەژمار هەیە بۆ بەکارهێنانی مسار؟", "نەخێر. دەتوانیت بەبێ هەژمار بگەڕێیت، ڕێنیشاندەر بەکاربهێنیت و ڕاپۆرت بنێریت."),
+        ],
+    }
+
+
+# --------------------------------------------------------------------------
+# Rendering
+# --------------------------------------------------------------------------
+
+LANDING = "waze-alternative"
+ALL_PAGES = [LANDING] + PAGES
+OG_IMAGE = ORIGIN + "/assets/og-image.png"
+LOGO_PNG = ORIGIN + "/assets/masar-logo-512.png"
+OG_LOCALE = {"ar": "ar_IQ", "en": "en_US", "ckb": "ckb_IQ"}
+APP_NAME = {"ar": "مسار", "en": "Masar", "ckb": "مسار"}
+
+
+def page_content(lang):
+    c = content(lang)
+    lp = landing(lang)
+    c["nav"] = {LANDING: lp["nav"], **c["nav"]}
+    c[LANDING] = lp
+    return c
+
+
+def organization():
+    return {
+        "@type": "Organization",
+        "@id": ORIGIN + "/#org",
+        "name": "Masar Maps",
+        "alternateName": ["مسار", "Masar"],
+        "url": ORIGIN + "/",
+        "logo": LOGO_PNG,
+        "email": EMAIL,
+    }
+
+
+def mobile_app(lang, description):
+    return {
+        "@type": "MobileApplication",
+        "@id": ORIGIN + "/#app",
+        "name": APP_NAME[lang],
+        "alternateName": ["Masar", "مسار", "Masar Maps"],
+        "operatingSystem": "iOS, Android",
+        "applicationCategory": "TravelApplication",
+        "description": description,
+        "inLanguage": ["ar", "ckb", "en"],
+        "areaServed": {"@type": "Country", "name": "Iraq"},
+        "publisher": {"@id": ORIGIN + "/#org"},
+        "image": OG_IMAGE,
+    }
+
+
+def json_ld(lang, page, p, title, description, canonical):
+    import json
+    graph = [organization()]
+    webpage = {
+        "@type": "WebPage",
+        "@id": canonical + "#page",
+        "url": canonical,
+        "name": title,
+        "description": description,
+        "inLanguage": lang,
+        "isPartOf": {"@type": "WebSite", "@id": ORIGIN + "/#site", "url": ORIGIN + "/", "name": "Masar Maps"},
+        "publisher": {"@id": ORIGIN + "/#org"},
+    }
+    if page == LANDING:
+        webpage["about"] = {"@id": ORIGIN + "/#app"}
+        graph.append(mobile_app(lang, description))
+        graph.append({
+            "@type": "FAQPage",
+            "@id": canonical + "#faq",
+            "inLanguage": lang,
+            "mainEntity": [
+                {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
+                for q, a in p["faq"]
+            ],
+        })
+    graph.insert(0, webpage)
+    data = json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, indent=1)
+    return f'  <script type="application/ld+json">\n{data}\n  </script>'
+
+
 def render(lang, page):
     meta = LANGS[lang]
-    c = content(lang)
+    c = page_content(lang)
     p = c[page]
-    title = f"{p['title']} — {meta['brand']}"
+    title = p.get("seo_title") or f"{p['title']} — {meta['brand']}"
+    description = p.get("description") or p["lead"]
     canonical = ORIGIN + url(lang, page)
     alternates = "\n".join(
         f'  <link rel="alternate" hreflang="{l}" href="{ORIGIN + url(l, page)}">' for l in LANGS
     ) + f'\n  <link rel="alternate" hreflang="x-default" href="{ORIGIN + url("ar", page)}">'
+    og_alt = "\n".join(
+        f'  <meta property="og:locale:alternate" content="{OG_LOCALE[l]}">' for l in LANGS if l != lang
+    )
     langs = "".join(
         f'<a href="{url(l, page)}" lang="{l}" hreflang="{l}"'
         + (' aria-current="page"' if l == lang else "")
         + f">{LANGS[l]['label']}</a>"
         for l in LANGS
     )
-    sections = "\n".join(
-        f"      <section>\n        <h2>{h}</h2>\n        "
-        + "\n        ".join(render_block(b) for b in blocks)
-        + "\n      </section>"
-        for h, blocks in p["sections"]
-    )
+    blocks_html = []
+    for h, blocks in p["sections"]:
+        blocks_html.append(
+            f"      <section>\n        <h2>{h}</h2>\n        "
+            + "\n        ".join(b[1] if isinstance(b, tuple) and b[0] == "raw" else render_block(b) for b in blocks)
+            + "\n      </section>"
+        )
+    if "faq" in p:
+        faq = "\n        ".join(f"<h3>{q}</h3>\n        <p>{a}</p>" for q, a in p["faq"])
+        blocks_html.append(f"      <section>\n        <h2>{p['faq_title']}</h2>\n        {faq}\n      </section>")
+    sections = "\n".join(blocks_html)
     show_date = page in ("privacy", "terms")
     date = f'\n      <p class="date">{c["effective"]}</p>' if show_date else ""
     footer_links = "".join(
         f'<a href="{url(lang, pg)}"' + (' aria-current="page"' if pg == page else "") + f">{c['nav'][pg]}</a>"
-        for pg in PAGES
+        for pg in ALL_PAGES
     )
     return f"""<!doctype html>
 <html lang="{lang}" dir="{meta['dir']}">
@@ -483,12 +700,26 @@ def render(lang, page):
   <meta name="theme-color" content="#31C6F7">
   <meta name="color-scheme" content="light">
   <title>{escape(title)}</title>
-  <meta name="description" content="{escape(p['lead'])}">
+  <meta name="description" content="{escape(description)}">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="{canonical}">
 {alternates}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Masar Maps">
+  <meta property="og:title" content="{escape(title)}">
+  <meta property="og:description" content="{escape(description)}">
+  <meta property="og:url" content="{canonical}">
+  <meta property="og:image" content="{OG_IMAGE}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="{OG_LOCALE[lang]}">
+{og_alt}
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="preload" href="/assets/fonts/{'Vazirmatn-Regular' if lang == 'ckb' else 'ReadexPro-Regular'}.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/pages.css">
+{json_ld(lang, page, p, title, description, canonical)}
 </head>
 <body>
   <header>
@@ -513,13 +744,75 @@ def render(lang, page):
 """
 
 
+# --------------------------------------------------------------------------
+# robots.txt, sitemap.xml and .well-known
+# --------------------------------------------------------------------------
+
+LASTMOD = "2026-10-12"
+
+# Fill these when the store accounts exist, then rebuild:
+#   APPLE_TEAM_ID  — Apple Developer → Membership → Team ID (10 chars).
+#   ANDROID_SHA256 — Play Console → App integrity → App signing key certificate
+#                    → SHA-256 (add the upload key too for local release builds).
+APPLE_TEAM_ID = ""
+ANDROID_SHA256 = []
+BUNDLE_ID = "com.masarmaps"
+
+
+def write_seo_files():
+    import json
+    (SITE / "robots.txt").write_text(
+        "User-agent: *\nAllow: /\n\nSitemap: https://masarmaps.com/sitemap.xml\n", encoding="utf-8"
+    )
+    urls = [("/", "1.0")] + [
+        (url(l, pg), "0.9" if pg == LANDING else "0.5") for pg in ALL_PAGES for l in LANGS
+    ]
+    entries = []
+    for loc, prio in urls:
+        alts = ""
+        page = loc.rsplit("/", 1)[-1]
+        if page in ALL_PAGES:
+            alts = "".join(
+                f'\n    <xhtml:link rel="alternate" hreflang="{l}" href="{ORIGIN + url(l, page)}"/>' for l in LANGS
+            ) + f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{ORIGIN + url("ar", page)}"/>'
+        entries.append(
+            f"  <url>\n    <loc>{ORIGIN + loc}</loc>\n    <lastmod>{LASTMOD}</lastmod>\n    <priority>{prio}</priority>{alts}\n  </url>"
+        )
+    (SITE / "sitemap.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+        + "\n".join(entries) + "\n</urlset>\n",
+        encoding="utf-8",
+    )
+
+    wk = SITE / ".well-known"
+    wk.mkdir(exist_ok=True)
+    # Android App Links / Credential Manager. Empty fingerprints = no association yet.
+    assetlinks = [{
+        "relation": ["delegate_permission/common.handle_all_urls", "delegate_permission/common.get_login_creds"],
+        "target": {"namespace": "android_app", "package_name": BUNDLE_ID, "sha256_cert_fingerprints": ANDROID_SHA256},
+    }]
+    (wk / "assetlinks.json").write_text(json.dumps(assetlinks, indent=2) + "\n", encoding="utf-8")
+    # iOS associated domains. No paths open the app yet, so web pages always stay on the web.
+    app_ids = [f"{APPLE_TEAM_ID}.{BUNDLE_ID}"] if APPLE_TEAM_ID else []
+    aasa = {
+        "applinks": {"details": [{"appIDs": app_ids, "components": []}] if app_ids else []},
+        "webcredentials": {"apps": app_ids},
+    }
+    (wk / "apple-app-site-association").write_text(json.dumps(aasa, indent=2) + "\n", encoding="utf-8")
+    if not APPLE_TEAM_ID or not ANDROID_SHA256:
+        print("note: .well-known files have no app ids yet (set APPLE_TEAM_ID / ANDROID_SHA256)")
+
+
 def main():
     for lang, meta in LANGS.items():
         out_dir = SITE / meta["prefix"].lstrip("/") if meta["prefix"] else SITE
         out_dir.mkdir(parents=True, exist_ok=True)
-        for page in PAGES:
+        for page in ALL_PAGES:
             (out_dir / f"{page}.html").write_text(render(lang, page), encoding="utf-8")
             print("wrote", (out_dir / f"{page}.html").relative_to(SITE.parent))
+    write_seo_files()
+    print("wrote robots.txt, sitemap.xml, .well-known/")
 
 
 if __name__ == "__main__":
