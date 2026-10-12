@@ -99,3 +99,15 @@ footer p { margin: 4px 0 0; }
 }
 .sources { font-size: 14px; color: var(--muted); }
 .sources a { color: var(--muted); }
+.place { text-align: center; }
+.place-pin { display: block; margin: 0 auto 12px; border-radius: 16px; }
+.coords { direction: ltr; font-variant-numeric: tabular-nums; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 20px; }
+.btn-row .mail { margin-top: 0; }
+.btn-secondary {
+  display: inline-flex; align-items: center; min-height: 56px; padding: 0 22px;
+  border: 2px solid var(--line); border-radius: 16px; background: var(--white);
+  color: var(--ink); font-weight: 600; text-decoration: none;
+}
+.btn-secondary:hover { box-shadow: 0 3px 0 var(--line); }
+.btn-row [hidden] { display: none; }

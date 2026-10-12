@@ -5,7 +5,14 @@
         "appIDs": [
           "SVG229CANQ.com.masarmaps"
         ],
-        "components": []
+        "components": [
+          {
+            "/": "/p"
+          },
+          {
+            "/": "/p/*"
+          }
+        ]
       }
     ]
   },

@@ -760,6 +760,11 @@ ANDROID_SHA256 = [
     "33:8D:B6:53:E6:AA:18:11:F6:9D:8B:93:99:CF:37:7C:F4:68:36:F9:39:8B:6D:C5:11:F0:C7:14:39:48:DB:E5",
 ]
 BUNDLE_ID = "com.masarmaps"
+# Web paths the apps open (iOS universal links). Shared places: /p?ll=<lat>,<lon>&n=<name>.
+APP_LINK_PATHS = [{"/": "/p"}, {"/": "/p/*"}]
+# Store links for the /p fallback page. TODO: set APP_STORE_URL once the app is live.
+PLAY_URL = "https://play.google.com/store/apps/details?id=com.masarmaps"
+APP_STORE_URL = ""
 
 
 def write_seo_files():
@@ -799,12 +804,131 @@ def write_seo_files():
     # iOS associated domains. No paths open the app yet, so web pages always stay on the web.
     app_ids = [f"{APPLE_TEAM_ID}.{BUNDLE_ID}"] if APPLE_TEAM_ID else []
     aasa = {
-        "applinks": {"details": [{"appIDs": app_ids, "components": []}] if app_ids else []},
+        "applinks": {"details": [{"appIDs": app_ids, "components": APP_LINK_PATHS}] if app_ids else []},
         "webcredentials": {"apps": app_ids},
     }
     (wk / "apple-app-site-association").write_text(json.dumps(aasa, indent=2) + "\n", encoding="utf-8")
     if not APPLE_TEAM_ID or not ANDROID_SHA256:
         print("note: .well-known files have no app ids yet (set APPLE_TEAM_ID / ANDROID_SHA256)")
+
+
+# --------------------------------------------------------------------------
+# /p — shared-place fallback for people without the app. The apps open
+# https://masarmaps.com/p?ll=<lat>,<lon>&n=<name> directly (app links); this
+# page only renders when the app isn't installed. Not indexed.
+# --------------------------------------------------------------------------
+
+PLACE_TEXT = {
+    "ar": {"title": "مكان على مسار", "fallback": "مكان مشترك", "open": "افتح في مسار", "get": "حمّل التطبيق",
+           "map": "افتح في تطبيق خرائط", "bad": "هذا الرابط غير صالح.", "soon": "قريباً على App Store و Google Play."},
+    "en": {"title": "Place on Masar", "fallback": "Shared place", "open": "Open in Masar", "get": "Get the app",
+           "map": "Open in a map", "bad": "This link is not valid.", "soon": "Coming soon to the App Store and Google Play."},
+    "ckb": {"title": "شوێن لەسەر مسار", "fallback": "شوێنی هاوبەشکراو", "open": "لە مسار بیکەرەوە", "get": "ئەپەکە دابگرە",
+            "map": "لە نەخشەیەکدا بیکەرەوە", "bad": "ئەم بەستەرە دروست نییە.", "soon": "بەم زووانە لە App Store و Google Play."},
+}
+
+
+def render_place(lang):
+    import json
+    meta = LANGS[lang]
+    t = PLACE_TEXT[lang]
+    c = page_content(lang)
+    langs = "".join(
+        f'<a href="{url(l, "p")}" lang="{l}" hreflang="{l}" data-keep-query'
+        + (' aria-current="page"' if l == lang else "")
+        + f">{LANGS[l]['label']}</a>"
+        for l in LANGS
+    )
+    cfg = json.dumps({"play": PLAY_URL, "appStore": APP_STORE_URL, "pkg": BUNDLE_ID, "fallback": t["fallback"]}, ensure_ascii=False)
+    return f"""<!doctype html>
+<html lang="{lang}" dir="{meta['dir']}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#31C6F7">
+  <meta name="color-scheme" content="light">
+  <meta name="robots" content="noindex">
+  <title>{escape(t['title'])} — {meta['brand']}</title>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Masar Maps">
+  <meta property="og:title" content="{escape(t['title'])}">
+  <meta property="og:image" content="{OG_IMAGE}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/pages.css">
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="{c['home']}"><img src="/assets/masar-logo.svg" alt="" width="40" height="40"><span>{meta['brand']}</span></a>
+      <nav class="langs" aria-label="Language">{langs}</nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <article class="card place">
+      <img class="place-pin" src="/assets/masar-logo.svg" alt="" width="64" height="64">
+      <h1 id="name">{t['fallback']}</h1>
+      <p class="lead coords"><bdi id="coords"></bdi></p>
+      <div id="ok">
+        <div class="btn-row">
+          <a class="mail" id="open" href="#">{t['open']}</a>
+          <a class="btn-secondary" id="get" href="{PLAY_URL}">{t['get']}</a>
+        </div>
+        <p><a id="map" href="#">{t['map']}</a></p>
+        <p class="sources" id="soon" hidden>{t['soon']}</p>
+      </div>
+      <p class="lead" id="bad" hidden>{t['bad']}</p>
+    </article>
+  </main>
+  <footer class="wrap">
+    <p>{c['osm']} · <bdi>masarmaps.com</bdi></p>
+  </footer>
+  <script>
+  (function () {{
+    var cfg = {cfg};
+    var q = new URLSearchParams(location.search);
+    var ll = (q.get('ll') || '').split(',');
+    var lat = parseFloat(ll[0]), lon = parseFloat(ll[1]);
+    var valid = ll.length === 2 && isFinite(lat) && isFinite(lon) && Math.abs(lat) <= 90 && Math.abs(lon) <= 180;
+    document.querySelectorAll('[data-keep-query]').forEach(function (a) {{ a.href = a.getAttribute('href') + location.search; }});
+    if (!valid) {{
+      document.getElementById('ok').hidden = true;
+      document.getElementById('bad').hidden = false;
+      return;
+    }}
+    var name = (q.get('n') || '').trim().slice(0, 80) || cfg.fallback;
+    document.getElementById('name').textContent = name;
+    document.title = name + ' — ' + document.title.split(' — ').pop();
+    var la = lat.toFixed(5), lo = lon.toFixed(5);
+    document.getElementById('coords').textContent = la + ', ' + lo;
+
+    var ua = navigator.userAgent;
+    var android = /Android/i.test(ua);
+    var ios = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    var canonical = 'https://masarmaps.com/p' + location.search;
+    var open = document.getElementById('open');
+    if (android) {{
+      // intent: opens the app if installed, otherwise Play. A plain link to this
+      // same URL would stay in the browser.
+      open.href = 'intent://masarmaps.com/p' + location.search + '#Intent;scheme=https;package=' + cfg.pkg +
+        ';S.browser_fallback_url=' + encodeURIComponent(cfg.play) + ';end';
+    }} else {{
+      open.href = canonical;
+    }}
+    var get = document.getElementById('get');
+    if (ios) {{
+      if (cfg.appStore) get.href = cfg.appStore; else {{ get.hidden = true; document.getElementById('soon').hidden = false; }}
+    }}
+    var map = document.getElementById('map');
+    map.href = android
+      ? 'geo:' + la + ',' + lo + '?q=' + la + ',' + lo + '(' + encodeURIComponent(name) + ')'
+      : 'https://www.openstreetmap.org/?mlat=' + la + '&mlon=' + lo + '#map=17/' + la + '/' + lo;
+  }})();
+  </script>
+</body>
+</html>
+"""
 
 
 def main():
@@ -814,6 +938,7 @@ def main():
         for page in ALL_PAGES:
             (out_dir / f"{page}.html").write_text(render(lang, page), encoding="utf-8")
             print("wrote", (out_dir / f"{page}.html").relative_to(SITE.parent))
+        (out_dir / "p.html").write_text(render_place(lang), encoding="utf-8")
     write_seo_files()
     print("wrote robots.txt, sitemap.xml, .well-known/")
 
