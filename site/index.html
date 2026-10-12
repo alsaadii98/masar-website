@@ -192,6 +192,10 @@
       animation: arrive .85s .42s ease-out both;
     }
 
+    .legal { display: flex; justify-content: center; align-items: center; gap: 2px; margin-top: 2px; font-size: 12px; letter-spacing: .02em; }
+    .legal a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; color: var(--muted); text-decoration: none; }
+    .legal a:hover, .legal a:focus-visible { color: var(--ink); text-decoration: underline; text-decoration-color: var(--cyan); text-underline-offset: 3px; }
+
     @keyframes arrive {
       from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
@@ -272,7 +276,7 @@
       <div class="waiting" aria-hidden="true"><span></span><span></span><span></span></div>
     </div>
   </main>
-  <footer>masarmaps.com</footer>
+  <footer>masarmaps.com<nav class="legal" aria-label="Legal"><a href="/en/privacy">Privacy</a><span aria-hidden="true">·</span><a href="/en/terms">Terms</a><span aria-hidden="true">·</span><a href="/en/support">Support</a></nav></footer>
 
   <!-- Font licenses are retained in this inert template for single-file distribution. -->
   <template id="font-licenses"><pre>Copyright 2016 The Fredoka Project Authors (https://github.com/hafontia/Fredoka-One)
