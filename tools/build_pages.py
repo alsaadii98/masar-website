@@ -54,7 +54,7 @@ def content(lang):
         return {
             "nav": {"privacy": "Privacy", "terms": "Terms", "delete-account": "Delete account", "support": "Support"},
             "home": "Home",
-            "effective": "Effective 12 October 2026",
+            "effective": "Effective 13 October 2026",
             "osm": 'Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
             "privacy": {
                 "title": "Privacy Policy",
@@ -74,7 +74,7 @@ def content(lang):
                         "Masar uses your location only while the app is open or while you navigate. It never tracks you in the background otherwise.",
                         "During a trip, the app sends anonymous GPS points (position, speed, heading) to compute live traffic.",
                         "These points carry a trip token that changes every trip. They are never linked to your account or phone number.",
-                        "Raw points are deleted within 24 hours. We keep only average road speeds.",
+                        "We keep these anonymous points to improve live traffic and arrival-time estimates. They are never linked to you.",
                     ])]),
                     ("Road reports", [
                         "Reports (traffic, police, accident, hazard, road closed, checkpoint, flood, bad weather, speed bump, map error) show their place, type and time to other drivers.",
@@ -182,7 +182,7 @@ def content(lang):
         return {
             "nav": {"privacy": "الخصوصية", "terms": "الشروط", "delete-account": "حذف الحساب", "support": "الدعم"},
             "home": "الرئيسية",
-            "effective": "تاريخ السريان: 12 تشرين الأول 2026",
+            "effective": "تاريخ السريان: 13 تشرين الأول 2026",
             "osm": 'بيانات الخريطة © <a href="https://www.openstreetmap.org/copyright">مساهمو OpenStreetMap</a>',
             "privacy": {
                 "title": "سياسة الخصوصية",
@@ -202,7 +202,7 @@ def content(lang):
                         "يستخدم مسار موقعك فقط والتطبيق مفتوح أو أثناء الملاحة، ولا يتتبّعك في الخلفية غير ذلك أبداً.",
                         "أثناء الرحلة يرسل التطبيق نقاط GPS مجهولة (الموقع والسرعة والاتجاه) لحساب الزحمة المباشرة.",
                         "ترتبط هذه النقاط برمز رحلة يتغيّر مع كل رحلة، ولا ترتبط أبداً بحسابك أو رقم هاتفك.",
-                        "نحذف النقاط الخام خلال 24 ساعة، ونحتفظ فقط بمعدّل سرعة الطرق.",
+                        "نحتفظ بهذه النقاط المجهولة لتحسين حساب الزحمة وتوقّع أوقات الوصول، ولا نربطها بك أبداً.",
                     ])]),
                     ("البلاغات", [
                         "البلاغات (زحمة، شرطة، حادث، خطر، طريق مغلق، سيطرة، فيضان، طقس سيئ، مطب، خطأ بالخريطة) تُظهر مكانها ونوعها ووقتها للسائقين الآخرين.",
@@ -310,7 +310,7 @@ def content(lang):
     return {
         "nav": {"privacy": "تایبەتمەندی", "terms": "مەرجەکان", "delete-account": "سڕینەوەی هەژمار", "support": "پشتگیری"},
         "home": "سەرەتا",
-        "effective": "بەرواری کارپێکردن: 12ی تشرینی یەکەمی 2026",
+        "effective": "بەرواری کارپێکردن: 13ی تشرینی یەکەمی 2026",
         "osm": 'داتای نەخشە © <a href="https://www.openstreetmap.org/copyright">بەشداربووانی OpenStreetMap</a>',
         "privacy": {
             "title": "سیاسەتی تایبەتمەندی",
@@ -330,7 +330,7 @@ def content(lang):
                     "مسار تەنها کاتێک شوێنەکەت بەکاردەهێنێت کە ئەپەکە کراوەیە یان لە کاتی ڕێنیشانداندا. جگە لەوە هەرگیز لە پاشبنەمادا بەدواتدا ناچێت.",
                     "لە کاتی گەشتدا، ئەپەکە خاڵی GPSی بێناو (شوێن، خێرایی، ئاراستە) دەنێرێت بۆ ژماردنی قەرەباڵغی ڕاستەوخۆ.",
                     "ئەم خاڵانە نیشانەیەکی گەشتیان پێوەیە کە لە هەر گەشتێکدا دەگۆڕێت. هەرگیز بە هەژمار یان ژمارەی مۆبایلەکەتەوە نابەسترێنەوە.",
-                    "خاڵە خاوەکان لە ماوەی 24 کاتژمێردا دەسڕینەوە. تەنها تێکڕای خێرایی ڕێگاکان هەڵدەگرین.",
+                    "ئەم خاڵە نەناسراوانە هەڵدەگرین بۆ باشترکردنی ژمێرەی قەرەباڵغی و کاتی گەیشتن، و هەرگیز بە تۆوە نایبەستینەوە.",
                 ])]),
                 ("ڕاپۆرتەکان", [
                     "ڕاپۆرتەکان (قەرەباڵغی، پۆلیس، ڕووداو، مەترسی، ڕێگای داخراو، سەیتەرە، لافاو، کەشوهەوای خراپ، بەربەستی خێرایی، هەڵەی نەخشە) شوێن و جۆر و کاتیان بۆ شۆفێرانی تر پیشان دەدرێت.",
@@ -494,7 +494,7 @@ def landing(lang):
                     "بدون إعلانات، وبدون حساب.",
                 ])]),
                 ("خصوصيتك أولاً", [
-                    f'لا نبيع بياناتك أبداً. نقاط GPS مجهولة وتُحذف خلال 24 ساعة. خرائطنا من OpenStreetMap على خوادمنا الخاصة، بدون Google أو Apple. اقرأ <a href="{L("privacy")}">سياسة الخصوصية</a>.',
+                    f'لا نبيع بياناتك أبداً. نقاط GPS مجهولة ولا ترتبط بك أبداً. خرائطنا من OpenStreetMap على خوادمنا الخاصة، بدون Google أو Apple. اقرأ <a href="{L("privacy")}">سياسة الخصوصية</a>.',
                 ]),
             ],
             "faq_title": "أسئلة شائعة",
@@ -529,7 +529,7 @@ def landing(lang):
                     "No ads, no account needed.",
                 ])]),
                 ("Privacy first", [
-                    f'We never sell your data. GPS points are anonymous and deleted within 24 hours. Our maps come from OpenStreetMap on our own servers, without Google or Apple. Read our <a href="{L("privacy")}">Privacy Policy</a>.',
+                    f'We never sell your data. GPS points are anonymous and never linked to you. Our maps come from OpenStreetMap on our own servers, without Google or Apple. Read our <a href="{L("privacy")}">Privacy Policy</a>.',
                 ]),
             ],
             "faq_title": "Questions",
@@ -563,7 +563,7 @@ def landing(lang):
                 "بێ ڕیکلام، بێ هەژمار.",
             ])]),
             ("تایبەتمەندیت لە پێشەوەیە", [
-                f'هەرگیز زانیارییەکانت نافرۆشین. خاڵەکانی GPS بێناون و لە ماوەی 24 کاتژمێردا دەسڕدرێنەوە. نەخشەکانمان لە OpenStreetMapەوەن لەسەر سێرڤەرەکانی خۆمان، بەبێ Google یان Apple. <a href="{L("privacy")}">سیاسەتی تایبەتمەندی</a> بخوێنەوە.',
+                f'هەرگیز زانیارییەکانت نافرۆشین. خاڵەکانی GPS بێناون و هەرگیز بە تۆوە نابەسترێنەوە. نەخشەکانمان لە OpenStreetMapەوەن لەسەر سێرڤەرەکانی خۆمان، بەبێ Google یان Apple. <a href="{L("privacy")}">سیاسەتی تایبەتمەندی</a> بخوێنەوە.',
             ]),
         ],
         "faq_title": "پرسیارە باوەکان",
