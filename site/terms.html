@@ -3,8 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#31C6F7">
-  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/pages.css">
   <title>شروط الاستخدام — مسار</title>
   <meta name="description" content="قواعد قصيرة لاستخدام مسار.">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -25,10 +30,6 @@
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:locale:alternate" content="ckb_IQ">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/pages.css">
   <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -67,48 +68,54 @@
   </script>
 </head>
 <body>
-  <header>
+  <header class="top">
     <div class="wrap">
-      <a class="brand" href="/" aria-label="الرئيسية"><img src="/assets/masar-logo.svg" alt="" width="40" height="40"><span>مسار</span></a>
-      <nav class="langs" aria-label="Language"><a href="/terms" lang="ar" hreflang="ar" aria-current="page">العربية</a><a href="/en/terms" lang="en" hreflang="en">English</a><a href="/ckb/terms" lang="ckb" hreflang="ckb">کوردی</a></nav>
+      <a class="brand" href="/" aria-label="الرئيسية"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><img class="word on-light" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="68" height="34"><img class="word on-dark" src="/assets/brand/masar-wordmark-arabic-dark.svg" alt="مسار" width="68" height="34"></a>
+      <nav class="langs" aria-label="Language"><a class="chip" href="/terms" lang="ar" hreflang="ar" aria-current="page">العربية</a><a class="chip" href="/en/terms" lang="en" hreflang="en">English</a><a class="chip" href="/ckb/terms" lang="ckb" hreflang="ckb">کوردی</a></nav>
     </div>
   </header>
   <main class="wrap">
-    <article class="card">
+    <div class="head">
+      <div class="ico-tile"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path class="duo" d="M10.71 3.75L2.46 18A1.5 1.5 0 0 0 3.75 20.25L20.25 20.25A1.5 1.5 0 0 0 21.54 18L13.29 3.75A1.49 1.49 0 0 0 10.71 3.75Z" fill="#31C6F7"/>
+  <path class="line" d="M12 10.5L12 13.5M10.71 3.75L2.46 18A1.5 1.5 0 0 0 3.75 20.25L20.25 20.25A1.5 1.5 0 0 0 21.54 18L13.29 3.75A1.49 1.49 0 0 0 10.71 3.75ZM12 16.77v.2" stroke="#243039" stroke-width="2.4"/>
+</svg></div>
       <h1>شروط الاستخدام</h1>
       <p class="lead">قواعد قصيرة لاستخدام مسار.</p>
-      <p class="date">تاريخ السريان: 13 تشرين الأول 2026</p>
-      <section>
+        <p class="date">تاريخ السريان: 13 تشرين الأول 2026</p>
+    </div>
+    <div class="cards">
+      <section class="card">
         <h2>قُد بأمان</h2>
         <ul><li>التزم بقوانين المرور وإشارات الطريق. الطريق الفعلي يأتي أولاً دائماً.</li><li>لا تستخدم التطبيق أثناء القيادة. حدّد مسارك قبل الانطلاق، أو اطلب ذلك من مرافقك.</li></ul>
       </section>
-      <section>
+      <section class="card">
         <h2>المسارات للإرشاد فقط</h2>
         <p>المسارات والأوقات والتنبيهات للإرشاد فقط وقد تكون غير دقيقة. أنت المسؤول عن طريقة قيادتك.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>البلاغات يجب أن تكون صحيحة</h2>
         <p>انشر فقط بلاغات حقيقية وحالية. لا محتوى كاذباً أو مسيئاً أو شخصياً.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>حقوقنا</h2>
         <p>قد نحذف البلاغات الكاذبة أو المسيئة، ونحظر الأجهزة أو الحسابات التي تسيء استخدام مسار.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>بيانات الخريطة</h2>
         <p>بيانات الخريطة © <a href="https://www.openstreetmap.org/copyright">مساهمو OpenStreetMap</a>، متاحة برخصة قاعدة البيانات المفتوحة (ODbL).</p>
       </section>
-      <section>
+      <section class="card">
         <h2>الخصوصية</h2>
         <p>راجع <a href="/privacy">سياسة الخصوصية</a>.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>تواصل معنا</h2>
         <p><a class="mail" href="mailto:support@masarmaps.com">support@masarmaps.com</a></p>
       </section>
-    </article>
+    </div>
   </main>
-  <footer class="wrap">
+  <footer class="foot wrap">
     <nav aria-label="الدعم"><a href="/waze-alternative">بديل ويز</a><a href="/privacy">الخصوصية</a><a href="/terms" aria-current="page">الشروط</a><a href="/delete-account">حذف الحساب</a><a href="/support">الدعم</a></nav>
     <p>بيانات الخريطة © <a href="https://www.openstreetmap.org/copyright">مساهمو OpenStreetMap</a> · <bdi>masarmaps.com</bdi></p>
   </footer>

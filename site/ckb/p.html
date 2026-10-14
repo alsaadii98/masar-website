@@ -3,8 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#31C6F7">
-  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/pages.css">
   <meta name="robots" content="noindex">
   <title>شوێن لەسەر مسار — مسار</title>
   <meta property="og:type" content="website">
@@ -12,34 +17,31 @@
   <meta property="og:title" content="شوێن لەسەر مسار">
   <meta property="og:image" content="https://masarmaps.com/assets/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/pages.css">
 </head>
 <body>
-  <header>
+  <header class="top">
     <div class="wrap">
-      <a class="brand" href="/" aria-label="سەرەتا"><img src="/assets/masar-logo.svg" alt="" width="40" height="40"><span>مسار</span></a>
-      <nav class="langs" aria-label="Language"><a href="/p" lang="ar" hreflang="ar" data-keep-query>العربية</a><a href="/en/p" lang="en" hreflang="en" data-keep-query>English</a><a href="/ckb/p" lang="ckb" hreflang="ckb" data-keep-query aria-current="page">کوردی</a></nav>
+      <a class="brand" href="/" aria-label="سەرەتا"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><img class="word on-light" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="68" height="34"><img class="word on-dark" src="/assets/brand/masar-wordmark-arabic-dark.svg" alt="مسار" width="68" height="34"></a>
+      <nav class="langs" aria-label="Language"><a class="chip" href="/p" lang="ar" hreflang="ar" data-keep-query>العربية</a><a class="chip" href="/en/p" lang="en" hreflang="en" data-keep-query>English</a><a class="chip" href="/ckb/p" lang="ckb" hreflang="ckb" data-keep-query aria-current="page">کوردی</a></nav>
     </div>
   </header>
   <main class="wrap">
-    <article class="card place">
-      <img class="place-pin" src="/assets/masar-logo.svg" alt="" width="64" height="64">
+    <section class="card place">
+      <div class="host-static"><img src="/assets/brand/mascot.svg" alt="" width="78" height="76"></div>
       <h1 id="name">شوێنی هاوبەشکراو</h1>
       <p class="lead coords"><bdi id="coords"></bdi></p>
       <div id="ok">
         <div class="btn-row">
-          <a class="mail" id="open" href="#">لە مسار بیکەرەوە</a>
+          <a class="btn" id="open" href="#">لە مسار بیکەرەوە</a>
           <a class="btn-secondary" id="get" href="https://play.google.com/store/apps/details?id=com.masarmaps">ئەپەکە دابگرە</a>
         </div>
         <p><a id="map" href="#">لە نەخشەیەکدا بیکەرەوە</a></p>
         <p class="sources" id="soon" hidden>بەم زووانە لە App Store و Google Play.</p>
       </div>
       <p class="lead" id="bad" hidden>ئەم بەستەرە دروست نییە.</p>
-    </article>
+    </section>
   </main>
-  <footer class="wrap">
+  <footer class="foot wrap">
     <p>داتای نەخشە © <a href="https://www.openstreetmap.org/copyright">بەشداربووانی OpenStreetMap</a> · <bdi>masarmaps.com</bdi></p>
   </footer>
   <script>
@@ -64,7 +66,6 @@
     var ua = navigator.userAgent;
     var android = /Android/i.test(ua);
     var ios = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
-    var canonical = 'https://masarmaps.com/p' + location.search;
     var open = document.getElementById('open');
     if (android) {
       // intent: opens the app if installed, otherwise Play. A plain link to this
@@ -72,7 +73,7 @@
       open.href = 'intent://masarmaps.com/p' + location.search + '#Intent;scheme=https;package=' + cfg.pkg +
         ';S.browser_fallback_url=' + encodeURIComponent(cfg.play) + ';end';
     } else {
-      open.href = canonical;
+      open.href = 'https://masarmaps.com/p' + location.search;
     }
     var get = document.getElementById('get');
     if (ios) {

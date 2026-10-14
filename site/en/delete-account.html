@@ -3,8 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#31C6F7">
-  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/pages.css">
   <title>Delete your account — Masar</title>
   <meta name="description" content="You can delete your Masar account at any time.">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -25,10 +30,6 @@
   <meta property="og:locale:alternate" content="ar_IQ">
   <meta property="og:locale:alternate" content="ckb_IQ">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/pages.css">
   <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -67,40 +68,46 @@
   </script>
 </head>
 <body>
-  <header>
+  <header class="top">
     <div class="wrap">
-      <a class="brand" href="/" aria-label="Home"><img src="/assets/masar-logo.svg" alt="" width="40" height="40"><span>Masar</span></a>
-      <nav class="langs" aria-label="Language"><a href="/delete-account" lang="ar" hreflang="ar">العربية</a><a href="/en/delete-account" lang="en" hreflang="en" aria-current="page">English</a><a href="/ckb/delete-account" lang="ckb" hreflang="ckb">کوردی</a></nav>
+      <a class="brand" href="/" aria-label="Home"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><span class="latin">Masar</span></a>
+      <nav class="langs" aria-label="Language"><a class="chip" href="/delete-account" lang="ar" hreflang="ar">العربية</a><a class="chip" href="/en/delete-account" lang="en" hreflang="en" aria-current="page">English</a><a class="chip" href="/ckb/delete-account" lang="ckb" hreflang="ckb">کوردی</a></nav>
     </div>
   </header>
   <main class="wrap">
-    <article class="card">
+    <div class="head">
+      <div class="ico-tile"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path class="duo" d="M6 9A6 6 0 1 0 18 9A6 6 0 1 0 6 9Z" fill="#31C6F7"/>
+  <path class="line" d="M6 9A6 6 0 1 0 18 9A6 6 0 1 0 6 9ZM2.91 20.25A10.5 10.5 0 0 1 21.09 20.25" stroke="#243039" stroke-width="2.4"/>
+</svg></div>
       <h1>Delete your account</h1>
       <p class="lead">You can delete your Masar account at any time.</p>
-      <section>
+    </div>
+    <div class="cards">
+      <section class="card">
         <h2>In the app</h2>
         <ol><li>Open Masar.</li><li>Go to <span class="path">Settings → My account</span>.</li><li>Tap <strong>Delete account</strong>, then <strong>Delete for good</strong>.</li></ol>
       </section>
-      <section>
+      <section class="card">
         <h2>By email</h2>
         <p>Can't use the app? Email us with the phone number on your account. We may contact you to confirm the account is yours. We handle requests within 30 days.</p>
         <p><a class="mail" href="mailto:support@masarmaps.com">support@masarmaps.com</a></p>
       </section>
-      <section>
+      <section class="card">
         <h2>What we delete</h2>
         <ul><li>Your phone number and name</li><li>Your saved places</li><li>Your push notification tokens</li><li>Your points and level</li></ul>
       </section>
-      <section>
+      <section class="card">
         <h2>What we keep</h2>
         <ul><li>Anonymous traffic data (average road speeds). It is not linked to you.</li><li>Your past road reports stay on the map, without your name.</li></ul>
       </section>
-      <section>
+      <section class="card">
         <h2>Guests</h2>
         <p>Without an account we hold no account data. Uninstalling the app removes your saved places from the phone.</p>
       </section>
-    </article>
+    </div>
   </main>
-  <footer class="wrap">
+  <footer class="foot wrap">
     <nav aria-label="Support"><a href="/en/waze-alternative">Waze alternative</a><a href="/en/privacy">Privacy</a><a href="/en/terms">Terms</a><a href="/en/delete-account" aria-current="page">Delete account</a><a href="/en/support">Support</a></nav>
     <p>Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> · <bdi>masarmaps.com</bdi></p>
   </footer>

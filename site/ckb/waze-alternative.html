@@ -3,8 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#31C6F7">
-  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/pages.css">
   <title>جێگرەوەی ویز لە عێراق: مسار، ئەپی ڕێنیشاندەری عێراقی</title>
   <meta name="description" content="دوای بڕیاری قەدەغەکردنی ویز لە عێراق، مسار ئەپێکی ڕێنیشاندەری عێراقییە بە قەرەباڵغی ڕاستەوخۆ، ڕاپۆرتی ڕێگا و ڕێنمایی دەنگی بە کوردی و عەرەبی. بەم زووانە لە App Store و Google Play.">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -25,10 +30,6 @@
   <meta property="og:locale:alternate" content="ar_IQ">
   <meta property="og:locale:alternate" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/pages.css">
   <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -151,30 +152,64 @@
   </script>
 </head>
 <body>
-  <header>
+  <header class="top">
     <div class="wrap">
-      <a class="brand" href="/" aria-label="سەرەتا"><img src="/assets/masar-logo.svg" alt="" width="40" height="40"><span>مسار</span></a>
-      <nav class="langs" aria-label="Language"><a href="/waze-alternative" lang="ar" hreflang="ar">العربية</a><a href="/en/waze-alternative" lang="en" hreflang="en">English</a><a href="/ckb/waze-alternative" lang="ckb" hreflang="ckb" aria-current="page">کوردی</a></nav>
+      <a class="brand" href="/" aria-label="سەرەتا"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><img class="word on-light" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="68" height="34"><img class="word on-dark" src="/assets/brand/masar-wordmark-arabic-dark.svg" alt="مسار" width="68" height="34"></a>
+      <nav class="langs" aria-label="Language"><a class="chip" href="/waze-alternative" lang="ar" hreflang="ar">العربية</a><a class="chip" href="/en/waze-alternative" lang="en" hreflang="en">English</a><a class="chip" href="/ckb/waze-alternative" lang="ckb" hreflang="ckb" aria-current="page">کوردی</a></nav>
     </div>
   </header>
   <main class="wrap">
-    <article class="card">
+      <div class="hero-card">
+  <div class="stage" role="img" aria-label="Masar">
+    <div class="lens" aria-hidden="true">
+      <picture>
+        <source srcset="/assets/map/lens-dark.jpg" media="(prefers-color-scheme: dark)">
+        <img src="/assets/map/lens-light.jpg" alt="" width="290" height="290">
+      </picture>
+      <svg viewBox="0 0 290 290" class="lens-svg">
+        <polyline class="route-case" points="-122.3,957.1 127.8,683.7 135.4,672.2 147.7,641.9 153.5,617.3 173.6,108.7 177.2,86.5 164.0,52.8 93.9,-27.5" fill="none" stroke-width="12.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline class="route" points="-122.3,957.1 127.8,683.7 135.4,672.2 147.7,641.9 153.5,617.3 173.6,108.7 177.2,86.5 164.0,52.8 93.9,-27.5" fill="none" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <g>
+          <animateMotion dur="7s" repeatCount="indefinite" rotate="auto" path="M165.7,310.0 L173.6,108.7 L177.2,86.5 L164.0,52.8 L93.9,-27.5"/>
+          <image href="/assets/brand/driving.svg" x="-17" y="-17" width="34" height="34" transform="rotate(90)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="bubble" style="left:26px;top:30px;width:60px;height:60px;background:#FF9F1C;animation-delay:0.30s,0.00s" aria-hidden="true"><img src="/assets/stickers/traffic.svg" alt="" style="rotate:-8deg"></div>
+    <div class="bubble" style="left:312px;top:14px;width:56px;height:56px;background:#3D7BF5;animation-delay:0.35s,0.35s" aria-hidden="true"><img src="/assets/stickers/police.svg" alt="" style="rotate:6deg"></div>
+    <div class="bubble" style="left:320px;top:380px;width:50px;height:50px;background:#FFC928;animation-delay:0.40s,0.70s" aria-hidden="true"><img src="/assets/stickers/hazard.svg" alt="" style="rotate:-5deg"></div>
+    <div class="bubble" style="left:22px;top:380px;width:48px;height:48px;background:#B0601E;animation-delay:0.45s,1.05s" aria-hidden="true"><img src="/assets/stickers/speedbump.svg" alt="" style="rotate:8deg"></div>
+    <div class="host" aria-hidden="true"><img src="/assets/brand/mascot.svg" alt="" width="104" height="102"></div>
+    <div class="title">
+      <img class="word" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="150" height="75">
+      <span class="latin">Masar</span>
+      <span class="tagline" lang="ckb">مسار بۆ هەموو گەشتێک</span>
+    </div>
+  </div>
+      </div>
+    <div class="head">
+      <div class="ico-tile"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path class="duo" d="M16.5 18.75A2.25 2.25 0 1 0 21 18.75A2.25 2.25 0 1 0 16.5 18.75Z" fill="#31C6F7"/>
+  <path class="line" d="M16.5 18.75A2.25 2.25 0 1 0 21 18.75A2.25 2.25 0 1 0 16.5 18.75ZM6.75 5.25L15.75 5.25A3 3 0 0 1 15.75 11.25L6.75 11.25A3.75 3.75 0 0 0 6.75 18.75L16.5 18.75" stroke="#243039" stroke-width="2.4"/>
+</svg></div>
       <h1>جێگرەوەی ویز لە عێراق</h1>
       <p class="lead">مسار ئەپێکی ڕێنیشاندەری عێراقییە، بۆ عێراق دروستکراوە. بەم زووانە لە App Store و Google Play.</p>
-      <section>
+    </div>
+    <div class="cards">
+      <section class="card">
         <h2>قەدەغەکردنی ویز لە عێراق</h2>
         <p>لە تشرینی یەکەمی 2026دا، وەزیری پەیوەندییەکانی عێراق مستەفا سەند قەدەغەکردنی ئەپی ویز (Waze)ی لە عێراق ڕاگەیاند، و گوتی هۆکارەکەی ئەوەیە کە ئەپەکە بنەچەی ئیسرائیلییە. سەرەتا بۆ سەرەتای 2027 دیاری کرا، پاشان بۆ کۆتایی کانوونی یەکەمی 2026 پێشخرا، بەپێی ڕاپۆرتە ڕۆژنامەوانییەکان.</p>
         <p class="sources">سەرچاوەکان: <a href="https://www.kurdistan24.net/en/story/944372" rel="noopener">Kurdistan24</a> · <a href="https://www.aljazeera.com/news/2026/10/9/why-has-iraq-decided-to-ban-online-map-service-waze" rel="noopener">Al Jazeera</a> · <a href="https://www.thenationalnews.com/news/mena/2026/10/07/iraq-to-ban-waze-navigation-app-over-israeli-links/" rel="noopener">The National</a></p>
       </section>
-      <section>
+      <section class="card">
         <h2>مسار: جێگرەوەیەکی عێراقی بۆ ویز</h2>
         <ul><li>قەرەباڵغی ڕاستەوخۆ لەسەر ڕێگاکان، هەر خولەکێک نوێ دەبێتەوە.</li><li>ڕێنمایی دەنگی هەنگاو بە هەنگاو، و گۆڕینی ڕێگا بە خۆکار ئەگەر لە ڕێگاکە دەرچوویت.</li><li>ڕاپۆرتی شۆفێران: ڕووداو، قەرەباڵغی، ڕێگای داخراو، لافاو، بەربەستی خێرایی و زیاتر.</li><li>گەڕان بە کوردی و عەرەبی و ئینگلیزی.</li><li>هاوبەشکردنی کاتی گەیشتن لە واتسئاپ و تێلێگرام.</li><li>لەگەڵ CarPlay و Android Auto کار دەکات.</li><li>بێ ڕیکلام، بێ هەژمار.</li></ul>
       </section>
-      <section>
+      <section class="card">
         <h2>تایبەتمەندیت لە پێشەوەیە</h2>
         <p>هەرگیز زانیارییەکانت نافرۆشین. خاڵەکانی GPS بێناون و هەرگیز بە تۆوە نابەسترێنەوە. نەخشەکانمان لە OpenStreetMapەوەن لەسەر سێرڤەرەکانی خۆمان، بەبێ Google یان Apple. <a href="/ckb/privacy">سیاسەتی تایبەتمەندی</a> بخوێنەوە.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>پرسیارە باوەکان</h2>
         <h3>ئایا ویز لە عێراق قەدەغە دەکرێت؟</h3>
         <p>بەڵێ. وەزیری پەیوەندییەکان مستەفا سەند قەدەغەکردنی ویزی لە عێراق ڕاگەیاند. بەرواری ڕاگەیەندراو کۆتایی کانوونی یەکەمی 2026یە.</p>
@@ -189,11 +224,17 @@
         <h3>پێویستم بە هەژمار هەیە بۆ بەکارهێنانی مسار؟</h3>
         <p>نەخێر. دەتوانیت بەبێ هەژمار بگەڕێیت، ڕێنیشاندەر بەکاربهێنیت و ڕاپۆرت بنێریت.</p>
       </section>
-    </article>
+    </div>
   </main>
-  <footer class="wrap">
+  <footer class="foot wrap">
     <nav aria-label="پشتگیری"><a href="/ckb/waze-alternative" aria-current="page">جێگرەوەی ویز</a><a href="/ckb/privacy">تایبەتمەندی</a><a href="/ckb/terms">مەرجەکان</a><a href="/ckb/delete-account">سڕینەوەی هەژمار</a><a href="/ckb/support">پشتگیری</a></nav>
     <p>داتای نەخشە © <a href="https://www.openstreetmap.org/copyright">بەشداربووانی OpenStreetMap</a> · <bdi>masarmaps.com</bdi></p>
   </footer>
+  <script>
+  // Reduced motion: park the car on the route (iOS: 46 % of the loop).
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.lens-svg').forEach(function (s) { s.pauseAnimations(); s.setCurrentTime(7 * 0.46); });
+  }
+  </script>
 </body>
 </html>

@@ -3,8 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#31C6F7">
-  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/pages.css">
   <title>بديل ويز في العراق: مسار، تطبيق ملاحة عراقي</title>
   <meta name="description" content="بعد قرار حظر تطبيق ويز في العراق، مسار تطبيق ملاحة عراقي فيه زحمة مباشرة وبلاغات الطريق وإرشاد صوتي بالعربي والكوردي. قريباً على App Store و Google Play.">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -25,10 +30,6 @@
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:locale:alternate" content="ckb_IQ">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/pages.css">
   <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -151,30 +152,64 @@
   </script>
 </head>
 <body>
-  <header>
+  <header class="top">
     <div class="wrap">
-      <a class="brand" href="/" aria-label="الرئيسية"><img src="/assets/masar-logo.svg" alt="" width="40" height="40"><span>مسار</span></a>
-      <nav class="langs" aria-label="Language"><a href="/waze-alternative" lang="ar" hreflang="ar" aria-current="page">العربية</a><a href="/en/waze-alternative" lang="en" hreflang="en">English</a><a href="/ckb/waze-alternative" lang="ckb" hreflang="ckb">کوردی</a></nav>
+      <a class="brand" href="/" aria-label="الرئيسية"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><img class="word on-light" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="68" height="34"><img class="word on-dark" src="/assets/brand/masar-wordmark-arabic-dark.svg" alt="مسار" width="68" height="34"></a>
+      <nav class="langs" aria-label="Language"><a class="chip" href="/waze-alternative" lang="ar" hreflang="ar" aria-current="page">العربية</a><a class="chip" href="/en/waze-alternative" lang="en" hreflang="en">English</a><a class="chip" href="/ckb/waze-alternative" lang="ckb" hreflang="ckb">کوردی</a></nav>
     </div>
   </header>
   <main class="wrap">
-    <article class="card">
+      <div class="hero-card">
+  <div class="stage" role="img" aria-label="Masar">
+    <div class="lens" aria-hidden="true">
+      <picture>
+        <source srcset="/assets/map/lens-dark.jpg" media="(prefers-color-scheme: dark)">
+        <img src="/assets/map/lens-light.jpg" alt="" width="290" height="290">
+      </picture>
+      <svg viewBox="0 0 290 290" class="lens-svg">
+        <polyline class="route-case" points="-122.3,957.1 127.8,683.7 135.4,672.2 147.7,641.9 153.5,617.3 173.6,108.7 177.2,86.5 164.0,52.8 93.9,-27.5" fill="none" stroke-width="12.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline class="route" points="-122.3,957.1 127.8,683.7 135.4,672.2 147.7,641.9 153.5,617.3 173.6,108.7 177.2,86.5 164.0,52.8 93.9,-27.5" fill="none" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <g>
+          <animateMotion dur="7s" repeatCount="indefinite" rotate="auto" path="M165.7,310.0 L173.6,108.7 L177.2,86.5 L164.0,52.8 L93.9,-27.5"/>
+          <image href="/assets/brand/driving.svg" x="-17" y="-17" width="34" height="34" transform="rotate(90)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="bubble" style="left:26px;top:30px;width:60px;height:60px;background:#FF9F1C;animation-delay:0.30s,0.00s" aria-hidden="true"><img src="/assets/stickers/traffic.svg" alt="" style="rotate:-8deg"></div>
+    <div class="bubble" style="left:312px;top:14px;width:56px;height:56px;background:#3D7BF5;animation-delay:0.35s,0.35s" aria-hidden="true"><img src="/assets/stickers/police.svg" alt="" style="rotate:6deg"></div>
+    <div class="bubble" style="left:320px;top:380px;width:50px;height:50px;background:#FFC928;animation-delay:0.40s,0.70s" aria-hidden="true"><img src="/assets/stickers/hazard.svg" alt="" style="rotate:-5deg"></div>
+    <div class="bubble" style="left:22px;top:380px;width:48px;height:48px;background:#B0601E;animation-delay:0.45s,1.05s" aria-hidden="true"><img src="/assets/stickers/speedbump.svg" alt="" style="rotate:8deg"></div>
+    <div class="host" aria-hidden="true"><img src="/assets/brand/mascot.svg" alt="" width="104" height="102"></div>
+    <div class="title">
+      <img class="word" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="150" height="75">
+      <span class="latin">Masar</span>
+      <span class="tagline" lang="ar">مسار لكل مشوار</span>
+    </div>
+  </div>
+      </div>
+    <div class="head">
+      <div class="ico-tile"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path class="duo" d="M16.5 18.75A2.25 2.25 0 1 0 21 18.75A2.25 2.25 0 1 0 16.5 18.75Z" fill="#31C6F7"/>
+  <path class="line" d="M16.5 18.75A2.25 2.25 0 1 0 21 18.75A2.25 2.25 0 1 0 16.5 18.75ZM6.75 5.25L15.75 5.25A3 3 0 0 1 15.75 11.25L6.75 11.25A3.75 3.75 0 0 0 6.75 18.75L16.5 18.75" stroke="#243039" stroke-width="2.4"/>
+</svg></div>
       <h1>بديل ويز في العراق</h1>
       <p class="lead">مسار تطبيق ملاحة عراقي، مصنوع للعراق. قريباً على App Store و Google Play.</p>
-      <section>
+    </div>
+    <div class="cards">
+      <section class="card">
         <h2>حظر تطبيق ويز في العراق</h2>
         <p>في تشرين الأول 2026 أعلن وزير الاتصالات مصطفى سند حظر تطبيق ويز (Waze) في العراق، وقال إن السبب أن التطبيق إسرائيلي المنشأ. حُدّد الحظر أولاً مطلع 2027، ثم قُدّم موعده إلى نهاية كانون الأول 2026، بحسب تقارير صحفية.</p>
         <p class="sources">المصادر: <a href="https://www.kurdistan24.net/en/story/944372" rel="noopener">Kurdistan24</a> · <a href="https://www.aljazeera.com/news/2026/10/9/why-has-iraq-decided-to-ban-online-map-service-waze" rel="noopener">Al Jazeera</a> · <a href="https://www.thenationalnews.com/news/mena/2026/10/07/iraq-to-ban-waze-navigation-app-over-israeli-links/" rel="noopener">The National</a></p>
       </section>
-      <section>
+      <section class="card">
         <h2>مسار: بديل عراقي لويز</h2>
         <ul><li>زحمة مباشرة على الطرق، تتحدّث كل دقيقة.</li><li>إرشاد صوتي خطوة بخطوة، وإعادة توجيه تلقائية إذا خرجت عن المسار.</li><li>بلاغات السائقين: حوادث، زحمة، طرق مغلقة، فيضانات، مطبات وغيرها.</li><li>بحث بالعربي والكوردي والإنكليزي، وحتى العربي المكتوب بحروف لاتينية.</li><li>مشاركة وقت الوصول عبر واتساب وتيليغرام.</li><li>يعمل مع CarPlay و Android Auto.</li><li>بدون إعلانات، وبدون حساب.</li></ul>
       </section>
-      <section>
+      <section class="card">
         <h2>خصوصيتك أولاً</h2>
         <p>لا نبيع بياناتك أبداً. نقاط GPS مجهولة ولا ترتبط بك أبداً. خرائطنا من OpenStreetMap على خوادمنا الخاصة، بدون Google أو Apple. اقرأ <a href="/privacy">سياسة الخصوصية</a>.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>أسئلة شائعة</h2>
         <h3>هل سيتم حظر تطبيق ويز في العراق؟</h3>
         <p>نعم. أعلن وزير الاتصالات مصطفى سند حظر تطبيق ويز في العراق، والموعد المعلن نهاية كانون الأول 2026.</p>
@@ -189,11 +224,17 @@
         <h3>هل أحتاج حساباً لاستخدام مسار؟</h3>
         <p>لا. تستطيع البحث والملاحة ونشر البلاغات بدون حساب.</p>
       </section>
-    </article>
+    </div>
   </main>
-  <footer class="wrap">
+  <footer class="foot wrap">
     <nav aria-label="الدعم"><a href="/waze-alternative" aria-current="page">بديل ويز</a><a href="/privacy">الخصوصية</a><a href="/terms">الشروط</a><a href="/delete-account">حذف الحساب</a><a href="/support">الدعم</a></nav>
     <p>بيانات الخريطة © <a href="https://www.openstreetmap.org/copyright">مساهمو OpenStreetMap</a> · <bdi>masarmaps.com</bdi></p>
   </footer>
+  <script>
+  // Reduced motion: park the car on the route (iOS: 46 % of the loop).
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.lens-svg').forEach(function (s) { s.pauseAnimations(); s.setCurrentTime(7 * 0.46); });
+  }
+  </script>
 </body>
 </html>

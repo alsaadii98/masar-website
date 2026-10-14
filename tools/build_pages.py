@@ -595,6 +595,7 @@ def page_content(lang):
     lp = landing(lang)
     c["nav"] = {LANDING: lp["nav"], **c["nav"]}
     c[LANDING] = lp
+    c["legal"] = legal(lang)
     return c
 
 
@@ -656,6 +657,119 @@ def json_ld(lang, page, p, title, description, canonical):
     return f'  <script type="application/ld+json">\n{data}\n  </script>'
 
 
+# --------------------------------------------------------------------------
+# Design v2 shell (header, icons, splash stage) — see site/assets/pages.css.
+# --------------------------------------------------------------------------
+
+PAGE_ICON = {LANDING: "route", "privacy": "privacy", "terms": "report", "delete-account": "profile",
+             "support": "help", "legal": "options"}
+TAGLINE = {"ar": "مسار لكل مشوار", "en": "Masar for every trip", "ckb": "مسار بۆ هەموو گەشتێک"}
+
+
+def icon(name):
+    """Inline a design/icons/ui SVG so its duo/line layers follow the theme."""
+    import re
+    svg = (SITE / "assets" / "icons" / f"{name}.svg").read_text(encoding="utf-8").strip()
+    return re.sub(r"^<svg ", '<svg class="ico" aria-hidden="true" focusable="false" ', svg)
+
+
+def brand_html(lang, home_label):
+    word = (
+        '<img class="word on-light" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="68" height="34">'
+        '<img class="word on-dark" src="/assets/brand/masar-wordmark-arabic-dark.svg" alt="مسار" width="68" height="34">'
+        if lang != "en" else '<span class="latin">Masar</span>'
+    )
+    return (f'<a class="brand" href="/" aria-label="{home_label}">'
+            f'<img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40">{word}</a>')
+
+
+def langs_html(lang, page, keep_query=False):
+    extra = " data-keep-query" if keep_query else ""
+    return "".join(
+        f'<a class="chip" href="{url(l, page)}" lang="{l}" hreflang="{l}"{extra}'
+        + (' aria-current="page"' if l == lang else "")
+        + f">{LANGS[l]['label']}</a>"
+        for l in LANGS
+    )
+
+
+# Onboarding v3 splash geometry (iOS SplashView, board 390 wide). The lens shows the
+# map picture (430 × 932 frame) around FOCUS at 1.5 points per unit; 290 across.
+LENS_FOCUS = (228, 235)
+LENS_UNIT = 1.5
+LENS_SIZE = 290
+ROUTE = [(49.8, 776.4), (216.5, 594.1), (221.6, 586.5), (229.8, 566.3), (233.7, 549.9),
+         (247.1, 210.8), (249.5, 196.0), (240.7, 173.5), (193.9, 120.0)]
+CAR_PATH = [(241.8, 345), (247.1, 210.8), (249.5, 196.0), (240.7, 173.5), (193.9, 120.0)]
+BUBBLES = [  # stage left, top, size, tilt, type (board y − 90)
+    (26, 30, 60, -8, "traffic"), (312, 14, 56, 6, "police"),
+    (320, 380, 50, -5, "hazard"), (22, 380, 48, 8, "speedbump"),
+]
+REPORT_COLOR = {"traffic": "#FF9F1C", "police": "#3D7BF5", "hazard": "#FFC928", "speedbump": "#B0601E"}
+
+
+def _lens_pts(points):
+    fx, fy = LENS_FOCUS
+    h = LENS_SIZE / 2
+    return " ".join(f"{(x - fx) * LENS_UNIT + h:.1f},{(y - fy) * LENS_UNIT + h:.1f}" for x, y in points)
+
+
+def stage_html(lang):
+    route = _lens_pts(ROUTE)
+    car = "M" + _lens_pts(CAR_PATH).replace(" ", " L")
+    bubbles = "\n".join(
+        f'    <div class="bubble" style="left:{x}px;top:{y}px;width:{sz}px;height:{sz}px;background:{REPORT_COLOR[t]};'
+        f'animation-delay:{0.3 + i * 0.05:.2f}s,{i * 0.35:.2f}s" aria-hidden="true">'
+        f'<img src="/assets/stickers/{t}.svg" alt="" style="rotate:{tilt}deg"></div>'
+        for i, (x, y, sz, tilt, t) in enumerate(BUBBLES)
+    )
+    word = "" if lang == "en" else '<img class="word" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="150" height="75">'
+    latin_size = ' style="font-size:52px"' if lang == "en" else ""
+    return f"""  <div class="stage" role="img" aria-label="Masar">
+    <div class="lens" aria-hidden="true">
+      <picture>
+        <source srcset="/assets/map/lens-dark.jpg" media="(prefers-color-scheme: dark)">
+        <img src="/assets/map/lens-light.jpg" alt="" width="290" height="290">
+      </picture>
+      <svg viewBox="0 0 290 290" class="lens-svg">
+        <polyline class="route-case" points="{route}" fill="none" stroke-width="12.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline class="route" points="{route}" fill="none" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <g>
+          <animateMotion dur="7s" repeatCount="indefinite" rotate="auto" path="{car}"/>
+          <image href="/assets/brand/driving.svg" x="-17" y="-17" width="34" height="34" transform="rotate(90)"/>
+        </g>
+      </svg>
+    </div>
+{bubbles}
+    <div class="host" aria-hidden="true"><img src="/assets/brand/mascot.svg" alt="" width="104" height="102"></div>
+    <div class="title">
+      {word}
+      <span class="latin"{latin_size}>Masar</span>
+      <span class="tagline" lang="{lang}">{TAGLINE[lang]}</span>
+    </div>
+  </div>"""
+
+
+STAGE_SCRIPT = """  <script>
+  // Reduced motion: park the car on the route (iOS: 46 % of the loop).
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.lens-svg').forEach(function (s) { s.pauseAnimations(); s.setCurrentTime(7 * 0.46); });
+  }
+  </script>"""
+
+
+def head_common(lang):
+    return f"""  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/{'Vazirmatn-Regular' if lang == 'ckb' else 'ReadexPro-Regular'}.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/pages.css">"""
+
+
 def render(lang, page):
     meta = LANGS[lang]
     c = page_content(lang)
@@ -669,25 +783,22 @@ def render(lang, page):
     og_alt = "\n".join(
         f'  <meta property="og:locale:alternate" content="{OG_LOCALE[l]}">' for l in LANGS if l != lang
     )
-    langs = "".join(
-        f'<a href="{url(l, page)}" lang="{l}" hreflang="{l}"'
-        + (' aria-current="page"' if l == lang else "")
-        + f">{LANGS[l]['label']}</a>"
-        for l in LANGS
-    )
-    blocks_html = []
+    cards = []
     for h, blocks in p["sections"]:
-        blocks_html.append(
-            f"      <section>\n        <h2>{h}</h2>\n        "
+        cards.append(
+            f"      <section class=\"card\">\n        <h2>{h}</h2>\n        "
             + "\n        ".join(b[1] if isinstance(b, tuple) and b[0] == "raw" else render_block(b) for b in blocks)
             + "\n      </section>"
         )
     if "faq" in p:
         faq = "\n        ".join(f"<h3>{q}</h3>\n        <p>{a}</p>" for q, a in p["faq"])
-        blocks_html.append(f"      <section>\n        <h2>{p['faq_title']}</h2>\n        {faq}\n      </section>")
-    sections = "\n".join(blocks_html)
-    show_date = page in ("privacy", "terms")
-    date = f'\n      <p class="date">{c["effective"]}</p>' if show_date else ""
+        cards.append(f"      <section class=\"card\">\n        <h2>{p['faq_title']}</h2>\n        {faq}\n      </section>")
+    cards_html = "\n".join(cards)
+    date = f'\n        <p class="date">{c["effective"]}</p>' if page in ("privacy", "terms") else ""
+    legal_link = (f'\n      <p class="small-link"><a href="{url(lang, "legal")}">{c["legal"]["title"]}</a></p>'
+                  if page == "privacy" else "")
+    hero = (f'\n      <div class="hero-card">\n{stage_html(lang)}\n      </div>' if page == LANDING else "")
+    script = f"\n{STAGE_SCRIPT}" if page == LANDING else ""
     footer_links = "".join(
         f'<a href="{url(lang, pg)}"' + (' aria-current="page"' if pg == page else "") + f">{c['nav'][pg]}</a>"
         for pg in ALL_PAGES
@@ -695,10 +806,7 @@ def render(lang, page):
     return f"""<!doctype html>
 <html lang="{lang}" dir="{meta['dir']}">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#31C6F7">
-  <meta name="color-scheme" content="light">
+{head_common(lang)}
   <title>{escape(title)}</title>
   <meta name="description" content="{escape(description)}">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -715,30 +823,135 @@ def render(lang, page):
   <meta property="og:locale" content="{OG_LOCALE[lang]}">
 {og_alt}
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/{'Vazirmatn-Regular' if lang == 'ckb' else 'ReadexPro-Regular'}.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/pages.css">
 {json_ld(lang, page, p, title, description, canonical)}
 </head>
 <body>
-  <header>
+  <header class="top">
     <div class="wrap">
-      <a class="brand" href="/" aria-label="{c['home']}"><img src="/assets/masar-logo.svg" alt="" width="40" height="40"><span>{meta['brand']}</span></a>
-      <nav class="langs" aria-label="Language">{langs}</nav>
+      {brand_html(lang, c['home'])}
+      <nav class="langs" aria-label="Language">{langs_html(lang, page)}</nav>
+    </div>
+  </header>
+  <main class="wrap">{hero}
+    <div class="head">
+      <div class="ico-tile">{icon(PAGE_ICON[page])}</div>
+      <h1>{p['title']}</h1>
+      <p class="lead">{p['lead']}</p>{date}
+    </div>
+    <div class="cards">
+{cards_html}
+    </div>{legal_link}
+  </main>
+  <footer class="foot wrap">
+    <nav aria-label="{c['nav']['support']}">{footer_links}</nav>
+    <p>{c['osm']} · <bdi>masarmaps.com</bdi></p>
+  </footer>{script}
+</body>
+</html>
+"""
+
+
+# --------------------------------------------------------------------------
+# Legal notices (/legal): small link inside Privacy only. Not in the footer.
+# --------------------------------------------------------------------------
+
+FONTS = [("Readex Pro", "ReadexPro"), ("Baloo Bhaijaan 2", "BalooBhaijaan2"), ("Fredoka", "Fredoka"), ("Vazirmatn", "Vazirmatn")]
+
+
+def legal(lang):
+    fonts = [f'<bdi>{n}</bdi> — <a href="/assets/fonts/{f}-OFL.txt"><bdi>SIL Open Font License 1.1</bdi></a>' for n, f in FONTS]
+    osm = '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    phosphor = '<a href="/assets/icons/PHOSPHOR-LICENSE.txt"><bdi>Phosphor Icons (MIT)</bdi></a>'
+    if lang == "ar":
+        return {"title": "الإشعارات القانونية", "lead": "البيانات والخطوط والأيقونات التي يستخدمها مسار.",
+                "sections": [("الخرائط", [f"بيانات الخريطة © مساهمو {osm}، برخصة ODbL."]),
+                             ("الخطوط", [("ul", fonts)]),
+                             ("الأيقونات", [f"مبنية على {phosphor}."])]}
+    if lang == "en":
+        return {"title": "Legal notices", "lead": "Data, fonts and icons Masar uses.",
+                "sections": [("Maps", [f"Map data © {osm} contributors, under the ODbL."]),
+                             ("Fonts", [("ul", fonts)]),
+                             ("Icons", [f"Based on {phosphor}."])]}
+    return {"title": "ئاگادارییە یاساییەکان", "lead": "ئەو داتا و فۆنت و ئایکۆنانەی مسار بەکاریان دەهێنێت.",
+            "sections": [("نەخشەکان", [f"داتای نەخشە © بەشداربووانی {osm}، بە مۆڵەتی ODbL."]),
+                         ("فۆنتەکان", [("ul", fonts)]),
+                         ("ئایکۆنەکان", [f"لەسەر بنەمای {phosphor}."])]}
+
+
+def render_legal(lang):
+    meta = LANGS[lang]
+    c = page_content(lang)
+    p = c["legal"]
+    cards = "\n".join(
+        f"      <section class=\"card\">\n        <h2>{h}</h2>\n        " + "\n        ".join(render_block(b) for b in blocks) + "\n      </section>"
+        for h, blocks in p["sections"]
+    )
+    alternates = "\n".join(f'  <link rel="alternate" hreflang="{l}" href="{ORIGIN + url(l, "legal")}">' for l in LANGS)
+    return f"""<!doctype html>
+<html lang="{lang}" dir="{meta['dir']}">
+<head>
+{head_common(lang)}
+  <title>{escape(p['title'])} — {meta['brand']}</title>
+  <meta name="description" content="{escape(p['lead'])}">
+  <link rel="canonical" href="{ORIGIN + url(lang, 'legal')}">
+{alternates}
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      {brand_html(lang, c['home'])}
+      <nav class="langs" aria-label="Language">{langs_html(lang, 'legal')}</nav>
     </div>
   </header>
   <main class="wrap">
-    <article class="card">
+    <div class="head">
+      <div class="ico-tile">{icon(PAGE_ICON['legal'])}</div>
       <h1>{p['title']}</h1>
-      <p class="lead">{p['lead']}</p>{date}
-{sections}
-    </article>
+      <p class="lead">{p['lead']}</p>
+    </div>
+    <div class="cards">
+{cards}
+    </div>
+    <p class="small-link"><a href="{url(lang, 'privacy')}">{c['nav']['privacy']}</a></p>
   </main>
-  <footer class="wrap">
-    <nav aria-label="{c['nav']['support']}">{footer_links}</nav>
+  <footer class="foot wrap">
     <p>{c['osm']} · <bdi>masarmaps.com</bdi></p>
   </footer>
+</body>
+</html>
+"""
+
+
+# --------------------------------------------------------------------------
+# Home: still "coming soon", drawn as the onboarding v3 splash. SEO head kept
+# in tools/home_head.html.
+# --------------------------------------------------------------------------
+
+def render_home():
+    head = (Path(__file__).resolve().parent / "home_head.html").read_text(encoding="utf-8")
+    return f"""<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#31C6F7">
+  <meta name="color-scheme" content="light dark">
+{head.rstrip()}
+  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/pages.css">
+</head>
+<body class="splash home">
+  <main>
+{stage_html("ar")}
+    <p class="soon">قريباً<span class="en" lang="en">Coming soon</span></p>
+  </main>
+  <footer class="foot">
+    <nav aria-label="Links"><a href="/waze-alternative" lang="ar">بديل ويز في العراق</a><a href="/en/privacy" lang="en">Privacy</a><a href="/en/terms" lang="en">Terms</a><a href="/en/support" lang="en">Support</a></nav>
+    <p><bdi>masarmaps.com</bdi></p>
+  </footer>
+{STAGE_SCRIPT}
 </body>
 </html>
 """
@@ -774,12 +987,12 @@ def write_seo_files():
     )
     urls = [("/", "1.0")] + [
         (url(l, pg), "0.9" if pg == LANDING else "0.5") for pg in ALL_PAGES for l in LANGS
-    ]
+    ] + [(url(l, "legal"), "0.2") for l in LANGS]
     entries = []
     for loc, prio in urls:
         alts = ""
         page = loc.rsplit("/", 1)[-1]
-        if page in ALL_PAGES:
+        if page in ALL_PAGES + ["legal"]:
             alts = "".join(
                 f'\n    <xhtml:link rel="alternate" hreflang="{l}" href="{ORIGIN + url(l, page)}"/>' for l in LANGS
             ) + f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{ORIGIN + url("ar", page)}"/>'
@@ -833,20 +1046,11 @@ def render_place(lang):
     meta = LANGS[lang]
     t = PLACE_TEXT[lang]
     c = page_content(lang)
-    langs = "".join(
-        f'<a href="{url(l, "p")}" lang="{l}" hreflang="{l}" data-keep-query'
-        + (' aria-current="page"' if l == lang else "")
-        + f">{LANGS[l]['label']}</a>"
-        for l in LANGS
-    )
     cfg = json.dumps({"play": PLAY_URL, "appStore": APP_STORE_URL, "pkg": BUNDLE_ID, "fallback": t["fallback"]}, ensure_ascii=False)
     return f"""<!doctype html>
 <html lang="{lang}" dir="{meta['dir']}">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#31C6F7">
-  <meta name="color-scheme" content="light">
+{head_common(lang)}
   <meta name="robots" content="noindex">
   <title>{escape(t['title'])} — {meta['brand']}</title>
   <meta property="og:type" content="website">
@@ -854,34 +1058,31 @@ def render_place(lang):
   <meta property="og:title" content="{escape(t['title'])}">
   <meta property="og:image" content="{OG_IMAGE}">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/pages.css">
 </head>
 <body>
-  <header>
+  <header class="top">
     <div class="wrap">
-      <a class="brand" href="/" aria-label="{c['home']}"><img src="/assets/masar-logo.svg" alt="" width="40" height="40"><span>{meta['brand']}</span></a>
-      <nav class="langs" aria-label="Language">{langs}</nav>
+      {brand_html(lang, c['home'])}
+      <nav class="langs" aria-label="Language">{langs_html(lang, 'p', keep_query=True)}</nav>
     </div>
   </header>
   <main class="wrap">
-    <article class="card place">
-      <img class="place-pin" src="/assets/masar-logo.svg" alt="" width="64" height="64">
+    <section class="card place">
+      <div class="host-static"><img src="/assets/brand/mascot.svg" alt="" width="78" height="76"></div>
       <h1 id="name">{t['fallback']}</h1>
       <p class="lead coords"><bdi id="coords"></bdi></p>
       <div id="ok">
         <div class="btn-row">
-          <a class="mail" id="open" href="#">{t['open']}</a>
+          <a class="btn" id="open" href="#">{t['open']}</a>
           <a class="btn-secondary" id="get" href="{PLAY_URL}">{t['get']}</a>
         </div>
         <p><a id="map" href="#">{t['map']}</a></p>
         <p class="sources" id="soon" hidden>{t['soon']}</p>
       </div>
       <p class="lead" id="bad" hidden>{t['bad']}</p>
-    </article>
+    </section>
   </main>
-  <footer class="wrap">
+  <footer class="foot wrap">
     <p>{c['osm']} · <bdi>masarmaps.com</bdi></p>
   </footer>
   <script>
@@ -906,7 +1107,6 @@ def render_place(lang):
     var ua = navigator.userAgent;
     var android = /Android/i.test(ua);
     var ios = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
-    var canonical = 'https://masarmaps.com/p' + location.search;
     var open = document.getElementById('open');
     if (android) {{
       // intent: opens the app if installed, otherwise Play. A plain link to this
@@ -914,7 +1114,7 @@ def render_place(lang):
       open.href = 'intent://masarmaps.com/p' + location.search + '#Intent;scheme=https;package=' + cfg.pkg +
         ';S.browser_fallback_url=' + encodeURIComponent(cfg.play) + ';end';
     }} else {{
-      open.href = canonical;
+      open.href = 'https://masarmaps.com/p' + location.search;
     }}
     var get = document.getElementById('get');
     if (ios) {{
@@ -937,10 +1137,12 @@ def main():
         out_dir.mkdir(parents=True, exist_ok=True)
         for page in ALL_PAGES:
             (out_dir / f"{page}.html").write_text(render(lang, page), encoding="utf-8")
-            print("wrote", (out_dir / f"{page}.html").relative_to(SITE.parent))
+        (out_dir / "legal.html").write_text(render_legal(lang), encoding="utf-8")
         (out_dir / "p.html").write_text(render_place(lang), encoding="utf-8")
+        print("wrote", lang)
+    (SITE / "index.html").write_text(render_home(), encoding="utf-8")
     write_seo_files()
-    print("wrote robots.txt, sitemap.xml, .well-known/")
+    print("wrote index.html, robots.txt, sitemap.xml, .well-known/")
 
 
 if __name__ == "__main__":

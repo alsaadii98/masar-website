@@ -3,8 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#31C6F7">
-  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/pages.css">
   <title>Waze alternative in Iraq: Masar, the Iraqi navigation app</title>
   <meta name="description" content="Iraq is banning Waze. Masar is an Iraqi navigation app with live traffic, road reports and voice guidance in Arabic, Kurdish and English. Coming soon to the App Store and Google Play.">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -25,10 +30,6 @@
   <meta property="og:locale:alternate" content="ar_IQ">
   <meta property="og:locale:alternate" content="ckb_IQ">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/pages.css">
   <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -151,30 +152,64 @@
   </script>
 </head>
 <body>
-  <header>
+  <header class="top">
     <div class="wrap">
-      <a class="brand" href="/" aria-label="Home"><img src="/assets/masar-logo.svg" alt="" width="40" height="40"><span>Masar</span></a>
-      <nav class="langs" aria-label="Language"><a href="/waze-alternative" lang="ar" hreflang="ar">العربية</a><a href="/en/waze-alternative" lang="en" hreflang="en" aria-current="page">English</a><a href="/ckb/waze-alternative" lang="ckb" hreflang="ckb">کوردی</a></nav>
+      <a class="brand" href="/" aria-label="Home"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><span class="latin">Masar</span></a>
+      <nav class="langs" aria-label="Language"><a class="chip" href="/waze-alternative" lang="ar" hreflang="ar">العربية</a><a class="chip" href="/en/waze-alternative" lang="en" hreflang="en" aria-current="page">English</a><a class="chip" href="/ckb/waze-alternative" lang="ckb" hreflang="ckb">کوردی</a></nav>
     </div>
   </header>
   <main class="wrap">
-    <article class="card">
+      <div class="hero-card">
+  <div class="stage" role="img" aria-label="Masar">
+    <div class="lens" aria-hidden="true">
+      <picture>
+        <source srcset="/assets/map/lens-dark.jpg" media="(prefers-color-scheme: dark)">
+        <img src="/assets/map/lens-light.jpg" alt="" width="290" height="290">
+      </picture>
+      <svg viewBox="0 0 290 290" class="lens-svg">
+        <polyline class="route-case" points="-122.3,957.1 127.8,683.7 135.4,672.2 147.7,641.9 153.5,617.3 173.6,108.7 177.2,86.5 164.0,52.8 93.9,-27.5" fill="none" stroke-width="12.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline class="route" points="-122.3,957.1 127.8,683.7 135.4,672.2 147.7,641.9 153.5,617.3 173.6,108.7 177.2,86.5 164.0,52.8 93.9,-27.5" fill="none" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <g>
+          <animateMotion dur="7s" repeatCount="indefinite" rotate="auto" path="M165.7,310.0 L173.6,108.7 L177.2,86.5 L164.0,52.8 L93.9,-27.5"/>
+          <image href="/assets/brand/driving.svg" x="-17" y="-17" width="34" height="34" transform="rotate(90)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="bubble" style="left:26px;top:30px;width:60px;height:60px;background:#FF9F1C;animation-delay:0.30s,0.00s" aria-hidden="true"><img src="/assets/stickers/traffic.svg" alt="" style="rotate:-8deg"></div>
+    <div class="bubble" style="left:312px;top:14px;width:56px;height:56px;background:#3D7BF5;animation-delay:0.35s,0.35s" aria-hidden="true"><img src="/assets/stickers/police.svg" alt="" style="rotate:6deg"></div>
+    <div class="bubble" style="left:320px;top:380px;width:50px;height:50px;background:#FFC928;animation-delay:0.40s,0.70s" aria-hidden="true"><img src="/assets/stickers/hazard.svg" alt="" style="rotate:-5deg"></div>
+    <div class="bubble" style="left:22px;top:380px;width:48px;height:48px;background:#B0601E;animation-delay:0.45s,1.05s" aria-hidden="true"><img src="/assets/stickers/speedbump.svg" alt="" style="rotate:8deg"></div>
+    <div class="host" aria-hidden="true"><img src="/assets/brand/mascot.svg" alt="" width="104" height="102"></div>
+    <div class="title">
+      
+      <span class="latin" style="font-size:52px">Masar</span>
+      <span class="tagline" lang="en">Masar for every trip</span>
+    </div>
+  </div>
+      </div>
+    <div class="head">
+      <div class="ico-tile"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path class="duo" d="M16.5 18.75A2.25 2.25 0 1 0 21 18.75A2.25 2.25 0 1 0 16.5 18.75Z" fill="#31C6F7"/>
+  <path class="line" d="M16.5 18.75A2.25 2.25 0 1 0 21 18.75A2.25 2.25 0 1 0 16.5 18.75ZM6.75 5.25L15.75 5.25A3 3 0 0 1 15.75 11.25L6.75 11.25A3.75 3.75 0 0 0 6.75 18.75L16.5 18.75" stroke="#243039" stroke-width="2.4"/>
+</svg></div>
       <h1>The Waze alternative for Iraq</h1>
       <p class="lead">Masar is an Iraqi navigation app, made for Iraq. Coming soon to the App Store and Google Play.</p>
-      <section>
+    </div>
+    <div class="cards">
+      <section class="card">
         <h2>Iraq's Waze ban</h2>
         <p>In October 2026, Iraq's Communications Minister Mustafa Sanad announced a ban on the Waze app in Iraq, citing the app's Israeli origin. The ban was first set for the start of 2027, then brought forward to the end of December 2026, according to press reports.</p>
         <p class="sources">Sources: <a href="https://www.kurdistan24.net/en/story/944372" rel="noopener">Kurdistan24</a> · <a href="https://www.aljazeera.com/news/2026/10/9/why-has-iraq-decided-to-ban-online-map-service-waze" rel="noopener">Al Jazeera</a> · <a href="https://www.thenationalnews.com/news/mena/2026/10/07/iraq-to-ban-waze-navigation-app-over-israeli-links/" rel="noopener">The National</a></p>
       </section>
-      <section>
+      <section class="card">
         <h2>Masar: an Iraqi alternative to Waze</h2>
         <ul><li>Live traffic on the roads, updated every minute.</li><li>Turn-by-turn voice guidance, with automatic rerouting if you leave the route.</li><li>Driver reports: accidents, traffic, closed roads, floods, speed bumps and more.</li><li>Search in Arabic, Kurdish and English, even Arabic typed in Latin letters.</li><li>Share your arrival time on WhatsApp and Telegram.</li><li>Works with CarPlay and Android Auto.</li><li>No ads, no account needed.</li></ul>
       </section>
-      <section>
+      <section class="card">
         <h2>Privacy first</h2>
         <p>We never sell your data. GPS points are anonymous and never linked to you. Our maps come from OpenStreetMap on our own servers, without Google or Apple. Read our <a href="/en/privacy">Privacy Policy</a>.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>Questions</h2>
         <h3>Is Waze being banned in Iraq?</h3>
         <p>Yes. Communications Minister Mustafa Sanad announced a ban on Waze in Iraq. The announced date is the end of December 2026.</p>
@@ -189,11 +224,17 @@
         <h3>Do I need an account to use Masar?</h3>
         <p>No. You can search, navigate and post reports without an account.</p>
       </section>
-    </article>
+    </div>
   </main>
-  <footer class="wrap">
+  <footer class="foot wrap">
     <nav aria-label="Support"><a href="/en/waze-alternative" aria-current="page">Waze alternative</a><a href="/en/privacy">Privacy</a><a href="/en/terms">Terms</a><a href="/en/delete-account">Delete account</a><a href="/en/support">Support</a></nav>
     <p>Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> · <bdi>masarmaps.com</bdi></p>
   </footer>
+  <script>
+  // Reduced motion: park the car on the route (iOS: 46 % of the loop).
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.lens-svg').forEach(function (s) { s.pauseAnimations(); s.setCurrentTime(7 * 0.46); });
+  }
+  </script>
 </body>
 </html>

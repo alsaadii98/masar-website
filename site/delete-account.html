@@ -3,8 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#31C6F7">
-  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/pages.css">
   <title>حذف الحساب — مسار</title>
   <meta name="description" content="تستطيع حذف حسابك في مسار في أي وقت.">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -25,10 +30,6 @@
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:locale:alternate" content="ckb_IQ">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/pages.css">
   <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -67,40 +68,46 @@
   </script>
 </head>
 <body>
-  <header>
+  <header class="top">
     <div class="wrap">
-      <a class="brand" href="/" aria-label="الرئيسية"><img src="/assets/masar-logo.svg" alt="" width="40" height="40"><span>مسار</span></a>
-      <nav class="langs" aria-label="Language"><a href="/delete-account" lang="ar" hreflang="ar" aria-current="page">العربية</a><a href="/en/delete-account" lang="en" hreflang="en">English</a><a href="/ckb/delete-account" lang="ckb" hreflang="ckb">کوردی</a></nav>
+      <a class="brand" href="/" aria-label="الرئيسية"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><img class="word on-light" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="68" height="34"><img class="word on-dark" src="/assets/brand/masar-wordmark-arabic-dark.svg" alt="مسار" width="68" height="34"></a>
+      <nav class="langs" aria-label="Language"><a class="chip" href="/delete-account" lang="ar" hreflang="ar" aria-current="page">العربية</a><a class="chip" href="/en/delete-account" lang="en" hreflang="en">English</a><a class="chip" href="/ckb/delete-account" lang="ckb" hreflang="ckb">کوردی</a></nav>
     </div>
   </header>
   <main class="wrap">
-    <article class="card">
+    <div class="head">
+      <div class="ico-tile"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path class="duo" d="M6 9A6 6 0 1 0 18 9A6 6 0 1 0 6 9Z" fill="#31C6F7"/>
+  <path class="line" d="M6 9A6 6 0 1 0 18 9A6 6 0 1 0 6 9ZM2.91 20.25A10.5 10.5 0 0 1 21.09 20.25" stroke="#243039" stroke-width="2.4"/>
+</svg></div>
       <h1>حذف الحساب</h1>
       <p class="lead">تستطيع حذف حسابك في مسار في أي وقت.</p>
-      <section>
+    </div>
+    <div class="cards">
+      <section class="card">
         <h2>من التطبيق</h2>
         <ol><li>افتح مسار.</li><li>اذهب إلى <span class="path">الإعدادات ← حسابي</span>.</li><li>اضغط <strong>حذف الحساب</strong>، ثم <strong>حذف الحساب نهائياً</strong>.</li></ol>
       </section>
-      <section>
+      <section class="card">
         <h2>عبر البريد</h2>
         <p>لا تستطيع استخدام التطبيق؟ راسلنا مع رقم الهاتف المرتبط بحسابك. قد نتواصل معك للتأكد أن الحساب لك. ننفّذ الطلب خلال 30 يوماً.</p>
         <p><a class="mail" href="mailto:support@masarmaps.com">support@masarmaps.com</a></p>
       </section>
-      <section>
+      <section class="card">
         <h2>ما نحذفه</h2>
         <ul><li>رقم هاتفك واسمك</li><li>أماكنك المحفوظة</li><li>رموز الإشعارات</li><li>نقاطك ومستواك</li></ul>
       </section>
-      <section>
+      <section class="card">
         <h2>ما نحتفظ به</h2>
         <ul><li>بيانات الزحمة المجهولة (معدّل سرعة الطرق)، وهي غير مرتبطة بك.</li><li>بلاغاتك السابقة تبقى على الخريطة بدون اسمك.</li></ul>
       </section>
-      <section>
+      <section class="card">
         <h2>الضيوف</h2>
         <p>بدون حساب لا نحتفظ بأي بيانات حساب. حذف التطبيق يحذف أماكنك المحفوظة من الهاتف.</p>
       </section>
-    </article>
+    </div>
   </main>
-  <footer class="wrap">
+  <footer class="foot wrap">
     <nav aria-label="الدعم"><a href="/waze-alternative">بديل ويز</a><a href="/privacy">الخصوصية</a><a href="/terms">الشروط</a><a href="/delete-account" aria-current="page">حذف الحساب</a><a href="/support">الدعم</a></nav>
     <p>بيانات الخريطة © <a href="https://www.openstreetmap.org/copyright">مساهمو OpenStreetMap</a> · <bdi>masarmaps.com</bdi></p>
   </footer>

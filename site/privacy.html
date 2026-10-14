@@ -3,8 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#31C6F7">
-  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/pages.css">
   <title>سياسة الخصوصية — مسار</title>
   <meta name="description" content="مسار تطبيق ملاحة للعراق. هذا ما نجمعه ولماذا.">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -25,10 +30,6 @@
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:locale:alternate" content="ckb_IQ">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/pages.css">
   <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -67,77 +68,84 @@
   </script>
 </head>
 <body>
-  <header>
+  <header class="top">
     <div class="wrap">
-      <a class="brand" href="/" aria-label="الرئيسية"><img src="/assets/masar-logo.svg" alt="" width="40" height="40"><span>مسار</span></a>
-      <nav class="langs" aria-label="Language"><a href="/privacy" lang="ar" hreflang="ar" aria-current="page">العربية</a><a href="/en/privacy" lang="en" hreflang="en">English</a><a href="/ckb/privacy" lang="ckb" hreflang="ckb">کوردی</a></nav>
+      <a class="brand" href="/" aria-label="الرئيسية"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><img class="word on-light" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="68" height="34"><img class="word on-dark" src="/assets/brand/masar-wordmark-arabic-dark.svg" alt="مسار" width="68" height="34"></a>
+      <nav class="langs" aria-label="Language"><a class="chip" href="/privacy" lang="ar" hreflang="ar" aria-current="page">العربية</a><a class="chip" href="/en/privacy" lang="en" hreflang="en">English</a><a class="chip" href="/ckb/privacy" lang="ckb" hreflang="ckb">کوردی</a></nav>
     </div>
   </header>
   <main class="wrap">
-    <article class="card">
+    <div class="head">
+      <div class="ico-tile"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path class="duo" d="M3.75 10.75L3.75 5.25A0.75 0.75 0 0 1 4.5 4.5L19.5 4.5A0.75 0.75 0 0 1 20.25 5.25L20.25 10.75C20.25 18.63 13.57 21.23 12.23 21.67A0.68 0.68 0 0 1 11.77 21.67C10.43 21.23 3.75 18.63 3.75 10.75Z" fill="#31C6F7"/>
+  <path class="line" d="M3.75 10.75L3.75 5.25A0.75 0.75 0 0 1 4.5 4.5L19.5 4.5A0.75 0.75 0 0 1 20.25 5.25L20.25 10.75C20.25 18.63 13.57 21.23 12.23 21.67A0.68 0.68 0 0 1 11.77 21.67C10.43 21.23 3.75 18.63 3.75 10.75ZM16.12 9.75L10.62 15L7.88 12.38" stroke="#243039" stroke-width="2.4"/>
+</svg></div>
       <h1>سياسة الخصوصية</h1>
       <p class="lead">مسار تطبيق ملاحة للعراق. هذا ما نجمعه ولماذا.</p>
-      <p class="date">تاريخ السريان: 13 تشرين الأول 2026</p>
-      <section>
+        <p class="date">تاريخ السريان: 13 تشرين الأول 2026</p>
+    </div>
+    <div class="cards">
+      <section class="card">
         <h2>باختصار</h2>
         <ul><li>لا إعلانات.</li><li>لا نبيع بياناتك أبداً.</li><li>لا تتبّع بين التطبيقات، ولا معرّف إعلاني (IDFA أو AAID).</li><li>تستطيع استخدام مسار بدون حساب.</li></ul>
       </section>
-      <section>
+      <section class="card">
         <h2>الحساب (اختياري)</h2>
         <p>تستطيع تصفّح الخريطة والملاحة ونشر البلاغات كضيف.</p>
         <p>إذا سجّلت الدخول، تستخدم رقم هاتفك العراقي. نرسل لك رمزاً لمرة واحدة عبر واتساب من خلال مزوّدنا eSITE gateway. نحفظ رقم هاتفك مشفّراً لحسابك.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>الموقع</h2>
         <ul><li>يستخدم مسار موقعك فقط والتطبيق مفتوح أو أثناء الملاحة، ولا يتتبّعك في الخلفية غير ذلك أبداً.</li><li>أثناء الرحلة يرسل التطبيق نقاط GPS مجهولة (الموقع والسرعة والاتجاه) لحساب الزحمة المباشرة.</li><li>ترتبط هذه النقاط برمز رحلة يتغيّر مع كل رحلة، ولا ترتبط أبداً بحسابك أو رقم هاتفك.</li><li>نحتفظ بهذه النقاط المجهولة لتحسين حساب الزحمة وتوقّع أوقات الوصول، ولا نربطها بك أبداً.</li></ul>
       </section>
-      <section>
+      <section class="card">
         <h2>البلاغات</h2>
         <p>البلاغات (زحمة، شرطة، حادث، خطر، طريق مغلق، سيطرة، فيضان، طقس سيئ، مطب، خطأ بالخريطة) تُظهر مكانها ونوعها ووقتها للسائقين الآخرين.</p>
         <p>لا نُظهر أبداً من نشر البلاغ. بلاغات الضيوف تحمل معرّف جهاز عشوائياً للحماية من الإساءة. المستخدمون المسجّلون يكسبون نقاطاً.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>الأماكن المحفوظة</h2>
         <p>البيت والعمل والمفضّلة تبقى على هاتفك ما دمت ضيفاً. بعد تسجيل الدخول نحفظها على خادمنا لتبقى مع حسابك.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>الإشعارات</h2>
         <p>لإرسال الإشعارات نحفظ رمز Firebase Cloud Messaging مع لغة التطبيق ونظام التشغيل وإصدار التطبيق، ويرتبط بحسابك إذا كنت مسجّلاً.</p>
         <p>تستطيع إيقاف الإشعارات من إعدادات هاتفك.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>تقارير الأعطال والإحصاءات</h2>
         <p>نستخدم Google Firebase Crashlytics و Analytics لإصلاح الأخطاء وتحسين التطبيق. تصلها نسخة التطبيق واللغة وطراز الجهاز وتفاصيل الأعطال والشاشات والميزات المستخدمة.</p>
         <p>لا نرسل أبداً موقعك أو رقم هاتفك أو ما تبحث عنه. لا معرّف إعلاني ولا تتبّع. قد يقدّر Firebase منطقة تقريبية من عنوان IP.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>الخرائط</h2>
         <p>الخرائط والمسارات من خوادمنا الخاصة، مبنية على بيانات OpenStreetMap (© مساهمو OpenStreetMap، رخصة ODbL). لا نستخدم خرائط Google أو Apple لبيانات الخريطة أو المسارات.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>أين تُحفظ بياناتك</h2>
         <p>على خوادمنا الخاصة. كل الاتصالات عبر HTTPS، والبيانات الشخصية مشفّرة أثناء التخزين.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>حذف حسابك</h2>
         <p>من التطبيق: <span class="path">الإعدادات ← حسابي ← حذف الحساب</span>. يحذف ذلك رقم هاتفك وأماكنك المحفوظة ورموز الإشعارات ونقاطك.</p>
         <p>تستطيع أيضاً الطلب عبر البريد. راجع صفحة <a href="/delete-account">حذف الحساب</a>.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>الأطفال</h2>
         <p>مسار غير موجّه للأطفال دون 13 سنة.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>التغييرات</h2>
         <p>إذا غيّرنا هذه السياسة نحدّث هذه الصفحة والتاريخ أعلاه.</p>
       </section>
-      <section>
+      <section class="card">
         <h2>تواصل معنا</h2>
         <p><a class="mail" href="mailto:support@masarmaps.com">support@masarmaps.com</a></p>
       </section>
-    </article>
+    </div>
+      <p class="small-link"><a href="/legal">الإشعارات القانونية</a></p>
   </main>
-  <footer class="wrap">
+  <footer class="foot wrap">
     <nav aria-label="الدعم"><a href="/waze-alternative">بديل ويز</a><a href="/privacy" aria-current="page">الخصوصية</a><a href="/terms">الشروط</a><a href="/delete-account">حذف الحساب</a><a href="/support">الدعم</a></nav>
     <p>بيانات الخريطة © <a href="https://www.openstreetmap.org/copyright">مساهمو OpenStreetMap</a> · <bdi>masarmaps.com</bdi></p>
   </footer>
