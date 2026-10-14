@@ -663,6 +663,38 @@ def json_ld(lang, page, p, title, description, canonical):
 
 PAGE_ICON = {LANDING: "route", "privacy": "privacy", "terms": "report", "delete-account": "profile",
              "support": "help", "legal": "options"}
+THEME_TEXT = {
+    "ar": ("المظهر", "تلقائي", "نهاري", "ليلي"),
+    "en": ("Appearance", "Automatic", "Light", "Dark"),
+    "ckb": ("ڕووکار", "خۆکار", "ڕووناک", "تاریک"),
+}
+# Set the saved theme before the page paints (no flash). Per-visitor, browser only.
+THEME_INIT = """  <script>try{var t=localStorage.getItem('masar-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>"""
+THEME_SCRIPT = """  <script>
+  (function () {
+    var b = document.getElementById('theme-btn');
+    if (!b) return;
+    var order = ['auto', 'light', 'dark'];
+    var root = document.documentElement;
+    function current() { return root.getAttribute('data-theme') || 'auto'; }
+    function show() { var m = current(); b.querySelector('span').textContent = b.dataset[m]; b.setAttribute('aria-label', b.dataset.title + ': ' + b.dataset[m]); }
+    b.addEventListener('click', function () {
+      var next = order[(order.indexOf(current()) + 1) % 3];
+      if (next === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', next);
+      try { if (next === 'auto') localStorage.removeItem('masar-theme'); else localStorage.setItem('masar-theme', next); } catch (e) {}
+      show();
+    });
+    show();
+  })();
+  </script>"""
+
+
+def theme_button(lang):
+    title, auto, light, dark = THEME_TEXT[lang]
+    return (f'<button class="chip theme-btn" id="theme-btn" type="button" title="{title}" data-title="{title}" '
+            f'data-auto="{auto}" data-light="{light}" data-dark="{dark}">{icon("theme")}<span>{auto}</span></button>')
+
+
 TAGLINE = {"ar": "مسار لكل مشوار", "en": "Masar for every trip", "ckb": "مسار بۆ هەموو گەشتێک"}
 
 
@@ -727,10 +759,8 @@ def stage_html(lang):
     latin_size = ' style="font-size:52px"' if lang == "en" else ""
     return f"""  <div class="stage" role="img" aria-label="Masar">
     <div class="lens" aria-hidden="true">
-      <picture>
-        <source srcset="/assets/map/lens-dark.jpg" media="(prefers-color-scheme: dark)">
-        <img src="/assets/map/lens-light.jpg" alt="" width="290" height="290">
-      </picture>
+      <img class="on-light" src="/assets/map/lens-light.jpg" alt="" width="290" height="290">
+      <img class="on-dark" src="/assets/map/lens-dark.jpg" alt="" width="290" height="290" loading="lazy">
       <svg viewBox="0 0 290 290" class="lens-svg">
         <polyline class="route-case" points="{route}" fill="none" stroke-width="12.5" stroke-linecap="round" stroke-linejoin="round"/>
         <polyline class="route" points="{route}" fill="none" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -764,6 +794,7 @@ def head_common(lang):
   <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
   <meta name="color-scheme" content="light dark">
+{THEME_INIT}
   <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="preload" href="/assets/fonts/{'Vazirmatn-Regular' if lang == 'ckb' else 'ReadexPro-Regular'}.woff2" as="font" type="font/woff2" crossorigin>
@@ -829,7 +860,7 @@ def render(lang, page):
   <header class="top">
     <div class="wrap">
       {brand_html(lang, c['home'])}
-      <nav class="langs" aria-label="Language">{langs_html(lang, page)}</nav>
+      <div class="tools">{theme_button(lang)}<nav class="langs" aria-label="Language">{langs_html(lang, page)}</nav></div>
     </div>
   </header>
   <main class="wrap">{hero}
@@ -846,6 +877,7 @@ def render(lang, page):
     <nav aria-label="{c['nav']['support']}">{footer_links}</nav>
     <p>{c['osm']} · <bdi>masarmaps.com</bdi></p>
   </footer>{script}
+{THEME_SCRIPT}
 </body>
 </html>
 """
@@ -900,7 +932,7 @@ def render_legal(lang):
   <header class="top">
     <div class="wrap">
       {brand_html(lang, c['home'])}
-      <nav class="langs" aria-label="Language">{langs_html(lang, 'legal')}</nav>
+      <div class="tools">{theme_button(lang)}<nav class="langs" aria-label="Language">{langs_html(lang, 'legal')}</nav></div>
     </div>
   </header>
   <main class="wrap">
@@ -917,6 +949,7 @@ def render_legal(lang):
   <footer class="foot wrap">
     <p>{c['osm']} · <bdi>masarmaps.com</bdi></p>
   </footer>
+{THEME_SCRIPT}
 </body>
 </html>
 """
@@ -936,6 +969,7 @@ def render_home():
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#31C6F7">
   <meta name="color-scheme" content="light dark">
+{THEME_INIT}
 {head.rstrip()}
   <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -943,6 +977,7 @@ def render_home():
   <link rel="stylesheet" href="/assets/pages.css">
 </head>
 <body class="splash home">
+  {theme_button("ar")}
   <main>
 {stage_html("ar")}
     <p class="soon">قريباً<span class="en" lang="en">Coming soon</span></p>
@@ -952,6 +987,7 @@ def render_home():
     <p><bdi>masarmaps.com</bdi></p>
   </footer>
 {STAGE_SCRIPT}
+{THEME_SCRIPT}
 </body>
 </html>
 """
@@ -1063,7 +1099,7 @@ def render_place(lang):
   <header class="top">
     <div class="wrap">
       {brand_html(lang, c['home'])}
-      <nav class="langs" aria-label="Language">{langs_html(lang, 'p', keep_query=True)}</nav>
+      <div class="tools">{theme_button(lang)}<nav class="langs" aria-label="Language">{langs_html(lang, 'p', keep_query=True)}</nav></div>
     </div>
   </header>
   <main class="wrap">
@@ -1126,6 +1162,7 @@ def render_place(lang):
       : 'https://www.openstreetmap.org/?mlat=' + la + '&mlon=' + lo + '#map=17/' + la + '/' + lo;
   }})();
   </script>
+{THEME_SCRIPT}
 </body>
 </html>
 """

@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
   <meta name="color-scheme" content="light dark">
+  <script>try{var t=localStorage.getItem('masar-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
@@ -71,7 +72,10 @@
   <header class="top">
     <div class="wrap">
       <a class="brand" href="/" aria-label="الرئيسية"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><img class="word on-light" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="68" height="34"><img class="word on-dark" src="/assets/brand/masar-wordmark-arabic-dark.svg" alt="مسار" width="68" height="34"></a>
-      <nav class="langs" aria-label="Language"><a class="chip" href="/support" lang="ar" hreflang="ar" aria-current="page">العربية</a><a class="chip" href="/en/support" lang="en" hreflang="en">English</a><a class="chip" href="/ckb/support" lang="ckb" hreflang="ckb">کوردی</a></nav>
+      <div class="tools"><button class="chip theme-btn" id="theme-btn" type="button" title="المظهر" data-title="المظهر" data-auto="تلقائي" data-light="نهاري" data-dark="ليلي"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path class="duo" d="M12 3A9 9 0 0 1 12 21" fill="#31C6F7"/>
+  <path class="line" d="M3 12A9 9 0 1 0 21 12A9 9 0 1 0 3 12ZM12 3L12 21" stroke="#243039" stroke-width="2.4"/>
+</svg><span>تلقائي</span></button><nav class="langs" aria-label="Language"><a class="chip" href="/support" lang="ar" hreflang="ar" aria-current="page">العربية</a><a class="chip" href="/en/support" lang="en" hreflang="en">English</a><a class="chip" href="/ckb/support" lang="ckb" hreflang="ckb">کوردی</a></nav></div>
     </div>
   </header>
   <main class="wrap">
@@ -105,5 +109,22 @@
     <nav aria-label="الدعم"><a href="/waze-alternative">بديل ويز</a><a href="/privacy">الخصوصية</a><a href="/terms">الشروط</a><a href="/delete-account">حذف الحساب</a><a href="/support" aria-current="page">الدعم</a></nav>
     <p>بيانات الخريطة © <a href="https://www.openstreetmap.org/copyright">مساهمو OpenStreetMap</a> · <bdi>masarmaps.com</bdi></p>
   </footer>
+  <script>
+  (function () {
+    var b = document.getElementById('theme-btn');
+    if (!b) return;
+    var order = ['auto', 'light', 'dark'];
+    var root = document.documentElement;
+    function current() { return root.getAttribute('data-theme') || 'auto'; }
+    function show() { var m = current(); b.querySelector('span').textContent = b.dataset[m]; b.setAttribute('aria-label', b.dataset.title + ': ' + b.dataset[m]); }
+    b.addEventListener('click', function () {
+      var next = order[(order.indexOf(current()) + 1) % 3];
+      if (next === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', next);
+      try { if (next === 'auto') localStorage.removeItem('masar-theme'); else localStorage.setItem('masar-theme', next); } catch (e) {}
+      show();
+    });
+    show();
+  })();
+  </script>
 </body>
 </html>

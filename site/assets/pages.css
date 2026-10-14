@@ -39,8 +39,9 @@
 :lang(ar) { --head: 'Baloo Bhaijaan 2', 'Readex Pro', 'Vazirmatn', Tahoma, sans-serif; --head-weight: 700; --lh: 1.75; }
 :lang(ckb) { --ui: 'Vazirmatn', Tahoma, sans-serif; --head: 'Vazirmatn', Tahoma, sans-serif; --head-weight: 700; --lh: 1.75; }
 
+/* Dark: follows the phone unless the visitor picks a theme (html[data-theme]). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #17181B;
     --surface: #212227;
     --field: #2B2C31;
@@ -55,6 +56,22 @@
     --card-shadow: none;
   }
 }
+:root[data-theme="dark"] {
+  --bg: #17181B;
+  --surface: #212227;
+  --field: #2B2C31;
+  --text: #F3F4F6;
+  --muted: #A9ACB3;
+  --border: #3A3B42;
+  --hairline: rgba(255, 255, 255, .10);
+  --tint: #1E3440;
+  --link: #31C6F7;
+  --route: #579BFF;
+  --route-case: #2A5FC4;
+  --card-shadow: none;
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { min-width: 280px; background: var(--bg); -webkit-text-size-adjust: 100%; }
@@ -78,7 +95,9 @@ bdi, .ltr { direction: ltr; unicode-bidi: isolate; }
 
 /* Theme-aware artwork: light file by default, dark file in dark mode. */
 .on-dark { display: none; }
-@media (prefers-color-scheme: dark) { .on-light { display: none; } .on-dark { display: inline-block; } }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .on-light { display: none; } :root:not([data-theme="light"]) .on-dark { display: inline-block; } }
+:root[data-theme="dark"] .on-light { display: none; }
+:root[data-theme="dark"] .on-dark { display: inline-block; }
 
 /* Icons (Phosphor duotone, restyled): duo = flat cyan, line = text colour. */
 .ico { width: 24px; height: 24px; display: block; }
@@ -94,7 +113,13 @@ bdi, .ltr { direction: ltr; unicode-bidi: isolate; }
 .brand .word { height: 34px; width: auto; }
 .brand .latin { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 24px; line-height: 1; }
 
+.tools { display: flex; gap: 6px; flex-wrap: wrap; }
 .langs { display: flex; gap: 6px; }
+.theme-btn { gap: 6px; padding: 0 14px; cursor: pointer; font-family: var(--ui); }
+.theme-btn .ico { width: 20px; height: 20px; }
+.home .theme-btn { position: absolute; top: max(14px, env(safe-area-inset-top)); inset-inline-start: 16px;
+  background: var(--white); border-color: var(--white); color: var(--ink); }
+.home .theme-btn .ico .line { stroke: var(--ink); }
 .chip {
   display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 16px;
   border: 1.5px solid var(--border); border-radius: 999px; background: var(--surface);
@@ -208,7 +233,7 @@ li::marker { color: var(--cyan); font-weight: 600; }
 @keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
 
 /* Home: the splash fills the screen; "coming soon" under it. */
-.home { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
+.home { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
 .home main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 0 0; }
 .soon { margin: 18px 0 0; text-align: center; font-family: 'Baloo Bhaijaan 2', sans-serif; font-weight: 700; font-size: 30px; line-height: 1.3; color: var(--ink); }
 .soon .en { display: block; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px; }

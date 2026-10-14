@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#31C6F7">
   <meta name="color-scheme" content="light dark">
+  <script>try{var t=localStorage.getItem('masar-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <meta name="description" content="مسار تطبيق ملاحة عراقي وبديل ويز في العراق: زحمة مباشرة، بلاغات الطريق، وإرشاد صوتي بالعربي والكوردي. قريباً. Masar, the Iraqi navigation app — coming soon.">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://masarmaps.com/">
@@ -29,13 +30,15 @@
   <link rel="stylesheet" href="/assets/pages.css">
 </head>
 <body class="splash home">
+  <button class="chip theme-btn" id="theme-btn" type="button" title="المظهر" data-title="المظهر" data-auto="تلقائي" data-light="نهاري" data-dark="ليلي"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path class="duo" d="M12 3A9 9 0 0 1 12 21" fill="#31C6F7"/>
+  <path class="line" d="M3 12A9 9 0 1 0 21 12A9 9 0 1 0 3 12ZM12 3L12 21" stroke="#243039" stroke-width="2.4"/>
+</svg><span>تلقائي</span></button>
   <main>
   <div class="stage" role="img" aria-label="Masar">
     <div class="lens" aria-hidden="true">
-      <picture>
-        <source srcset="/assets/map/lens-dark.jpg" media="(prefers-color-scheme: dark)">
-        <img src="/assets/map/lens-light.jpg" alt="" width="290" height="290">
-      </picture>
+      <img class="on-light" src="/assets/map/lens-light.jpg" alt="" width="290" height="290">
+      <img class="on-dark" src="/assets/map/lens-dark.jpg" alt="" width="290" height="290" loading="lazy">
       <svg viewBox="0 0 290 290" class="lens-svg">
         <polyline class="route-case" points="-122.3,957.1 127.8,683.7 135.4,672.2 147.7,641.9 153.5,617.3 173.6,108.7 177.2,86.5 164.0,52.8 93.9,-27.5" fill="none" stroke-width="12.5" stroke-linecap="round" stroke-linejoin="round"/>
         <polyline class="route" points="-122.3,957.1 127.8,683.7 135.4,672.2 147.7,641.9 153.5,617.3 173.6,108.7 177.2,86.5 164.0,52.8 93.9,-27.5" fill="none" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -67,6 +70,23 @@
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.querySelectorAll('.lens-svg').forEach(function (s) { s.pauseAnimations(); s.setCurrentTime(7 * 0.46); });
   }
+  </script>
+  <script>
+  (function () {
+    var b = document.getElementById('theme-btn');
+    if (!b) return;
+    var order = ['auto', 'light', 'dark'];
+    var root = document.documentElement;
+    function current() { return root.getAttribute('data-theme') || 'auto'; }
+    function show() { var m = current(); b.querySelector('span').textContent = b.dataset[m]; b.setAttribute('aria-label', b.dataset.title + ': ' + b.dataset[m]); }
+    b.addEventListener('click', function () {
+      var next = order[(order.indexOf(current()) + 1) % 3];
+      if (next === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', next);
+      try { if (next === 'auto') localStorage.removeItem('masar-theme'); else localStorage.setItem('masar-theme', next); } catch (e) {}
+      show();
+    });
+    show();
+  })();
   </script>
 </body>
 </html>
