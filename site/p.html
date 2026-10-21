@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#31C6F7">
   <meta name="color-scheme" content="light dark">
   <script>try{var t=localStorage.getItem('masar-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
@@ -21,29 +20,33 @@
   <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-  <header class="top">
-    <div class="wrap">
-      <a class="brand" href="/" aria-label="الرئيسية"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><img class="word on-light" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="64" height="32"><img class="word on-dark" src="/assets/brand/masar-wordmark-arabic-dark.svg" alt="مسار" width="64" height="32"></a>
-      <div class="tools"><button class="chip theme-btn" id="theme-btn" type="button" title="المظهر" data-title="المظهر" data-auto="تلقائي" data-light="نهاري" data-dark="ليلي"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M324-111.5Q251-143 197-197t-85.5-127Q80-397 80-480t31.5-156Q143-709 197-763t127-85.5Q397-880 480-880t156 31.5Q709-817 763-763t85.5 127Q880-563 880-480t-31.5 156Q817-251 763-197t-127 85.5Q563-80 480-80t-156-31.5ZM500-140q137-10 228.5-106T820-480q0-138-91.5-234T500-820v680Z"/></svg><span>تلقائي</span></button><nav class="langs" aria-label="Language"><a class="chip" href="/p" lang="ar" hreflang="ar" data-keep-query aria-current="page">العربية</a><a class="chip" href="/en/p" lang="en" hreflang="en" data-keep-query>English</a><a class="chip" href="/ckb/p" lang="ckb" hreflang="ckb" data-keep-query>کوردی</a></nav></div>
-    </div>
-  </header>
-  <main class="wrap">
-    <section class="state place">
-      <span class="disc disc-xl" aria-hidden="true"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M458.5-103.5Q448-107 440-115q-42-38-91-87.5T258-309q-42-57-70-119t-28-124q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 62-28 124t-70 119q-42 57-91 106.5T520-115q-8 8-18.5 11.5T480-100q-11 0-21.5-3.5Zm71-407Q550-531 550-560t-20.5-49.5Q509-630 480-630t-49.5 20.5Q410-589 410-560t20.5 49.5Q451-490 480-490t49.5-20.5Z"/></svg></span>
-      <h1 id="name" style="margin-top: 24px">مكان مشترك</h1>
+  <div class="cyan">
+    <header class="top">
+      <div class="wrap">
+        <a class="brand" href="/" aria-label="الرئيسية"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="42" height="42"><img class="word" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="64" height="32"></a>
+        <div class="tools"><button class="chip theme-btn" id="theme-btn" type="button" title="المظهر" data-title="المظهر" data-auto="تلقائي" data-light="نهاري" data-dark="ليلي"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M324-111.5Q251-143 197-197t-85.5-127Q80-397 80-480t31.5-156Q143-709 197-763t127-85.5Q397-880 480-880t156 31.5Q709-817 763-763t85.5 127Q880-563 880-480t-31.5 156Q817-251 763-197t-127 85.5Q563-80 480-80t-156-31.5ZM500-140q137-10 228.5-106T820-480q0-138-91.5-234T500-820v680Z"/></svg><span>تلقائي</span></button><nav class="langs" aria-label="Language"><a class="chip" href="/p" lang="ar" hreflang="ar" data-keep-query aria-current="page">العربية</a><a class="chip" href="/en/p" lang="en" hreflang="en" data-keep-query>English</a><a class="chip" href="/ckb/p" lang="ckb" hreflang="ckb" data-keep-query>کوردی</a></nav></div>
+      </div>
+    </header>
+    <main class="wrap state place">
+      <img class="mascot bob" src="/assets/brand/mascot-v5.svg" alt="" width="180" height="180">
+      <h1 id="name">مكان مشترك</h1>
       <p class="lead coords"><bdi id="coords"></bdi></p>
       <div id="ok" class="btn-col">
         <a class="btn" id="open" href="#">افتح في مسار</a>
-        <a class="btn-secondary" id="get" href="https://play.google.com/store/apps/details?id=com.masarmaps">حمّل التطبيق</a>
+        <a class="btn-dark" id="get" href="https://play.google.com/store/apps/details?id=com.masarmaps">حمّل التطبيق</a>
         <a class="link-quiet" id="map" href="#">افتح في تطبيق خرائط</a>
         <p class="sources" id="soon" hidden>قريباً على App Store و Google Play.</p>
       </div>
       <p class="lead" id="bad" hidden>هذا الرابط غير صالح.</p>
-      <div class="shot"><div class="phone"><div class="screen"><img class="on-light" src="/assets/screens/place.png" alt="بطاقة مكان في مسار" width="384" height="838" loading="lazy"><img class="on-dark" src="/assets/screens/place-dark.png" alt="بطاقة مكان في مسار" width="384" height="838" loading="lazy"></div></div></div>
-    </section>
-  </main>
-  <footer class="foot wrap">
-    <p>بيانات الخريطة © <a href="https://www.openstreetmap.org/copyright">مساهمو OpenStreetMap</a> · <bdi>masarmaps.com</bdi></p>
+    </main>
+  </div>
+  <footer class="b-foot">
+    <div class="wrap b-foot-in">
+      <img class="mascot" src="/assets/brand/mascot-v5.svg" alt="" width="104" height="104">
+      <p class="foot-title">مسار لكل مشوار</p>
+      <nav aria-label="الدعم"><a href="/waze-alternative">بديل ويز</a><a href="/privacy">الخصوصية</a><a href="/terms">الشروط</a><a href="/delete-account">حذف الحساب</a><a href="/support">الدعم</a></nav>
+      <p class="foot-small">بيانات الخريطة © <a href="https://www.openstreetmap.org/copyright">مساهمو OpenStreetMap</a> · <bdi>masarmaps.com</bdi></p>
+    </div>
   </footer>
   <script>
   (function () {
