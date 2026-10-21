@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#31C6F7">
   <meta name="color-scheme" content="light dark">
   <script>try{var t=localStorage.getItem('masar-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Vazirmatn-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/pages.css">
   <title>Terms of Use — Masar</title>
   <meta name="description" content="Short rules for using Masar.">
@@ -69,59 +69,75 @@
   </script>
 </head>
 <body>
-  <header class="top">
-    <div class="wrap">
-      <a class="brand" href="/" aria-label="Home"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><span class="latin">Masar</span></a>
-      <div class="tools"><button class="chip theme-btn" id="theme-btn" type="button" title="Appearance" data-title="Appearance" data-auto="Automatic" data-light="Light" data-dark="Dark"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path class="duo" d="M12 3A9 9 0 0 1 12 21" fill="#31C6F7"/>
-  <path class="line" d="M3 12A9 9 0 1 0 21 12A9 9 0 1 0 3 12ZM12 3L12 21" stroke="#243039" stroke-width="2.4"/>
-</svg><span>Automatic</span></button><nav class="langs" aria-label="Language"><a class="chip" href="/terms" lang="ar" hreflang="ar">العربية</a><a class="chip" href="/en/terms" lang="en" hreflang="en" aria-current="page">English</a><a class="chip" href="/ckb/terms" lang="ckb" hreflang="ckb">کوردی</a></nav></div>
-    </div>
-  </header>
-  <main class="wrap">
-    <div class="head">
-      <div class="ico-tile"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path class="duo" d="M10.71 3.75L2.46 18A1.5 1.5 0 0 0 3.75 20.25L20.25 20.25A1.5 1.5 0 0 0 21.54 18L13.29 3.75A1.49 1.49 0 0 0 10.71 3.75Z" fill="#31C6F7"/>
-  <path class="line" d="M12 10.5L12 13.5M10.71 3.75L2.46 18A1.5 1.5 0 0 0 3.75 20.25L20.25 20.25A1.5 1.5 0 0 0 21.54 18L13.29 3.75A1.49 1.49 0 0 0 10.71 3.75ZM12 16.77v.2" stroke="#243039" stroke-width="2.4"/>
-</svg></div>
-      <h1>Terms of Use</h1>
-      <p class="lead">Short rules for using Masar.</p>
+  <div class="cyan band">
+    <header class="top">
+      <div class="wrap">
+        <a class="brand" href="/" aria-label="Home"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="42" height="42"><span class="latin">Masar</span></a>
+        <div class="tools"><button class="chip theme-btn" id="theme-btn" type="button" title="Appearance" data-title="Appearance" data-auto="Automatic" data-light="Light" data-dark="Dark"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M324-111.5Q251-143 197-197t-85.5-127Q80-397 80-480t31.5-156Q143-709 197-763t127-85.5Q397-880 480-880t156 31.5Q709-817 763-763t85.5 127Q880-563 880-480t-31.5 156Q817-251 763-197t-127 85.5Q563-80 480-80t-156-31.5ZM500-140q137-10 228.5-106T820-480q0-138-91.5-234T500-820v680Z"/></svg><span>Automatic</span></button><nav class="langs" aria-label="Language"><a class="chip" href="/terms" lang="ar" hreflang="ar">العربية</a><a class="chip" href="/en/terms" lang="en" hreflang="en" aria-current="page">English</a><a class="chip" href="/ckb/terms" lang="ckb" hreflang="ckb">کوردی</a></nav></div>
+      </div>
+    </header>
+    <div class="narrow band-head">
+      <div class="art" aria-hidden="true"><img class="ava bob" src="/assets/brand/avatars/avatar-1-happy-cyan.svg" alt="" width="132" height="132"></div>
+      <div>
+        <h1>Terms of Use</h1>
+        <p class="lead">Short rules for using Masar.</p>
         <p class="date">Effective 13 October 2026</p>
+      </div>
     </div>
+  </div>
+  <main class="narrow content">
     <div class="cards">
-      <section class="card">
+      <section class="section">
         <h2>Drive safely</h2>
-        <ul><li>Follow traffic laws and road signs. The real road always comes first.</li><li>Do not use the app while driving. Set your route before you go, or let a passenger do it.</li></ul>
+        <div class="group">
+          <ul><li>Follow traffic laws and road signs. The real road always comes first.</li><li>Do not use the app while driving. Set your route before you go, or let a passenger do it.</li></ul>
+        </div>
       </section>
-      <section class="card">
+      <section class="section">
         <h2>Routes are guidance</h2>
-        <p>Routes, times and alerts are guidance only and can be wrong. You are responsible for how you drive.</p>
+        <div class="group">
+          <p>Routes, times and alerts are guidance only and can be wrong. You are responsible for how you drive.</p>
+        </div>
       </section>
-      <section class="card">
+      <section class="section">
         <h2>Reports must be true</h2>
-        <p>Post only real, current road reports. No false, offensive or personal content.</p>
+        <div class="group">
+          <p>Post only real, current road reports. No false, offensive or personal content.</p>
+        </div>
       </section>
-      <section class="card">
+      <section class="section">
         <h2>Our rights</h2>
-        <p>We may remove false or abusive reports, and block devices or accounts that misuse Masar.</p>
+        <div class="group">
+          <p>We may remove false or abusive reports, and block devices or accounts that misuse Masar.</p>
+        </div>
       </section>
-      <section class="card">
+      <section class="section">
         <h2>Map data</h2>
-        <p>Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, available under the Open Database License (ODbL).</p>
+        <div class="group">
+          <p>Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, available under the Open Database License (ODbL).</p>
+        </div>
       </section>
-      <section class="card">
+      <section class="section">
         <h2>Privacy</h2>
-        <p>See our <a href="/en/privacy">Privacy Policy</a>.</p>
+        <div class="group">
+          <p>See our <a href="/en/privacy">Privacy Policy</a>.</p>
+        </div>
       </section>
-      <section class="card">
+      <section class="section">
         <h2>Contact</h2>
-        <p><a class="mail" href="mailto:support@masarmaps.com">support@masarmaps.com</a></p>
+        <div class="group">
+          <p><a class="mail" href="mailto:support@masarmaps.com">support@masarmaps.com</a></p>
+        </div>
       </section>
     </div>
   </main>
-  <footer class="foot wrap">
-    <nav aria-label="Support"><a href="/en/waze-alternative">Waze alternative</a><a href="/en/privacy">Privacy</a><a href="/en/terms" aria-current="page">Terms</a><a href="/en/delete-account">Delete account</a><a href="/en/support">Support</a></nav>
-    <p>Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> · <bdi>masarmaps.com</bdi></p>
+  <footer class="b-foot">
+    <div class="wrap b-foot-in">
+      <img class="mascot" src="/assets/brand/mascot-v5.svg" alt="" width="104" height="104">
+      <p class="foot-title">Masar for every trip</p>
+      <nav aria-label="Support"><a href="/en/waze-alternative">Waze alternative</a><a href="/en/privacy">Privacy</a><a href="/en/terms" aria-current="page">Terms</a><a href="/en/delete-account">Delete account</a><a href="/en/support">Support</a></nav>
+      <p class="foot-small">Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> · <bdi>masarmaps.com</bdi></p>
+    </div>
   </footer>
   <script>
   (function () {

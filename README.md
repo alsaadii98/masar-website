@@ -41,7 +41,7 @@ python3 tools/build_pages.py
 | Delete account | `/delete-account` | `/en/delete-account` | `/ckb/delete-account` |
 | Support | `/support` | `/en/support` | `/ckb/support` |
 
-Shared assets are in `site/assets` (stylesheet, logo, and the OFL fonts Readex Pro, Baloo Bhaijaan 2, Fredoka and Vazirmatn as WOFF2 with their licences). The home page stays a coming-soon page; it only links to these pages in its footer.
+Shared assets are in `site/assets`: stylesheet, logo, mascot and avatars, Vazirmatn (OFL, WOFF2 with its licence; the other font files stay for the OG image tool and /legal), Material Symbols Rounded icons (Apache 2.0, `assets/icons/material`). The look is direction B «Friendly mascot» on the app's v5 style (IraqWaze `docs/design/v5/STYLE.md`): cyan bands with the mascot and avatars, readable content cards, cyan footer. No app screenshots on the site for now. The home page stays a coming-soon page; it only links to these pages in its footer.
 
 ## SEO
 

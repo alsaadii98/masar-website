@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#31C6F7">
   <meta name="color-scheme" content="light dark">
   <script>try{var t=localStorage.getItem('masar-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Vazirmatn-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/pages.css">
   <title>الدعم — مسار</title>
   <meta name="description" content="عندك سؤال عن مسار؟ نحن هنا للمساعدة.">
@@ -69,45 +69,51 @@
   </script>
 </head>
 <body>
-  <header class="top">
-    <div class="wrap">
-      <a class="brand" href="/" aria-label="الرئيسية"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><img class="word on-light" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="68" height="34"><img class="word on-dark" src="/assets/brand/masar-wordmark-arabic-dark.svg" alt="مسار" width="68" height="34"></a>
-      <div class="tools"><button class="chip theme-btn" id="theme-btn" type="button" title="المظهر" data-title="المظهر" data-auto="تلقائي" data-light="نهاري" data-dark="ليلي"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path class="duo" d="M12 3A9 9 0 0 1 12 21" fill="#31C6F7"/>
-  <path class="line" d="M3 12A9 9 0 1 0 21 12A9 9 0 1 0 3 12ZM12 3L12 21" stroke="#243039" stroke-width="2.4"/>
-</svg><span>تلقائي</span></button><nav class="langs" aria-label="Language"><a class="chip" href="/support" lang="ar" hreflang="ar" aria-current="page">العربية</a><a class="chip" href="/en/support" lang="en" hreflang="en">English</a><a class="chip" href="/ckb/support" lang="ckb" hreflang="ckb">کوردی</a></nav></div>
+  <div class="cyan band">
+    <header class="top">
+      <div class="wrap">
+        <a class="brand" href="/" aria-label="الرئيسية"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="42" height="42"><img class="word" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="64" height="32"></a>
+        <div class="tools"><button class="chip theme-btn" id="theme-btn" type="button" title="المظهر" data-title="المظهر" data-auto="تلقائي" data-light="نهاري" data-dark="ليلي"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M324-111.5Q251-143 197-197t-85.5-127Q80-397 80-480t31.5-156Q143-709 197-763t127-85.5Q397-880 480-880t156 31.5Q709-817 763-763t85.5 127Q880-563 880-480t-31.5 156Q817-251 763-197t-127 85.5Q563-80 480-80t-156-31.5ZM500-140q137-10 228.5-106T820-480q0-138-91.5-234T500-820v680Z"/></svg><span>تلقائي</span></button><nav class="langs" aria-label="Language"><a class="chip" href="/support" lang="ar" hreflang="ar" aria-current="page">العربية</a><a class="chip" href="/en/support" lang="en" hreflang="en">English</a><a class="chip" href="/ckb/support" lang="ckb" hreflang="ckb">کوردی</a></nav></div>
+      </div>
+    </header>
+    <div class="narrow band-head">
+      <div class="art" aria-hidden="true"><img class="ava bob" src="/assets/brand/avatars/avatar-2-wink-orange.svg" alt="" width="132" height="132"></div>
+      <div>
+        <h1>الدعم</h1>
+        <p class="lead">عندك سؤال عن مسار؟ نحن هنا للمساعدة.</p>
+      </div>
     </div>
-  </header>
-  <main class="wrap">
-    <div class="head">
-      <div class="ico-tile"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path class="duo" d="M3 12A9 9 0 1 0 21 12A9 9 0 1 0 3 12Z" fill="#31C6F7"/>
-  <path class="line" d="M3 12A9 9 0 1 0 21 12A9 9 0 1 0 3 12ZM12 13.5L12 12.75A2.62 2.62 0 1 0 9.38 10.12M12 16.77v.2" stroke="#243039" stroke-width="2.4"/>
-</svg></div>
-      <h1>الدعم</h1>
-      <p class="lead">عندك سؤال عن مسار؟ نحن هنا للمساعدة.</p>
-    </div>
+  </div>
+  <main class="narrow content">
     <div class="cards">
-      <section class="card">
+      <section class="section">
         <h2>تواصل معنا</h2>
-        <p><a class="mail" href="mailto:support@masarmaps.com">support@masarmaps.com</a></p>
+        <div class="group">
+          <p><a class="mail" href="mailto:support@masarmaps.com">support@masarmaps.com</a></p>
+        </div>
       </section>
-      <section class="card">
+      <section class="section">
         <h2>أسئلة شائعة</h2>
-        <h3>هل أحتاج حساباً؟</h3>
-        <p>لا. تستطيع البحث والملاحة ونشر البلاغات كضيف. سجّل الدخول فقط لجمع النقاط ومزامنة أماكنك المحفوظة.</p>
-        <h3>كيف تعمل البلاغات؟</h3>
-        <p>اضغط <strong>بلّغ</strong> واختر النوع. يظهر البلاغ على الخريطة للسائقين القريبين مع مكانه ووقته. لا يظهر اسمك أبداً.</p>
-        <h3>هل يعمل مسار مع CarPlay و Android Auto؟</h3>
-        <p>نعم. اربط هاتفك بالسيارة وافتح مسار على شاشة السيارة.</p>
-        <h3>كيف أحذف حسابي؟</h3>
-        <p>من التطبيق: <span class="path">الإعدادات ← حسابي ← حذف الحساب</span>. أو راجع صفحة <a href="/delete-account">حذف الحساب</a>.</p>
+        <div class="group">
+          <h3>هل أحتاج حساباً؟</h3>
+          <p>لا. تستطيع البحث والملاحة ونشر البلاغات كضيف. سجّل الدخول فقط لجمع النقاط ومزامنة أماكنك المحفوظة.</p>
+          <h3>كيف تعمل البلاغات؟</h3>
+          <p>اضغط <strong>بلّغ</strong> واختر النوع. يظهر البلاغ على الخريطة للسائقين القريبين مع مكانه ووقته. لا يظهر اسمك أبداً.</p>
+          <h3>هل يعمل مسار مع CarPlay و Android Auto؟</h3>
+          <p>نعم. اربط هاتفك بالسيارة وافتح مسار على شاشة السيارة.</p>
+          <h3>كيف أحذف حسابي؟</h3>
+          <p>من التطبيق: <span class="path">الإعدادات ← حسابي ← حذف الحساب</span>. أو راجع صفحة <a href="/delete-account">حذف الحساب</a>.</p>
+        </div>
       </section>
     </div>
   </main>
-  <footer class="foot wrap">
-    <nav aria-label="الدعم"><a href="/waze-alternative">بديل ويز</a><a href="/privacy">الخصوصية</a><a href="/terms">الشروط</a><a href="/delete-account">حذف الحساب</a><a href="/support" aria-current="page">الدعم</a></nav>
-    <p>بيانات الخريطة © <a href="https://www.openstreetmap.org/copyright">مساهمو OpenStreetMap</a> · <bdi>masarmaps.com</bdi></p>
+  <footer class="b-foot">
+    <div class="wrap b-foot-in">
+      <img class="mascot" src="/assets/brand/mascot-v5.svg" alt="" width="104" height="104">
+      <p class="foot-title">مسار لكل مشوار</p>
+      <nav aria-label="الدعم"><a href="/waze-alternative">بديل ويز</a><a href="/privacy">الخصوصية</a><a href="/terms">الشروط</a><a href="/delete-account">حذف الحساب</a><a href="/support" aria-current="page">الدعم</a></nav>
+      <p class="foot-small">بيانات الخريطة © <a href="https://www.openstreetmap.org/copyright">مساهمو OpenStreetMap</a> · <bdi>masarmaps.com</bdi></p>
+    </div>
   </footer>
   <script>
   (function () {

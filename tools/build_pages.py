@@ -445,6 +445,9 @@ def render_block(b):
         return f"<{kind}>{items}</{kind}>"
     if kind == "h3":
         return f"<h3>{b[1]}</h3>"
+    if kind == "rows":
+        items = "".join(f"<li>{disc(i, 'm')}<span>{t}</span></li>" for i, t in b[1])
+        return f'<ul class="rows">{items}</ul>'
     if kind == "mail":
         return f"<p>{mail_link()}</p>"
     raise ValueError(kind)
@@ -594,6 +597,9 @@ def page_content(lang):
     c = content(lang)
     lp = landing(lang)
     c["nav"] = {LANDING: lp["nav"], **c["nav"]}
+    # Feature list on the landing page: rows with tint-disc icons (app style).
+    h, blocks = lp["sections"][1]
+    lp["sections"][1] = (h, [("rows", list(zip(FEATURE_ICONS, blocks[0][1])))])
     c[LANDING] = lp
     c["legal"] = legal(lang)
     return c
@@ -658,11 +664,21 @@ def json_ld(lang, page, p, title, description, canonical):
 
 
 # --------------------------------------------------------------------------
-# Design v2 shell (header, icons, splash stage) — see site/assets/pages.css.
+# Direction B «Friendly mascot» shell (owner pick 2026-10-21) on the app's v5 style:
+# cyan header band with the mascot or an avatar, readable content cards, cyan footer.
+# See site/assets/pages.css. No app screenshots on the site for now (owner).
 # --------------------------------------------------------------------------
 
-PAGE_ICON = {LANDING: "route", "privacy": "privacy", "terms": "report", "delete-account": "profile",
-             "support": "help", "legal": "options"}
+MASCOT = "/assets/brand/mascot-v5.svg"
+AVATARS = ["avatar-1-happy-cyan", "avatar-2-wink-orange", "avatar-3-love-mint", "avatar-4-cool-lilac",
+           "avatar-5-sleepy-night", "avatar-6-excited-sand"]
+# The character in each page's cyan band: the mascot, or an avatar.
+PAGE_ART = {LANDING: "mascot", "privacy": "avatar-4-cool-lilac", "terms": "avatar-1-happy-cyan",
+            "delete-account": "avatar-5-sleepy-night", "support": "avatar-2-wink-orange",
+            "legal": "avatar-6-excited-sand"}
+# Icons for the landing page's feature rows, in content order.
+FEATURE_ICONS = ["directions_car-fill", "record_voice_over", "warning", "search", "share", "navigation-fill", "shield"]
+
 THEME_TEXT = {
     "ar": ("المظهر", "تلقائي", "نهاري", "ليلي"),
     "en": ("Appearance", "Automatic", "Light", "Dark"),
@@ -688,31 +704,44 @@ THEME_SCRIPT = """  <script>
   })();
   </script>"""
 
+TAGLINE = {"ar": "مسار لكل مشوار", "en": "Masar for every trip", "ckb": "مسار بۆ هەموو گەشتێک"}
+SOON = {"ar": "قريباً", "en": "Coming soon", "ckb": "بەم زووانە"}
+STORE_LINE = {"ar": "قريباً على App Store و Google Play.", "en": "Coming soon to the App Store and Google Play.",
+              "ckb": "بەم زووانە لە App Store و Google Play."}
+
 
 def theme_button(lang):
     title, auto, light, dark = THEME_TEXT[lang]
     return (f'<button class="chip theme-btn" id="theme-btn" type="button" title="{title}" data-title="{title}" '
-            f'data-auto="{auto}" data-light="{light}" data-dark="{dark}">{icon("theme")}<span>{auto}</span></button>')
-
-
-TAGLINE = {"ar": "مسار لكل مشوار", "en": "Masar for every trip", "ckb": "مسار بۆ هەموو گەشتێک"}
+            f'data-auto="{auto}" data-light="{light}" data-dark="{dark}">{icon("contrast")}<span>{auto}</span></button>')
 
 
 def icon(name):
-    """Inline a design/icons/ui SVG so its duo/line layers follow the theme."""
+    """Inline a mono Material Symbols Rounded glyph; it takes the text colour (currentColor)."""
     import re
-    svg = (SITE / "assets" / "icons" / f"{name}.svg").read_text(encoding="utf-8").strip()
+    svg = (SITE / "assets" / "icons" / "material" / f"{name}.svg").read_text(encoding="utf-8").strip()
+    svg = re.sub(r' (width|height)="[^"]*"', "", svg)
     return re.sub(r"^<svg ", '<svg class="ico" aria-hidden="true" focusable="false" ', svg)
 
 
+def disc(name, size="m"):
+    """Tint-disc badge (v5 STYLE §3.2): tint outer disc, cyan inner disc, white glyph. Decorative."""
+    return f'<span class="disc disc-{size}" aria-hidden="true">{icon(name)}</span>'
+
+
+def art_html(kind, cls="bob"):
+    # Mascot and avatars: brand characters. Never rotated or mirrored.
+    if kind == "mascot":
+        return f'<img class="mascot {cls}" src="{MASCOT}" alt="" width="180" height="180">'
+    return f'<img class="ava {cls}" src="/assets/brand/avatars/{kind}.svg" alt="" width="132" height="132">'
+
+
 def brand_html(lang, home_label):
-    word = (
-        '<img class="word on-light" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="68" height="34">'
-        '<img class="word on-dark" src="/assets/brand/masar-wordmark-arabic-dark.svg" alt="مسار" width="68" height="34">'
-        if lang != "en" else '<span class="latin">Masar</span>'
-    )
+    # On cyan: the ink wordmark in both themes.
+    word = ('<img class="word" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="64" height="32">'
+            if lang != "en" else '<span class="latin">Masar</span>')
     return (f'<a class="brand" href="/" aria-label="{home_label}">'
-            f'<img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40">{word}</a>')
+            f'<img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="42" height="42">{word}</a>')
 
 
 def langs_html(lang, page, keep_query=False):
@@ -725,80 +754,62 @@ def langs_html(lang, page, keep_query=False):
     )
 
 
-# Onboarding v3 splash geometry (iOS SplashView, board 390 wide). The lens shows the
-# map picture (430 × 932 frame) around FOCUS at 1.5 points per unit; 290 across.
-LENS_FOCUS = (228, 235)
-LENS_UNIT = 1.5
-LENS_SIZE = 290
-ROUTE = [(49.8, 776.4), (216.5, 594.1), (221.6, 586.5), (229.8, 566.3), (233.7, 549.9),
-         (247.1, 210.8), (249.5, 196.0), (240.7, 173.5), (193.9, 120.0)]
-CAR_PATH = [(241.8, 345), (247.1, 210.8), (249.5, 196.0), (240.7, 173.5), (193.9, 120.0)]
-BUBBLES = [  # stage left, top, size, tilt, type (board y − 90)
-    (26, 30, 60, -8, "traffic"), (312, 14, 56, 6, "police"),
-    (320, 380, 50, -5, "hazard"), (22, 380, 48, 8, "speedbump"),
-]
-REPORT_COLOR = {"traffic": "#FF9F1C", "police": "#3D7BF5", "hazard": "#FFC928", "speedbump": "#B0601E"}
+def header_html(lang, page, c, keep_query=False):
+    return f"""    <header class="top">
+      <div class="wrap">
+        {brand_html(lang, c['home'])}
+        <div class="tools">{theme_button(lang)}<nav class="langs" aria-label="Language">{langs_html(lang, page, keep_query)}</nav></div>
+      </div>
+    </header>"""
 
 
-def _lens_pts(points):
-    fx, fy = LENS_FOCUS
-    h = LENS_SIZE / 2
-    return " ".join(f"{(x - fx) * LENS_UNIT + h:.1f},{(y - fy) * LENS_UNIT + h:.1f}" for x, y in points)
-
-
-def stage_html(lang):
-    route = _lens_pts(ROUTE)
-    car = "M" + _lens_pts(CAR_PATH).replace(" ", " L")
-    bubbles = "\n".join(
-        f'    <div class="bubble" style="left:{x}px;top:{y}px;width:{sz}px;height:{sz}px;background:{REPORT_COLOR[t]};'
-        f'animation-delay:{0.3 + i * 0.05:.2f}s,{i * 0.35:.2f}s" aria-hidden="true">'
-        f'<img src="/assets/stickers/{t}.svg" alt="" style="rotate:{tilt}deg"></div>'
-        for i, (x, y, sz, tilt, t) in enumerate(BUBBLES)
+def footer_html(lang, c, page=None):
+    links = "".join(
+        f'<a href="{url(lang, pg)}"' + (' aria-current="page"' if pg == page else "") + f">{c['nav'][pg]}</a>"
+        for pg in ALL_PAGES
     )
-    word = "" if lang == "en" else '<img class="word" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="150" height="75">'
-    latin_size = ' style="font-size:52px"' if lang == "en" else ""
-    return f"""  <div class="stage" role="img" aria-label="Masar">
-    <div class="lens" aria-hidden="true">
-      <img class="on-light" src="/assets/map/lens-light.jpg" alt="" width="290" height="290">
-      <img class="on-dark" src="/assets/map/lens-dark.jpg" alt="" width="290" height="290" loading="lazy">
-      <svg viewBox="0 0 290 290" class="lens-svg">
-        <polyline class="route-case" points="{route}" fill="none" stroke-width="12.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <polyline class="route" points="{route}" fill="none" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <g>
-          <animateMotion dur="7s" repeatCount="indefinite" rotate="auto" path="{car}"/>
-          <image href="/assets/brand/driving.svg" x="-17" y="-17" width="34" height="34" transform="rotate(90)"/>
-        </g>
-      </svg>
+    return f"""  <footer class="b-foot">
+    <div class="wrap b-foot-in">
+      <img class="mascot" src="{MASCOT}" alt="" width="104" height="104">
+      <p class="foot-title">{TAGLINE[lang]}</p>
+      <nav aria-label="{c['nav']['support']}">{links}</nav>
+      <p class="foot-small">{c['osm']} · <bdi>masarmaps.com</bdi></p>
     </div>
-{bubbles}
-    <div class="host" aria-hidden="true"><img src="/assets/brand/mascot.svg" alt="" width="104" height="102"></div>
-    <div class="title">
-      {word}
-      <span class="latin"{latin_size}>Masar</span>
-      <span class="tagline" lang="{lang}">{TAGLINE[lang]}</span>
-    </div>
-  </div>"""
-
-
-STAGE_SCRIPT = """  <script>
-  // Reduced motion: park the car on the route (iOS: 46 % of the loop).
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('.lens-svg').forEach(function (s) { s.pauseAnimations(); s.setCurrentTime(7 * 0.46); });
-  }
-  </script>"""
+  </footer>"""
 
 
 def head_common(lang):
     return f"""  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#31C6F7">
   <meta name="color-scheme" content="light dark">
 {THEME_INIT}
   <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/{'Vazirmatn-Regular' if lang == 'ckb' else 'ReadexPro-Regular'}.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Vazirmatn-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/pages.css">"""
+
+
+def sections_html(sections):
+    out = []
+    for h, blocks in sections:
+        body = "\n          ".join(b[1] if isinstance(b, tuple) and b[0] == "raw" else render_block(b) for b in blocks)
+        out.append(f"      <section class=\"section\">\n        <h2>{h}</h2>\n        <div class=\"group\">\n          {body}\n        </div>\n      </section>")
+    return "\n".join(out)
+
+
+def band_html(lang, page, c, art, title, lead, extra=""):
+    return f"""  <div class="cyan band">
+{header_html(lang, page, c)}
+    <div class="narrow band-head">
+      <div class="art" aria-hidden="true">{art_html(art)}</div>
+      <div>
+        <h1>{title}</h1>
+        <p class="lead">{lead}</p>{extra}
+      </div>
+    </div>
+  </div>"""
 
 
 def render(lang, page):
@@ -814,26 +825,13 @@ def render(lang, page):
     og_alt = "\n".join(
         f'  <meta property="og:locale:alternate" content="{OG_LOCALE[l]}">' for l in LANGS if l != lang
     )
-    cards = []
-    for h, blocks in p["sections"]:
-        cards.append(
-            f"      <section class=\"card\">\n        <h2>{h}</h2>\n        "
-            + "\n        ".join(b[1] if isinstance(b, tuple) and b[0] == "raw" else render_block(b) for b in blocks)
-            + "\n      </section>"
-        )
+    cards_html = sections_html(p["sections"])
     if "faq" in p:
-        faq = "\n        ".join(f"<h3>{q}</h3>\n        <p>{a}</p>" for q, a in p["faq"])
-        cards.append(f"      <section class=\"card\">\n        <h2>{p['faq_title']}</h2>\n        {faq}\n      </section>")
-    cards_html = "\n".join(cards)
+        faq = "\n          ".join(f'<div class="faq"><h3>{q}</h3>\n          <p>{a}</p></div>' for q, a in p["faq"])
+        cards_html += f"\n      <section class=\"section\">\n        <h2>{p['faq_title']}</h2>\n        <div class=\"group\">\n          {faq}\n        </div>\n      </section>"
     date = f'\n        <p class="date">{c["effective"]}</p>' if page in ("privacy", "terms") else ""
     legal_link = (f'\n      <p class="small-link"><a href="{url(lang, "legal")}">{c["legal"]["title"]}</a></p>'
                   if page == "privacy" else "")
-    hero = (f'\n      <div class="hero-card">\n{stage_html(lang)}\n      </div>' if page == LANDING else "")
-    script = f"\n{STAGE_SCRIPT}" if page == LANDING else ""
-    footer_links = "".join(
-        f'<a href="{url(lang, pg)}"' + (' aria-current="page"' if pg == page else "") + f">{c['nav'][pg]}</a>"
-        for pg in ALL_PAGES
-    )
     return f"""<!doctype html>
 <html lang="{lang}" dir="{meta['dir']}">
 <head>
@@ -857,26 +855,13 @@ def render(lang, page):
 {json_ld(lang, page, p, title, description, canonical)}
 </head>
 <body>
-  <header class="top">
-    <div class="wrap">
-      {brand_html(lang, c['home'])}
-      <div class="tools">{theme_button(lang)}<nav class="langs" aria-label="Language">{langs_html(lang, page)}</nav></div>
-    </div>
-  </header>
-  <main class="wrap">{hero}
-    <div class="head">
-      <div class="ico-tile">{icon(PAGE_ICON[page])}</div>
-      <h1>{p['title']}</h1>
-      <p class="lead">{p['lead']}</p>{date}
-    </div>
+{band_html(lang, page, c, PAGE_ART[page], p['title'], p['lead'], date)}
+  <main class="narrow content">
     <div class="cards">
 {cards_html}
     </div>{legal_link}
   </main>
-  <footer class="foot wrap">
-    <nav aria-label="{c['nav']['support']}">{footer_links}</nav>
-    <p>{c['osm']} · <bdi>masarmaps.com</bdi></p>
-  </footer>{script}
+{footer_html(lang, c, page)}
 {THEME_SCRIPT}
 </body>
 </html>
@@ -894,30 +879,27 @@ def legal(lang):
     fonts = [f'<bdi>{n}</bdi> — <a href="/assets/fonts/{f}-OFL.txt"><bdi>SIL Open Font License 1.1</bdi></a>' for n, f in FONTS]
     osm = '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     phosphor = '<a href="/assets/icons/PHOSPHOR-LICENSE.txt"><bdi>Phosphor Icons (MIT)</bdi></a>'
+    material = '<a href="/assets/icons/material/LICENSE.txt"><bdi>Material Symbols Rounded (Apache 2.0)</bdi></a>'
     if lang == "ar":
         return {"title": "الإشعارات القانونية", "lead": "البيانات والخطوط والأيقونات التي يستخدمها مسار.",
                 "sections": [("الخرائط", [f"بيانات الخريطة © مساهمو {osm}، برخصة ODbL."]),
                              ("الخطوط", [("ul", fonts)]),
-                             ("الأيقونات", [f"مبنية على {phosphor}."])]}
+                             ("الأيقونات", [("ul", [material, f"مبنية على {phosphor}."])])]}
     if lang == "en":
         return {"title": "Legal notices", "lead": "Data, fonts and icons Masar uses.",
                 "sections": [("Maps", [f"Map data © {osm} contributors, under the ODbL."]),
                              ("Fonts", [("ul", fonts)]),
-                             ("Icons", [f"Based on {phosphor}."])]}
+                             ("Icons", [("ul", [material, f"Based on {phosphor}."])])]}
     return {"title": "ئاگادارییە یاساییەکان", "lead": "ئەو داتا و فۆنت و ئایکۆنانەی مسار بەکاریان دەهێنێت.",
             "sections": [("نەخشەکان", [f"داتای نەخشە © بەشداربووانی {osm}، بە مۆڵەتی ODbL."]),
                          ("فۆنتەکان", [("ul", fonts)]),
-                         ("ئایکۆنەکان", [f"لەسەر بنەمای {phosphor}."])]}
+                         ("ئایکۆنەکان", [("ul", [material, f"لەسەر بنەمای {phosphor}."])])]}
 
 
 def render_legal(lang):
     meta = LANGS[lang]
     c = page_content(lang)
     p = c["legal"]
-    cards = "\n".join(
-        f"      <section class=\"card\">\n        <h2>{h}</h2>\n        " + "\n        ".join(render_block(b) for b in blocks) + "\n      </section>"
-        for h, blocks in p["sections"]
-    )
     alternates = "\n".join(f'  <link rel="alternate" hreflang="{l}" href="{ORIGIN + url(l, "legal")}">' for l in LANGS)
     return f"""<!doctype html>
 <html lang="{lang}" dir="{meta['dir']}">
@@ -929,26 +911,14 @@ def render_legal(lang):
 {alternates}
 </head>
 <body>
-  <header class="top">
-    <div class="wrap">
-      {brand_html(lang, c['home'])}
-      <div class="tools">{theme_button(lang)}<nav class="langs" aria-label="Language">{langs_html(lang, 'legal')}</nav></div>
-    </div>
-  </header>
-  <main class="wrap">
-    <div class="head">
-      <div class="ico-tile">{icon(PAGE_ICON['legal'])}</div>
-      <h1>{p['title']}</h1>
-      <p class="lead">{p['lead']}</p>
-    </div>
+{band_html(lang, 'legal', c, PAGE_ART['legal'], p['title'], p['lead'])}
+  <main class="narrow content">
     <div class="cards">
-{cards}
+{sections_html(p['sections'])}
     </div>
     <p class="small-link"><a href="{url(lang, 'privacy')}">{c['nav']['privacy']}</a></p>
   </main>
-  <footer class="foot wrap">
-    <p>{c['osm']} · <bdi>masarmaps.com</bdi></p>
-  </footer>
+{footer_html(lang, c)}
 {THEME_SCRIPT}
 </body>
 </html>
@@ -956,12 +926,23 @@ def render_legal(lang):
 
 
 # --------------------------------------------------------------------------
-# Home: still "coming soon", drawn as the onboarding v3 splash. SEO head kept
-# in tools/home_head.html.
+# Home: coming soon, one cyan screen (direction B). SEO head kept in
+# tools/home_head.html. Arabic only.
 # --------------------------------------------------------------------------
+
+def store_badges(label):
+    # Our own pills (no store artwork until the apps are live). Ink pill, white text.
+    return (f'<div class="stores"><span class="store"><b>App Store</b><small>{label}</small></span>'
+            f'<span class="store"><b>Google Play</b><small>{label}</small></span></div>')
+
 
 def render_home():
     head = (Path(__file__).resolve().parent / "home_head.html").read_text(encoding="utf-8")
+    c = page_content("ar")
+    avas = "\n          ".join(
+        f'<img class="ava a{i + 1}" src="/assets/brand/avatars/{a}.svg" alt="" width="84" height="84">'
+        for i, a in enumerate(AVATARS)
+    )
     return f"""<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -973,21 +954,60 @@ def render_home():
 {head.rstrip()}
   <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Vazirmatn-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/pages.css">
 </head>
-<body class="splash home">
-  {theme_button("ar")}
-  <main>
-{stage_html("ar")}
-    <p class="soon">قريباً<span class="en" lang="en">Coming soon</span></p>
-  </main>
-  <footer class="foot">
-    <nav aria-label="Links"><a href="/waze-alternative" lang="ar">بديل ويز في العراق</a><a href="/en/privacy" lang="en">Privacy</a><a href="/en/terms" lang="en">Terms</a><a href="/en/support" lang="en">Support</a></nav>
-    <p><bdi>masarmaps.com</bdi></p>
-  </footer>
-{STAGE_SCRIPT}
+<body>
+  <div class="cyan home-hero">
+    <header class="top">
+      <div class="wrap">
+        {brand_html("ar", c['home'])}
+        <div class="tools">{theme_button("ar")}<nav class="langs" aria-label="اللغة"><a class="chip" href="/" aria-current="page" lang="ar">العربية</a><a class="chip" href="/ckb/waze-alternative" lang="ckb" hreflang="ckb">کوردی</a><a class="chip" href="/en/waze-alternative" lang="en" hreflang="en">English</a></nav></div>
+      </div>
+    </header>
+    <main class="wrap home-main">
+      <div class="home-copy">
+        <p class="tag">{SOON['ar']}</p>
+        <h1>طريقك<br>أوضح</h1>
+        <p class="home-line">مسار تطبيق ملاحة عراقي، بزحمة مباشرة وبلاغات السائقين.</p>
+        {store_badges(SOON['ar'])}
+      </div>
+      <div class="stage" aria-hidden="true">
+        <div class="halo"></div>
+        <img class="mascot bob" src="{MASCOT}" alt="" width="340" height="340">
+        {avas}
+      </div>
+    </main>
+  </div>
+{footer_html('ar', c)}
 {THEME_SCRIPT}
+</body>
+</html>
+"""
+
+
+def render_404():
+    return f"""<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#31C6F7">
+  <meta name="color-scheme" content="light dark">
+  <meta name="robots" content="noindex">
+{THEME_INIT}
+  <title>الصفحة غير موجودة — مسار</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
+  <link rel="stylesheet" href="/assets/pages.css">
+</head>
+<body class="cyan" style="min-height: 100svh">
+  <main class="wrap state" style="min-height: 100svh; justify-content: center">
+    {art_html('avatar-5-sleepy-night')}
+    <h1>الصفحة غير موجودة</h1>
+    <p class="lead" lang="en" dir="ltr">Page not found.</p>
+    <div class="btn-col"><a class="btn-dark" href="/"><bdi>masarmaps.com</bdi></a></div>
+  </main>
 </body>
 </html>
 """
@@ -1096,31 +1116,22 @@ def render_place(lang):
   <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-  <header class="top">
-    <div class="wrap">
-      {brand_html(lang, c['home'])}
-      <div class="tools">{theme_button(lang)}<nav class="langs" aria-label="Language">{langs_html(lang, 'p', keep_query=True)}</nav></div>
-    </div>
-  </header>
-  <main class="wrap">
-    <section class="card place">
-      <div class="host-static"><img src="/assets/brand/mascot.svg" alt="" width="78" height="76"></div>
+  <div class="cyan">
+{header_html(lang, 'p', c, keep_query=True)}
+    <main class="wrap state place">
+      {art_html('mascot')}
       <h1 id="name">{t['fallback']}</h1>
       <p class="lead coords"><bdi id="coords"></bdi></p>
-      <div id="ok">
-        <div class="btn-row">
-          <a class="btn" id="open" href="#">{t['open']}</a>
-          <a class="btn-secondary" id="get" href="{PLAY_URL}">{t['get']}</a>
-        </div>
-        <p><a id="map" href="#">{t['map']}</a></p>
+      <div id="ok" class="btn-col">
+        <a class="btn" id="open" href="#">{t['open']}</a>
+        <a class="btn-dark" id="get" href="{PLAY_URL}">{t['get']}</a>
+        <a class="link-quiet" id="map" href="#">{t['map']}</a>
         <p class="sources" id="soon" hidden>{t['soon']}</p>
       </div>
       <p class="lead" id="bad" hidden>{t['bad']}</p>
-    </section>
-  </main>
-  <footer class="foot wrap">
-    <p>{c['osm']} · <bdi>masarmaps.com</bdi></p>
-  </footer>
+    </main>
+  </div>
+{footer_html(lang, c)}
   <script>
   (function () {{
     var cfg = {cfg};
@@ -1178,8 +1189,9 @@ def main():
         (out_dir / "p.html").write_text(render_place(lang), encoding="utf-8")
         print("wrote", lang)
     (SITE / "index.html").write_text(render_home(), encoding="utf-8")
+    (SITE / "404.html").write_text(render_404(), encoding="utf-8")
     write_seo_files()
-    print("wrote index.html, robots.txt, sitemap.xml, .well-known/")
+    print("wrote index.html, 404.html, robots.txt, sitemap.xml, .well-known/")
 
 
 if __name__ == "__main__":
