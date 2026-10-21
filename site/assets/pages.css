@@ -293,3 +293,120 @@ h3 { font-size: 17px; line-height: 1.45; font-weight: 700; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ==========================================================================
+   Direction B «Friendly mascot» (owner pick 2026-10-21): a bright cyan world with
+   the smiling-arrow mascot and the avatars as characters. Ink text on cyan, never
+   white. Cyan stays cyan in both themes (like the onboarding splash); content
+   sections after the hero follow the theme. Mascot and avatars: never rotated or mirrored.
+   ========================================================================== */
+.cyan-hero { background: var(--cyan); color: var(--ink); position: relative; overflow: hidden; }
+.cyan-hero .brand, .cyan-hero .brand .latin { color: var(--ink); }
+.cyan-hero .brand .word.on-dark { display: none !important; }
+.cyan-hero .brand .word.on-light { display: block !important; }
+.cyan-hero .brand .tile { box-shadow: 0 0 0 2px var(--ink); border-radius: 10px; }
+.cyan-hero .langs { background: rgba(255, 255, 255, .32); }
+.cyan-hero .chip { color: var(--ink); }
+.cyan-hero .chip[aria-current="page"] { background: #FFFFFF; color: var(--ink); }
+.cyan-hero .theme-btn { background: rgba(255, 255, 255, .32); color: var(--ink); }
+
+.hero-b { display: grid; align-items: center; gap: 24px; padding: 24px 0 0; min-height: calc(100svh - 92px); }
+.hero-copy { position: relative; z-index: 2; padding-bottom: 32px; }
+.soon-tag {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 0 20px; margin: 0 0 20px; border-radius: 20px;
+  background: #FFFFFF; color: var(--ink); font-size: 17px; font-weight: 800;
+  animation: pop .52s .1s cubic-bezier(.3, 1.3, .5, 1) both;
+}
+.hero-b h1 {
+  font-size: clamp(72px, 11vw, 150px); line-height: .98; letter-spacing: -.02em; color: var(--ink);
+  animation: up .5s .05s cubic-bezier(.2, .9, .25, 1) both;
+}
+.hero-line { margin: 24px 0 0; font-size: clamp(19px, 1.8vw, 24px); line-height: 1.5; font-weight: 500; max-width: 22em; color: var(--ink); }
+.stores { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.store {
+  display: inline-flex; flex-direction: column; justify-content: center; min-height: 60px; padding: 0 24px; border-radius: 30px;
+  background: var(--ink); color: #FFFFFF; line-height: 1.2;
+}
+.store b { font-size: 18px; font-weight: 800; direction: ltr; }
+.store small { font-size: 13px; font-weight: 500; opacity: .8; }
+
+.hero-art { position: relative; height: 640px; }
+.hero-art .ph { position: absolute; top: 40px; }
+.hero-art .phone { width: 280px; background: #0B0F12; box-shadow: 0 40px 80px rgba(0, 60, 90, .35), 0 10px 24px rgba(0, 60, 90, .18); }
+.hero-art .ph-a { inset-inline-end: 6%; rotate: 7deg; animation: rise .6s .15s cubic-bezier(.22, 1.1, .36, 1) both; }
+.hero-art .ph-b { inset-inline-end: 38%; top: 90px; rotate: -6deg; z-index: 1; animation: rise .6s .3s cubic-bezier(.22, 1.1, .36, 1) both; }
+.hero-mascot {
+  position: absolute; z-index: 3; width: 250px; height: auto; bottom: -10px; inset-inline-start: -4%;
+  filter: drop-shadow(0 24px 30px rgba(0, 60, 90, .28));
+  animation: pop .6s .45s cubic-bezier(.3, 1.3, .5, 1) both, bob 3.4s 1.1s ease-in-out infinite;
+}
+.floats .ava {
+  position: absolute; z-index: 4; width: 72px; height: 72px; border-radius: 50%;
+  box-shadow: 0 0 0 4px #FFFFFF, 0 12px 24px rgba(0, 60, 90, .22);
+  animation: pop .5s cubic-bezier(.3, 1.3, .5, 1) both, bob 3.2s ease-in-out infinite;
+}
+.ava-1 { top: 2%; inset-inline-start: 4%; animation-delay: .55s, 0s !important; }
+.ava-2 { top: 30%; inset-inline-start: -6%; width: 60px !important; height: 60px !important; animation-delay: .6s, .5s !important; }
+.ava-3 { top: -2%; inset-inline-end: 0; width: 64px !important; height: 64px !important; animation-delay: .65s, 1s !important; }
+.ava-4 { bottom: 8%; inset-inline-end: 2%; animation-delay: .7s, 1.5s !important; }
+.ava-5 { top: 52%; inset-inline-end: -4%; width: 56px !important; height: 56px !important; animation-delay: .75s, .8s !important; }
+.ava-6 { bottom: 1%; inset-inline-start: -13%; width: 58px !important; height: 58px !important; animation-delay: .8s, 1.2s !important; }
+@keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+
+/* Feature bands: big screen + tint-disc icon + one line. */
+.band { padding: clamp(64px, 9vw, 120px) 0; }
+.band + .band { border-top: 1px solid var(--hairline); }
+.band-in { display: grid; align-items: center; gap: 48px; }
+.band-copy h2 { font-size: clamp(38px, 5.4vw, 64px); line-height: 1.08; letter-spacing: -.01em; margin-top: 24px; }
+.band-copy p { margin: 16px 0 0; font-size: clamp(19px, 1.7vw, 22px); line-height: 1.5; color: var(--muted); max-width: 24em; }
+.band-shot { position: relative; display: flex; justify-content: center; padding: 24px 0; }
+.band-shot::before { /* big tint disc behind the phone */
+  content: ""; position: absolute; top: 50%; left: 50%; width: min(520px, 110%); aspect-ratio: 1; translate: -50% -50%;
+  border-radius: 50%; background: var(--tint);
+}
+.band-shot .phone.big { width: 300px; rotate: -4deg; box-shadow: 0 40px 70px rgba(36, 48, 57, .18), 0 8px 20px rgba(36, 48, 57, .08); }
+.band.flip .band-shot .phone.big { rotate: 4deg; }
+
+/* Friendly footer: cyan, mascot, links in ink. */
+.b-foot { background: var(--cyan); color: var(--ink); border-radius: 40px 40px 0 0; margin-top: 24px; }
+.b-foot-in { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 64px 0 max(40px, env(safe-area-inset-bottom)); }
+.foot-mascot { width: 120px; height: auto; animation: bob 3.4s ease-in-out infinite; filter: drop-shadow(0 14px 18px rgba(0, 60, 90, .25)); }
+.foot-title { margin: 20px 0 0; font-size: clamp(30px, 4vw, 44px); font-weight: 800; line-height: 1.15; }
+.foot-line { margin: 8px 0 0; font-size: 18px; font-weight: 500; }
+.b-foot nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 8px; margin-top: 28px; }
+.b-foot nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: 22px; color: var(--ink); font-weight: 700; background: rgba(255, 255, 255, .32); }
+.b-foot nav a:hover { text-decoration: none; background: #FFFFFF; }
+.foot-small { margin: 24px 0 0; font-size: 14px; }
+.foot-small a { color: var(--ink); text-decoration: underline; }
+
+@media (min-width: 980px) {
+  .hero-b { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
+  .band-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; }
+  .band.flip .band-copy { order: 2; }
+}
+@media (max-width: 979px) {
+  .hero-b { min-height: 0; padding-top: 16px; }
+  .hero-art { height: 560px; max-width: 520px; width: 100%; margin: 0 auto; }
+  .hero-art .phone { width: 230px; }
+  .hero-art .ph-a { inset-inline-end: 2%; }
+  .hero-art .ph-b { inset-inline-end: 34%; top: 80px; }
+  .hero-mascot { width: 190px; inset-inline-start: -2%; bottom: 0; }
+  .band-shot .phone.big { width: 260px; }
+}
+@media (max-width: 520px) {
+  .hero-b h1 { font-size: 76px; }
+  .hero-art { height: 470px; }
+  .hero-art .phone { width: 186px; padding: 7px; border-radius: 34px; }
+  .hero-art .phone .screen { border-radius: 28px; }
+  .hero-art .ph-a { top: 30px; inset-inline-end: 0; }
+  .hero-art .ph-b { top: 70px; inset-inline-end: 36%; }
+  .hero-mascot { width: 150px; inset-inline-start: -4%; bottom: 6px; }
+  .floats .ava { width: 54px; height: 54px; box-shadow: 0 0 0 3px #FFFFFF, 0 8px 16px rgba(0, 60, 90, .2); }
+  .ava-2, .ava-5 { display: none; }
+  .ava-1 { top: 0; inset-inline-start: 0; }
+  .ava-3 { top: -4%; }
+  .ava-6 { bottom: 4%; inset-inline-start: 46%; }
+  .store { min-height: 56px; padding: 0 20px; flex: 1; }
+  .band-shot .phone.big { width: 230px; }
+  .band-shot::before { width: 340px; }
+}

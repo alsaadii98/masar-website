@@ -677,17 +677,19 @@ PAGE_SHOT = {"privacy": "privacy", "terms": "report", "delete-account": "delete"
 SHOT_ALT = {
     "ar": {"home": "شاشة مسار الرئيسية", "drive": "شاشة القيادة في مسار", "report": "شاشة البلاغ في مسار",
            "privacy": "شاشة الخصوصية في مسار", "delete": "شاشة حذف الحساب في مسار", "settings": "شاشة الإعدادات في مسار",
-           "legal": "شاشة الإشعارات القانونية في مسار", "place": "بطاقة مكان في مسار"},
+           "legal": "شاشة الإشعارات القانونية في مسار", "place": "بطاقة مكان في مسار",
+           "traffic": "خريطة الزحمة في مسار", "voice": "المساعد الصوتي في مسار"},
     "en": {"home": "Masar home screen", "drive": "Masar driving screen", "report": "Masar report screen",
            "privacy": "Masar privacy screen", "delete": "Masar delete-account screen", "settings": "Masar settings screen",
-           "legal": "Masar legal notices screen", "place": "Masar place card"},
+           "legal": "Masar legal notices screen", "place": "Masar place card",
+           "traffic": "Masar live traffic map", "voice": "Masar voice assistant"},
     "ckb": {"home": "شاشەی سەرەکیی مسار", "drive": "شاشەی لێخوڕین لە مسار", "report": "شاشەی ڕاپۆرت لە مسار",
             "privacy": "شاشەی تایبەتمەندی لە مسار", "delete": "شاشەی سڕینەوەی هەژمار لە مسار",
             "settings": "شاشەی ڕێکخستنەکان لە مسار", "legal": "شاشەی ئاگادارییە یاساییەکان لە مسار",
-            "place": "کارتی شوێن لە مسار"},
+            "place": "کارتی شوێن لە مسار", "traffic": "نەخشەی قەرەباڵغی لە مسار", "voice": "یاریدەدەری دەنگی لە مسار"},
 }
 # Screens that have a dark export. The others show the light screen in both themes.
-DARK_SHOTS = {"home", "drive", "report", "delete", "settings", "legal", "place"}
+DARK_SHOTS = {"home", "drive", "report", "delete", "settings", "legal", "place", "traffic", "voice"}
 # Icons for the landing page's feature rows, in content order.
 FEATURE_ICONS = ["directions_car-fill", "record_voice_over", "warning", "search", "share", "navigation-fill", "shield"]
 
@@ -989,20 +991,51 @@ def render_legal(lang):
 # tools/home_head.html.
 # --------------------------------------------------------------------------
 
-HOME_FEATURES = [("directions_car-fill", "زحمة مباشرة"), ("warning", "بلاغات الطريق"), ("record_voice_over", "إرشاد صوتي")]
+AVATARS = ["avatar-1-happy-cyan", "avatar-2-wink-orange", "avatar-3-love-mint", "avatar-4-cool-lilac",
+           "avatar-5-sleepy-night", "avatar-6-excited-sand"]
+
+# Direction B «Friendly mascot»: feature bands under the cyan hero (icon, title, one line, screen).
+HOME_BANDS = [
+    ("warning", "بلّغ بلمسة واحدة", "حادث، زحمة، مطب أو سيطرة. لمسة وتوصل للكل.", "report"),
+    ("directions_car-fill", "زحمة مباشرة", "نشوف الطريق الآن، ونختار لك الأسرع.", "traffic"),
+    ("record_voice_over", "صوت بالعربي والكوردي", "إرشاد واضح خطوة بخطوة، بلغتك.", "voice"),
+    ("navigation-fill", "في سيارتك", "يعمل مع CarPlay و Android Auto.", "drive"),
+]
+
+
+def store_badges(label):
+    # Our own pills (no store artwork until the apps are live). Ink pill, white text.
+    return (f'<div class="stores"><span class="store"><b>App Store</b><small>{label}</small></span>'
+            f'<span class="store"><b>Google Play</b><small>{label}</small></span></div>')
 
 
 def render_home():
     head = (Path(__file__).resolve().parent / "home_head.html").read_text(encoding="utf-8")
     c = page_content("ar")
-    features = "\n          ".join(f"<li>{disc(i, 'm')}<span>{t}</span></li>" for i, t in HOME_FEATURES)
+    floats = "\n          ".join(
+        f'<img class="ava ava-{i + 1}" src="/assets/brand/avatars/{a}.svg" alt="" width="72" height="72">'
+        for i, a in enumerate(AVATARS)
+    )
+    bands = "\n".join(
+        f"""    <section class="band{' flip' if i % 2 else ''}">
+      <div class="wrap band-in">
+        <div class="band-copy">
+          {disc(ic, 'l')}
+          <h2>{t}</h2>
+          <p>{line}</p>
+        </div>
+        <div class="band-shot">{phone('ar', shot, ' big')}</div>
+      </div>
+    </section>"""
+        for i, (ic, t, line, shot) in enumerate(HOME_BANDS)
+    )
+    footer_links = "".join(f'<a href="{url("ar", pg)}">{c["nav"][pg]}</a>' for pg in ALL_PAGES)
     return f"""<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#31C6F7">
   <meta name="color-scheme" content="light dark">
 {THEME_INIT}
 {head.rstrip()}
@@ -1012,34 +1045,42 @@ def render_home():
   <link rel="preload" href="/assets/fonts/Vazirmatn-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/pages.css">
 </head>
-<body class="home">
-  <header class="top">
-    <div class="wrap">
-      {brand_html("ar", c['home'])}
-      <div class="tools">{theme_button("ar")}</div>
+<body class="b-home">
+  <div class="cyan-hero">
+    <header class="top">
+      <div class="wrap">
+        {brand_html("ar", c['home'])}
+        <div class="tools">{theme_button("ar")}<nav class="langs" aria-label="اللغة"><a class="chip" href="/" aria-current="page" lang="ar">العربية</a><a class="chip" href="/ckb/waze-alternative" lang="ckb" hreflang="ckb">کوردی</a><a class="chip" href="/en/waze-alternative" lang="en" hreflang="en">English</a></nav></div>
+      </div>
+    </header>
+    <main class="wrap hero-b">
+      <div class="hero-copy">
+        <p class="soon-tag">قريباً</p>
+        <h1>طريقك<br>أوضح</h1>
+        <p class="hero-line">مسار تطبيق ملاحة عراقي، بزحمة مباشرة وبلاغات السائقين.</p>
+        {store_badges('قريباً')}
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="ph ph-a">{phone('ar', 'home')}</div>
+        <div class="ph ph-b">{phone('ar', 'drive')}</div>
+        <img class="hero-mascot" src="/assets/brand/mascot-v5.svg" alt="" width="260" height="260">
+        <div class="floats">
+          {floats}
+        </div>
+      </div>
+    </main>
+  </div>
+  <div class="bands">
+{bands}
+  </div>
+  <footer class="b-foot">
+    <div class="wrap b-foot-in">
+      <img class="foot-mascot" src="/assets/brand/mascot-v5.svg" alt="" width="120" height="120">
+      <p class="foot-title">{TAGLINE['ar']}</p>
+      <p class="foot-line">قريباً على App Store و Google Play.</p>
+      <nav aria-label="روابط">{footer_links}</nav>
+      <p class="foot-small">{c['osm']} · <bdi>masarmaps.com</bdi></p>
     </div>
-  </header>
-  <main class="wrap">
-    <section class="hero">
-      <div class="copy">
-        {mascot(112)}
-        <p class="soon-chip">قريباً<span class="en" lang="en">Coming soon</span></p>
-        <h1>{TAGLINE['ar']}</h1>
-        <p class="en-line" lang="en">{TAGLINE['en']}</p>
-        <ul class="features">
-          {features}
-        </ul>
-        <a class="btn" href="/waze-alternative">بديل ويز في العراق</a>
-      </div>
-      <div class="phones">
-        {phone('ar', 'home', ' back')}
-        {phone('ar', 'drive', ' front')}
-      </div>
-    </section>
-  </main>
-  <footer class="foot wrap">
-    <nav aria-label="Links"><a href="/waze-alternative" lang="ar">بديل ويز في العراق</a><a href="/en/privacy" lang="en">Privacy</a><a href="/en/terms" lang="en">Terms</a><a href="/en/support" lang="en">Support</a></nav>
-    <p><bdi>masarmaps.com</bdi></p>
   </footer>
 {THEME_SCRIPT}
 </body>
