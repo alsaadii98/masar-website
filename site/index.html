@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#31C6F7">
+  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <meta name="color-scheme" content="light dark">
   <script>try{var t=localStorage.getItem('masar-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <meta name="description" content="مسار تطبيق ملاحة عراقي وبديل ويز في العراق: زحمة مباشرة، بلاغات الطريق، وإرشاد صوتي بالعربي والكوردي. قريباً. Masar, the Iraqi navigation app — coming soon.">
@@ -26,51 +27,41 @@
   </script>
   <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/ReadexPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Vazirmatn-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/pages.css">
 </head>
-<body class="splash home">
-  <button class="chip theme-btn" id="theme-btn" type="button" title="المظهر" data-title="المظهر" data-auto="تلقائي" data-light="نهاري" data-dark="ليلي"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path class="duo" d="M12 3A9 9 0 0 1 12 21" fill="#31C6F7"/>
-  <path class="line" d="M3 12A9 9 0 1 0 21 12A9 9 0 1 0 3 12ZM12 3L12 21" stroke="#243039" stroke-width="2.4"/>
-</svg><span>تلقائي</span></button>
-  <main>
-  <div class="stage" role="img" aria-label="Masar">
-    <div class="lens" aria-hidden="true">
-      <img class="on-light" src="/assets/map/lens-light.jpg" alt="" width="290" height="290">
-      <img class="on-dark" src="/assets/map/lens-dark.jpg" alt="" width="290" height="290" loading="lazy">
-      <svg viewBox="0 0 290 290" class="lens-svg">
-        <polyline class="route-case" points="-122.3,957.1 127.8,683.7 135.4,672.2 147.7,641.9 153.5,617.3 173.6,108.7 177.2,86.5 164.0,52.8 93.9,-27.5" fill="none" stroke-width="12.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <polyline class="route" points="-122.3,957.1 127.8,683.7 135.4,672.2 147.7,641.9 153.5,617.3 173.6,108.7 177.2,86.5 164.0,52.8 93.9,-27.5" fill="none" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <g>
-          <animateMotion dur="7s" repeatCount="indefinite" rotate="auto" path="M165.7,310.0 L173.6,108.7 L177.2,86.5 L164.0,52.8 L93.9,-27.5"/>
-          <image href="/assets/brand/driving.svg" x="-17" y="-17" width="34" height="34" transform="rotate(90)"/>
-        </g>
-      </svg>
+<body class="home">
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="الرئيسية"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><img class="word on-light" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="64" height="32"><img class="word on-dark" src="/assets/brand/masar-wordmark-arabic-dark.svg" alt="مسار" width="64" height="32"></a>
+      <div class="tools"><button class="chip theme-btn" id="theme-btn" type="button" title="المظهر" data-title="المظهر" data-auto="تلقائي" data-light="نهاري" data-dark="ليلي"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M324-111.5Q251-143 197-197t-85.5-127Q80-397 80-480t31.5-156Q143-709 197-763t127-85.5Q397-880 480-880t156 31.5Q709-817 763-763t85.5 127Q880-563 880-480t-31.5 156Q817-251 763-197t-127 85.5Q563-80 480-80t-156-31.5ZM500-140q137-10 228.5-106T820-480q0-138-91.5-234T500-820v680Z"/></svg><span>تلقائي</span></button></div>
     </div>
-    <div class="bubble" style="left:26px;top:30px;width:60px;height:60px;background:#FF9F1C;animation-delay:0.30s,0.00s" aria-hidden="true"><img src="/assets/stickers/traffic.svg" alt="" style="rotate:-8deg"></div>
-    <div class="bubble" style="left:312px;top:14px;width:56px;height:56px;background:#3D7BF5;animation-delay:0.35s,0.35s" aria-hidden="true"><img src="/assets/stickers/police.svg" alt="" style="rotate:6deg"></div>
-    <div class="bubble" style="left:320px;top:380px;width:50px;height:50px;background:#FFC928;animation-delay:0.40s,0.70s" aria-hidden="true"><img src="/assets/stickers/hazard.svg" alt="" style="rotate:-5deg"></div>
-    <div class="bubble" style="left:22px;top:380px;width:48px;height:48px;background:#B0601E;animation-delay:0.45s,1.05s" aria-hidden="true"><img src="/assets/stickers/speedbump.svg" alt="" style="rotate:8deg"></div>
-    <div class="host" aria-hidden="true"><img src="/assets/brand/mascot.svg" alt="" width="104" height="102"></div>
-    <div class="title">
-      <img class="word" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="150" height="75">
-      <span class="latin">Masar</span>
-      <span class="tagline" lang="ar">مسار لكل مشوار</span>
-    </div>
-  </div>
-    <p class="soon">قريباً<span class="en" lang="en">Coming soon</span></p>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <div class="copy">
+        <span class="mascot-disc" style="--size:112px" aria-hidden="true"><img class="mascot" src="/assets/brand/mascot-v5.svg" alt="" width="112" height="112"></span>
+        <p class="soon-chip">قريباً<span class="en" lang="en">Coming soon</span></p>
+        <h1>مسار لكل مشوار</h1>
+        <p class="en-line" lang="en">Masar for every trip</p>
+        <ul class="features">
+          <li><span class="disc disc-m" aria-hidden="true"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M200-204v44q0 16.67-11.74 28.33Q176.53-120 159.76-120q-16.76 0-28.26-11.67Q120-143.33 120-160v-304q0-4.67.5-9.33.5-4.67 2.5-9.67l78-236q6-19 21.75-30T258-760h444q19.5 0 35.25 11T759-719l78 236q2 5 2.5 9.67.5 4.66.5 9.33v304q0 16.67-11.74 28.33Q816.53-120 799.76-120 783-120 771-131.96T759-161v-43H200Zm3-330h554l-55-166H258l-55 166Zm82.76 220q23.24 0 38.74-15.75Q340-345.5 340-368q0-23.33-15.75-39.67Q308.5-424 286-424q-23.33 0-39.67 16.26Q230-391.47 230-368.24q0 23.24 16.26 38.74 16.27 15.5 39.5 15.5ZM675-314q23.33 0 39.67-15.75Q731-345.5 731-368q0-23.33-16.26-39.67Q698.47-424 675.24-424q-23.24 0-38.74 16.26-15.5 16.27-15.5 39.5 0 23.24 15.75 38.74Q652.5-314 675-314Z"/></svg></span><span>زحمة مباشرة</span></li>
+          <li><span class="disc disc-m" aria-hidden="true"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M92-120q-9 0-15.5-4T66-135q-4-7-4.5-14.5T66-165l388-670q5-8 11.5-11.5T480-850q8 0 14.5 3.5T506-835l388 670q5 8 4.5 15.5T894-135q-4 7-10.5 11t-15.5 4H92Zm52-60h672L480-760 144-180Zm361.5-65.5Q514-254 514-267t-8.5-21.5Q497-297 484-297t-21.5 8.5Q454-280 454-267t8.5 21.5Q471-237 484-237t21.5-8.5Zm0-111Q514-365 514-378v-164q0-13-8.5-21.5T484-572q-13 0-21.5 8.5T454-542v164q0 13 8.5 21.5T484-348q13 0 21.5-8.5ZM480-470Z"/></svg></span><span>بلاغات الطريق</span></li>
+          <li><span class="disc disc-m" aria-hidden="true"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M920-591q0 80-24.5 142T826-333q-10 12-24.5 13T776-330q-11-11-10.5-26t10.5-27q36-44 55-92.5T850-591q0-67-19-115.5T776-799q-10-12-10.5-27t10.5-26q11-11 25.5-10t24.5 13q45 54 69.5 116T920-591Zm-200 0q0 32-9.5 61T684-475q-8 12-22 13t-25-10q-11-11-12-25t7-27q8-14 13-31t5-36q0-19-5-36t-13-31q-8-13-7-27t12-25q11-11 25-10t22 13q17 26 26.5 55t9.5 61ZM360-441q-66 0-108-42t-42-108q0-66 42-108t108-42q66 0 108 42t42 108q0 66-42 108t-108 42ZM40-180v-34q0-38 19-64.5t49-41.5q51-26 120.5-43T360-380q62 0 131 17t120 43q30 15 49.5 41.5T680-214v34q0 25-17.5 42.5T620-120H100q-25 0-42.5-17.5T40-180Zm60 0h520v-34q0-16-8.5-29.5T587-266q-48-27-109-40.5T360-320q-57 0-118.5 14.5T132-266q-14 7-23 21.5t-9 30.5v34Zm324.5-346.5Q450-552 450-591t-25.5-64.5Q399-681 360-681t-64.5 25.5Q270-630 270-591t25.5 64.5Q321-501 360-501t64.5-25.5ZM360-591Zm0 411Z"/></svg></span><span>إرشاد صوتي</span></li>
+        </ul>
+        <a class="btn" href="/waze-alternative">بديل ويز في العراق</a>
+      </div>
+      <div class="phones">
+        <div class="phone back"><div class="screen"><img class="on-light" src="/assets/screens/home.png" alt="شاشة مسار الرئيسية" width="384" height="838" loading="lazy"><img class="on-dark" src="/assets/screens/home-dark.png" alt="شاشة مسار الرئيسية" width="384" height="838" loading="lazy"></div></div>
+        <div class="phone front"><div class="screen"><img class="on-light" src="/assets/screens/drive.png" alt="شاشة القيادة في مسار" width="384" height="838" loading="lazy"><img class="on-dark" src="/assets/screens/drive-dark.png" alt="شاشة القيادة في مسار" width="384" height="838" loading="lazy"></div></div>
+      </div>
+    </section>
   </main>
-  <footer class="foot">
+  <footer class="foot wrap">
     <nav aria-label="Links"><a href="/waze-alternative" lang="ar">بديل ويز في العراق</a><a href="/en/privacy" lang="en">Privacy</a><a href="/en/terms" lang="en">Terms</a><a href="/en/support" lang="en">Support</a></nav>
     <p><bdi>masarmaps.com</bdi></p>
   </footer>
-  <script>
-  // Reduced motion: park the car on the route (iOS: 46 % of the loop).
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('.lens-svg').forEach(function (s) { s.pauseAnimations(); s.setCurrentTime(7 * 0.46); });
-  }
-  </script>
   <script>
   (function () {
     var b = document.getElementById('theme-btn');

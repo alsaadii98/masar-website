@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#F4F5F6" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#17181B" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <meta name="color-scheme" content="light dark">
   <script>try{var t=localStorage.getItem('masar-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <link rel="icon" type="image/svg+xml" href="/assets/masar-logo.svg">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="preload" href="/assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Vazirmatn-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/pages.css">
   <title>مەرجەکانی بەکارهێنان — مسار</title>
   <meta name="description" content="چەند ڕێسایەکی کورت بۆ بەکارهێنانی مسار.">
@@ -71,52 +72,65 @@
 <body>
   <header class="top">
     <div class="wrap">
-      <a class="brand" href="/" aria-label="سەرەتا"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><img class="word on-light" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="68" height="34"><img class="word on-dark" src="/assets/brand/masar-wordmark-arabic-dark.svg" alt="مسار" width="68" height="34"></a>
-      <div class="tools"><button class="chip theme-btn" id="theme-btn" type="button" title="ڕووکار" data-title="ڕووکار" data-auto="خۆکار" data-light="ڕووناک" data-dark="تاریک"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path class="duo" d="M12 3A9 9 0 0 1 12 21" fill="#31C6F7"/>
-  <path class="line" d="M3 12A9 9 0 1 0 21 12A9 9 0 1 0 3 12ZM12 3L12 21" stroke="#243039" stroke-width="2.4"/>
-</svg><span>خۆکار</span></button><nav class="langs" aria-label="Language"><a class="chip" href="/terms" lang="ar" hreflang="ar">العربية</a><a class="chip" href="/en/terms" lang="en" hreflang="en">English</a><a class="chip" href="/ckb/terms" lang="ckb" hreflang="ckb" aria-current="page">کوردی</a></nav></div>
+      <a class="brand" href="/" aria-label="سەرەتا"><img class="tile" src="/assets/brand/masar-app-tile-light.svg" alt="" width="40" height="40"><img class="word on-light" src="/assets/brand/masar-wordmark-arabic-light.svg" alt="مسار" width="64" height="32"><img class="word on-dark" src="/assets/brand/masar-wordmark-arabic-dark.svg" alt="مسار" width="64" height="32"></a>
+      <div class="tools"><button class="chip theme-btn" id="theme-btn" type="button" title="ڕووکار" data-title="ڕووکار" data-auto="خۆکار" data-light="ڕووناک" data-dark="تاریک"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M324-111.5Q251-143 197-197t-85.5-127Q80-397 80-480t31.5-156Q143-709 197-763t127-85.5Q397-880 480-880t156 31.5Q709-817 763-763t85.5 127Q880-563 880-480t-31.5 156Q817-251 763-197t-127 85.5Q563-80 480-80t-156-31.5ZM500-140q137-10 228.5-106T820-480q0-138-91.5-234T500-820v680Z"/></svg><span>خۆکار</span></button><nav class="langs" aria-label="Language"><a class="chip" href="/terms" lang="ar" hreflang="ar">العربية</a><a class="chip" href="/en/terms" lang="en" hreflang="en">English</a><a class="chip" href="/ckb/terms" lang="ckb" hreflang="ckb" aria-current="page">کوردی</a></nav></div>
     </div>
   </header>
   <main class="wrap">
-    <div class="head">
-      <div class="ico-tile"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path class="duo" d="M10.71 3.75L2.46 18A1.5 1.5 0 0 0 3.75 20.25L20.25 20.25A1.5 1.5 0 0 0 21.54 18L13.29 3.75A1.49 1.49 0 0 0 10.71 3.75Z" fill="#31C6F7"/>
-  <path class="line" d="M12 10.5L12 13.5M10.71 3.75L2.46 18A1.5 1.5 0 0 0 3.75 20.25L20.25 20.25A1.5 1.5 0 0 0 21.54 18L13.29 3.75A1.49 1.49 0 0 0 10.71 3.75ZM12 16.77v.2" stroke="#243039" stroke-width="2.4"/>
-</svg></div>
-      <h1>مەرجەکانی بەکارهێنان</h1>
-      <p class="lead">چەند ڕێسایەکی کورت بۆ بەکارهێنانی مسار.</p>
+    <div class="layout">
+      <div>
+        <div class="head">
+          <span class="disc disc-l" aria-hidden="true"><svg class="ico" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M200-204v44q0 16.67-11.74 28.33Q176.53-120 159.76-120q-16.76 0-28.26-11.67Q120-143.33 120-160v-304q0-4.67.5-9.33.5-4.67 2.5-9.67l78-236q6-19 21.75-30T258-760h444q19.5 0 35.25 11T759-719l78 236q2 5 2.5 9.67.5 4.66.5 9.33v304q0 16.67-11.74 28.33Q816.53-120 799.76-120 783-120 771-131.96T759-161v-43H200Zm3-330h554l-55-166H258l-55 166Zm82.76 220q23.24 0 38.74-15.75Q340-345.5 340-368q0-23.33-15.75-39.67Q308.5-424 286-424q-23.33 0-39.67 16.26Q230-391.47 230-368.24q0 23.24 16.26 38.74 16.27 15.5 39.5 15.5ZM675-314q23.33 0 39.67-15.75Q731-345.5 731-368q0-23.33-16.26-39.67Q698.47-424 675.24-424q-23.24 0-38.74 16.26-15.5 16.27-15.5 39.5 0 23.24 15.75 38.74Q652.5-314 675-314Z"/></svg></span>
+          <h1>مەرجەکانی بەکارهێنان</h1>
+          <p class="lead">چەند ڕێسایەکی کورت بۆ بەکارهێنانی مسار.</p>
         <p class="date">بەرواری کارپێکردن: 13ی تشرینی یەکەمی 2026</p>
-    </div>
-    <div class="cards">
-      <section class="card">
+        </div>
+        <div class="cards">
+      <section class="section">
         <h2>بە سەلامەتی لێبخوڕە</h2>
-        <ul><li>پابەندی یاساکانی هاتوچۆ و نیشانەکانی ڕێگا بە. ڕێگای ڕاستەقینە هەمیشە لە پێشەوەیە.</li><li>لە کاتی لێخوڕیندا ئەپەکە بەکارمەهێنە. پێش ڕۆیشتن ڕێگاکەت دیاری بکە، یان با هاوڕێکەت بیکات.</li></ul>
+        <div class="group">
+          <ul><li>پابەندی یاساکانی هاتوچۆ و نیشانەکانی ڕێگا بە. ڕێگای ڕاستەقینە هەمیشە لە پێشەوەیە.</li><li>لە کاتی لێخوڕیندا ئەپەکە بەکارمەهێنە. پێش ڕۆیشتن ڕێگاکەت دیاری بکە، یان با هاوڕێکەت بیکات.</li></ul>
+        </div>
       </section>
-      <section class="card">
+      <section class="section">
         <h2>ڕێگاکان تەنها ڕێنمایین</h2>
-        <p>ڕێگا، کات و ئاگادارکردنەوەکان تەنها بۆ ڕێنماییین و لەوانەیە هەڵە بن. تۆ بەرپرسیاری شێوەی لێخوڕینەکەتیت.</p>
+        <div class="group">
+          <p>ڕێگا، کات و ئاگادارکردنەوەکان تەنها بۆ ڕێنماییین و لەوانەیە هەڵە بن. تۆ بەرپرسیاری شێوەی لێخوڕینەکەتیت.</p>
+        </div>
       </section>
-      <section class="card">
+      <section class="section">
         <h2>ڕاپۆرتەکان دەبێت ڕاست بن</h2>
-        <p>تەنها ڕاپۆرتی ڕاستەقینە و ئێستایی بنێرە. ناوەڕۆکی درۆ، سووکایەتیئامێز یان کەسی مەنێرە.</p>
+        <div class="group">
+          <p>تەنها ڕاپۆرتی ڕاستەقینە و ئێستایی بنێرە. ناوەڕۆکی درۆ، سووکایەتیئامێز یان کەسی مەنێرە.</p>
+        </div>
       </section>
-      <section class="card">
+      <section class="section">
         <h2>مافەکانمان</h2>
-        <p>لەوانەیە ڕاپۆرتی درۆ یان خراپ بسڕینەوە، و ئەو ئامێر یان هەژمارانە بلۆک بکەین کە خراپ مسار بەکاردەهێنن.</p>
+        <div class="group">
+          <p>لەوانەیە ڕاپۆرتی درۆ یان خراپ بسڕینەوە، و ئەو ئامێر یان هەژمارانە بلۆک بکەین کە خراپ مسار بەکاردەهێنن.</p>
+        </div>
       </section>
-      <section class="card">
+      <section class="section">
         <h2>داتای نەخشە</h2>
-        <p>داتای نەخشە © <a href="https://www.openstreetmap.org/copyright">بەشداربووانی OpenStreetMap</a>، بە مۆڵەتی Open Database License (ODbL).</p>
+        <div class="group">
+          <p>داتای نەخشە © <a href="https://www.openstreetmap.org/copyright">بەشداربووانی OpenStreetMap</a>، بە مۆڵەتی Open Database License (ODbL).</p>
+        </div>
       </section>
-      <section class="card">
+      <section class="section">
         <h2>تایبەتمەندی</h2>
-        <p>سەیری <a href="/ckb/privacy">سیاسەتی تایبەتمەندی</a> بکە.</p>
+        <div class="group">
+          <p>سەیری <a href="/ckb/privacy">سیاسەتی تایبەتمەندی</a> بکە.</p>
+        </div>
       </section>
-      <section class="card">
+      <section class="section">
         <h2>پەیوەندیمان پێوە بکە</h2>
-        <p><a class="mail" href="mailto:support@masarmaps.com">support@masarmaps.com</a></p>
+        <div class="group">
+          <p><a class="mail" href="mailto:support@masarmaps.com">support@masarmaps.com</a></p>
+        </div>
       </section>
+        </div>
+      </div>
+      <aside class="shot"><div class="phone"><div class="screen"><img class="on-light" src="/assets/screens/report.png" alt="شاشەی ڕاپۆرت لە مسار" width="384" height="838" loading="lazy"><img class="on-dark" src="/assets/screens/report-dark.png" alt="شاشەی ڕاپۆرت لە مسار" width="384" height="838" loading="lazy"></div></div></aside>
     </div>
   </main>
   <footer class="foot wrap">
